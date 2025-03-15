@@ -1,0 +1,119 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use
+# For example: application-dev.yml if you use the "dev" profile.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# https://docs.spring.io/spring-boot/reference/features/profiles.html
+# ===================================================================
+
+logging:
+  level:
+    root: info
+    com.dct.nextgen: info
+    org.hibernate.sql: info
+  file:
+    path: /mnt/logs
+    name: ${logging.file.path}/clusterLogData.log # Used by default. Overridden by configuration in logback-spring.xml
+  charset:
+    console: UTF-8
+    file: UTF-8
+
+spring:
+  jpa:
+    # Avoid causing LazyInitializationException if querying outside the scope of EntityManager or causing poor performance
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: false
+    hibernate:
+      # Hibernate only checks if the current schema matches the entity
+      # If it does not match, the application will not start
+      # Do not make any changes to the schema
+      ddl-auto: validate
+  thymeleaf:
+    cache: false
+  servlet:
+    multipart:
+      # Maximum size of the entire HTTP request when uploading multipart data (including files and other parameters)
+      max-request-size: 50MB
+      # Maximum size for each file that a user can upload
+      max-file-size: 30MB
+
+server:
+  servlet:
+    session:
+      cookie:
+        # The session cookie that Spring Boot creates will have the HttpOnly attribute
+        # Setting HttpOnly helps protect cookies from Cross-Site Scripting (XSS) attacks
+        # Cookies will still be sent with each HTTP request (and can therefore be used for session authentication)
+        # But Cookies cannot be accessed from the client side using JavaScript (e.g. via document.cookie)
+        http-only: true
+  port: 8000
+
+dct-base:
+  domain: http://localhost:${server.port}
+
+  jpa:
+    persistence-unit-name: dct-nextgen-persistence
+    base-entity-packages:
+      - com.dct.nextgen.entity
+    base-repository-packages:
+      - com.dct.nextgen.repositories
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    database: jdbc:mysql://${NEXTGEN_BRAND_DATABASE_URL};encrypt=true;trustServerCertificate=true
+    username: ${NEXTGEN_BRAND_DATABASE_USERNAME}
+    password: ${NEXTGEN_BRAND_DATABASE_PASSWORD}
+    hikari:
+      poolName: Hikari
+      # AllowPoolSuspension means pause connection when there is a problem
+      # When the setting is false, the system will not allow to pause connections in pool
+      # Helping to maintain continuous system operation even when there is a problem
+      allow-pool-suspension: false
+      auto-commit: false # Do not automatically commit transactions
+      maximumPoolSize: 15 # Maximum database connections
+      minimumIdle: 2 # At least connections will be kept idle, ready for use
+      maxLifetime: 1200000 # Maximum time (20 minutes) that a connection can exist in the pool before being closed and recreated
+      idleTimeout: 600000 # Maximum time (10 minutes) that a connection can be idle before being closed
+      connectionTimeout: 60000 # Maximum time (1 minutes) to wait for connection from pool when no connection is available
+      leak-detection-threshold: 60000 # If a connection is not returned to the pool after 2 minutes, it will be detected as a "leak"
+      datasource-properties:
+        cachePrepStmts: true # Enable caching to improve performance when using multiple identical statements
+        prepStmtCacheSize: 100 # Prepared statement cache size. In this case, the cache can hold up to 100 statements
+        prepStmtCacheSqlLimit: 1024 # Limits the maximum length (in bytes) of an SQL statement that can be cached
+        useServerPrepStmts: true # Enable server-side prepared statements instead of client-side prepared statements
+
+  security:
+    auth:
+      base64-secret-key: ${NEXTGEN_BRAND_SECRET_KEY}
+      # Token is valid 24 hours
+      token-validity: 86400000 # milliseconds
+      token-validity-for-remember-me: 86400000 # milliseconds
+    oauth2:
+      enabled: false
+      base-authorize-uri: /api/p/common/auth/oauth2/authorize
+      default-redirect-uri: ${dct-base.domain}/login/oauth2/code/
+      redirect-uri: ${dct-base.domain}/api/p/common/callback/auth/oauth2/code/
+      google:
+        client-registration-id: google
+        client-name: Nextgen Creative
+        client-ID: ${GOOGLE_CLIENT_ID}
+        client-secret: ${GOOGLE_CLIENT_SECRET}
+        scope:
+          - https://www.googleapis.com/auth/userinfo.email
+          - https://www.googleapis.com/auth/userinfo.profile
+        authorization-uri: https://accounts.google.com/o/oauth2/auth
+        token-uri: https://oauth2.googleapis.com/token
+        user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+        username-attribute-name: sub
+
+  resources:
+    upload:
+      upload-path: D:/Downloads/
