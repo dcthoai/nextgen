@@ -74,7 +74,5 @@ public class NextgenApplication {
 			contextPath,
 			activeProfile
 		);
-
-		log.info("[DCT_BASE_APPLICATION] started");
 	}
 }

@@ -3,9 +3,11 @@ package com.dct.nextgen.repositories;
 import com.dct.nextgen.entity.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 
+@Repository
 public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
 
     @Query(

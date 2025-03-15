@@ -94,7 +94,7 @@ dct-base:
       token-validity: 86400000 # milliseconds
       token-validity-for-remember-me: 86400000 # milliseconds
     oauth2:
-      enabled: true
+      enabled: false
       base-authorize-uri: /api/p/common/auth/oauth2/authorize
       default-redirect-uri: ${dct-base.domain}/login/oauth2/code/
       redirect-uri: ${dct-base.domain}/api/p/common/callback/auth/oauth2/code/
