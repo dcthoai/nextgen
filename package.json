@@ -7,7 +7,17 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:webapp": "node build/server/server.mjs"
+    "serve:ssr:webapp": "node build/server/server.mjs",
+    "clean-www": "rimraf target/classes/static/",
+    "cleanup": "rimraf target/",
+    "webapp:build": "npm run clean-www && npm run webapp:build:dev",
+    "webapp:build:dev": "ng build --configuration development",
+    "webapp:build:prod": "ng build --configuration production",
+    "webapp:dev": "ng serve",
+    "webapp:dev-ssl": "ng serve --ssl",
+    "webapp:dev-verbose": "ng serve --verbose",
+    "webapp:prod": "npm run clean-www && npm run webapp:build:prod",
+    "webapp:test": "npm run test --"
   },
   "private": true,
   "dependencies": {
