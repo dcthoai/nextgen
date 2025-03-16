@@ -26,7 +26,6 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
         show_sql: true
     hibernate:
       # Hibernate only checks if the current schema matches the entity
@@ -89,7 +88,7 @@ dct-base:
 
   security:
     auth:
-      base64-secret-key: ZGN0X2Jhc2Vfc2VjcmV0X2tleV90b2tlbi12YWxpZGl0eV84NjQwMDAwMG1zX2Zvcl9yZW1lbWJlcl9tZV84NjQwMDAwMG1z
+      base64-secret-key: ZGN0LWJhc2Utc2VjcmV0LWtleS10b2tlbi12YWxpZGl0eS04NjQwMDAwMG1zLWZvci1yZW1lbWJlci1tZS04NjQwMDAwMG1z
       # Token is valid 24 hours
       token-validity: 86400000 # milliseconds
       token-validity-for-remember-me: 86400000 # milliseconds

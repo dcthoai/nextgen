@@ -5,14 +5,13 @@ import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.BaseAuthTokenDTO;
 import com.dct.nextgen.exception.BaseAuthenticationException;
-
 import com.dct.nextgen.exception.BaseBadRequestException;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 
@@ -30,6 +29,7 @@ import org.springframework.util.StringUtils;
 import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
@@ -55,7 +55,7 @@ public class JwtProvider {
         }
 
         log.debug("Using a Base64-encoded JWT secret key");
-        byte[] keyBytes = Decoders.BASE64.decode(base64SecretKey);
+        byte[] keyBytes = Base64.getUrlDecoder().decode(base64SecretKey);
         secretKey = Keys.hmacShaKeyFor(keyBytes);
         jwtParser = Jwts.parser().verifyWith(secretKey).build();
         log.debug("Sign JWT with algorithm: {}", secretKey.getAlgorithm());
