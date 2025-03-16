@@ -5,7 +5,6 @@ import com.dct.nextgen.dto.BaseAuthTokenDTO;
 import com.dct.nextgen.security.jwt.JwtProvider;
 import com.dct.nextgen.security.config.SecurityConfig;
 import com.dct.nextgen.aop.CheckAuthorize;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 /**
  * Security configuration parameters
@@ -30,12 +29,12 @@ public interface SecurityConstants {
     }
 
     /**
-     * The paths for security configuration in {@link SecurityConfig#securityFilterChain(HttpSecurity)} <p>
+     * The paths for security configuration in {@link SecurityConfig#securityFilterChain} <p>
      * Requests matching the patterns below will have their own specific security rules applied <p>
      * Requests not listed will require authentication by default
      */
     interface REQUEST_MATCHERS {
-        String[] OPTIONS = { "/**" };
+
         String[] ADMIN = { "/api/admin**", "/admin**" };
         String[] USER = { "/api/users**", "/users**" };
         String[] PUBLIC = {
@@ -119,7 +118,7 @@ public interface SecurityConstants {
     /**
      * The list of ROLES used in this application <p>
      * Constants starting with the "ROLE" prefix are used for storing in the database or with @{@link CheckAuthorize}<p>
-     * Constants without the "ROLE" prefix are used for {@link SecurityConfig#securityFilterChain(HttpSecurity)} <p>
+     * Constants without the "ROLE" prefix are used for {@link SecurityConfig#securityFilterChain} <p>
      * Spring Security automatically adds the "ROLE" prefix by default
      */
     interface ROLES {

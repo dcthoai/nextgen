@@ -7,6 +7,7 @@ import com.dct.nextgen.security.handler.CustomAuthenticationEntryPoint;
 import com.dct.nextgen.security.jwt.JwtFilter;
 import com.dct.nextgen.security.service.CustomUserDetailsService;
 import com.dct.nextgen.exception.handler.CustomExceptionHandler;
+import com.dct.nextgen.security.service.SecurityUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +31,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import java.util.Objects;
 
@@ -155,7 +158,7 @@ public class SecurityConfig {
      *
      */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         log.debug("Configuring SecurityFilterChain");
         http.csrf(AbstractHttpConfigurer::disable) // Because of using JWT, CSRF is not required
             .cors(Customizer.withDefaults())
@@ -173,16 +176,16 @@ public class SecurityConfig {
             )
             .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(registry -> registry
-                .requestMatchers(SecurityConstants.REQUEST_MATCHERS.ADMIN).hasRole(SecurityConstants.ROLES.ADMIN)
-                .requestMatchers(SecurityConstants.REQUEST_MATCHERS.USER).hasAnyRole(
-                    SecurityConstants.ROLES.USER,
-                    SecurityConstants.ROLES.ADMIN
-                )
-                .requestMatchers(SecurityConstants.REQUEST_MATCHERS.PUBLIC).permitAll()
+                .requestMatchers(SecurityUtils.convertToMvcMatchers(mvc, SecurityConstants.REQUEST_MATCHERS.ADMIN))
+                    .hasRole(SecurityConstants.ROLES.ADMIN)
+                .requestMatchers(SecurityUtils.convertToMvcMatchers(mvc, SecurityConstants.REQUEST_MATCHERS.USER))
+                    .hasAnyRole(SecurityConstants.ROLES.USER, SecurityConstants.ROLES.ADMIN)
+                .requestMatchers(SecurityUtils.convertToMvcMatchers(mvc, SecurityConstants.REQUEST_MATCHERS.PUBLIC))
+                    .permitAll()
                 // Used with custom CORS filters in CORS (Cross-Origin Resource Sharing) mechanism
                 // The browser will send OPTIONS requests (preflight requests) to check
                 // if the server allows access from other sources before send requests such as POST, GET
-                .requestMatchers(HttpMethod.OPTIONS, SecurityConstants.REQUEST_MATCHERS.OPTIONS).permitAll()
+                .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(AbstractHttpConfigurer::disable);
@@ -191,6 +194,11 @@ public class SecurityConfig {
             oAuth2ClientConfig.configure(http);
 
         return http.build();
+    }
+
+    @Bean
+    MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+        return new MvcRequestMatcher.Builder(introspector);
     }
 
     /**
