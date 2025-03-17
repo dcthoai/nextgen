@@ -35,8 +35,7 @@ public interface SecurityConstants {
      */
     interface REQUEST_MATCHERS {
 
-        String[] ADMIN = { "/api/admin**", "/admin**" };
-        String[] USER = { "/api/users**", "/users**" };
+        String[] PRIVATE = { "/api/admin**", "/admin**", "/api/users**", "/users**" };
         String[] PUBLIC = {
             "/",
             "/**.html",

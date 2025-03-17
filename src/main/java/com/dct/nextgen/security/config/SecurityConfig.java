@@ -137,12 +137,8 @@ public class SecurityConfig {
      *     Configures access permissions for HTTP requests:
      *     <ul>
      *       <li>
-     *         Only {@link SecurityConstants.ROLES#ADMIN} users can access resources defined in
-     *         {@link SecurityConstants.REQUEST_MATCHERS#ADMIN}
-     *       </li>
-     *       <li>
-     *         Both {@link SecurityConstants.ROLES#ADMIN} and {@link SecurityConstants.ROLES#USER} users
-     *         can access resources defined in {@link SecurityConstants.REQUEST_MATCHERS#USER}
+     *         Only authenticated users can access resources defined in
+     *         {@link SecurityConstants.REQUEST_MATCHERS#PRIVATE}
      *       </li>
      *       <li>All users can access resources defined in {@link SecurityConstants.REQUEST_MATCHERS#PUBLIC}</li>
      *       <li>{@link HttpMethod#OPTIONS} requests are allowed (used for CORS)</li>
@@ -155,7 +151,6 @@ public class SecurityConfig {
      *     this method will call {@link OAuth2ClientConfig#configure} method to add additional configuration
      *   </li>
      * </ul>
-     *
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
@@ -176,10 +171,8 @@ public class SecurityConfig {
             )
             .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(registry -> registry
-                .requestMatchers(SecurityUtils.convertToMvcMatchers(mvc, SecurityConstants.REQUEST_MATCHERS.ADMIN))
-                    .hasRole(SecurityConstants.ROLES.ADMIN)
-                .requestMatchers(SecurityUtils.convertToMvcMatchers(mvc, SecurityConstants.REQUEST_MATCHERS.USER))
-                    .hasAnyRole(SecurityConstants.ROLES.USER, SecurityConstants.ROLES.ADMIN)
+                .requestMatchers(SecurityUtils.convertToMvcMatchers(mvc, SecurityConstants.REQUEST_MATCHERS.PRIVATE))
+                    .authenticated()
                 .requestMatchers(SecurityUtils.convertToMvcMatchers(mvc, SecurityConstants.REQUEST_MATCHERS.PUBLIC))
                     .permitAll()
                 // Used with custom CORS filters in CORS (Cross-Origin Resource Sharing) mechanism
