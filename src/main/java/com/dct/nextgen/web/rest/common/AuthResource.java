@@ -1,4 +1,4 @@
-package com.dct.nextgen.web.rest;
+package com.dct.nextgen.web.rest.common;
 
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.HttpStatusConstants;
@@ -69,5 +69,11 @@ public class AuthResource {
         log.debug("Set token in secure cookie successful");
 
         return responseDTO;
+    }
+
+    @PostMapping("/logout")
+    public BaseResponseDTO logout() {
+
+        return new BaseResponseDTO();
     }
 }

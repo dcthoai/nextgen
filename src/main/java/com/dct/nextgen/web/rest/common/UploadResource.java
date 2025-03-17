@@ -1,10 +1,11 @@
-package com.dct.nextgen.web.rest;
+package com.dct.nextgen.web.rest.common;
 
 import com.dct.nextgen.common.FileUtils;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,12 +17,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/common/upload")
-public class ImageUploadResource {
+public class UploadResource {
 
-    private static final Logger log = LoggerFactory.getLogger(ImageUploadResource.class);
+    private static final Logger log = LoggerFactory.getLogger(UploadResource.class);
     private final FileUtils fileUtils;
 
-    public ImageUploadResource(FileUtils fileUtils) {
+    public UploadResource(FileUtils fileUtils) {
         this.fileUtils = fileUtils;
     }
 
@@ -36,5 +37,11 @@ public class ImageUploadResource {
         }
 
         return new BaseResponseDTO(filePaths);
+    }
+
+    @DeleteMapping("/images")
+    public BaseResponseDTO deleteImages() {
+
+        return new BaseResponseDTO();
     }
 }

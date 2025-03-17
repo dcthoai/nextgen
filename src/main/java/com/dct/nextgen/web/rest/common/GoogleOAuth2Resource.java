@@ -1,4 +1,4 @@
-package com.dct.nextgen.web.rest;
+package com.dct.nextgen.web.rest.common;
 
 import com.dct.nextgen.config.properties.GoogleOAuth2Config;
 import com.dct.nextgen.config.properties.OAuth2Config;
@@ -23,7 +23,7 @@ import java.util.Objects;
 
 @RestController
 @ConditionalOnProperty(name = PropertiesConstants.OAUTH2_ACTIVE_STATUS, havingValue = "true")
-@RequestMapping("/api")
+@RequestMapping("/api/p/common")
 public class GoogleOAuth2Resource {
 
     private static final Logger log = LoggerFactory.getLogger(GoogleOAuth2Resource.class);
@@ -39,7 +39,7 @@ public class GoogleOAuth2Resource {
         this.googleOAuth2Config = googleOAuth2Config;
     }
 
-    @GetMapping("/p/common/auth/oauth2/authorize/url/google")
+    @GetMapping("/auth/oauth2/authorize/url/google")
     public BaseResponseDTO getGoogleAuthUrl(HttpServletRequest request) {
         OAuth2AuthorizationRequest authorizationRequest = authorizationRequestResolver.resolve(
             request,
@@ -57,7 +57,7 @@ public class GoogleOAuth2Resource {
         return new BaseResponseDTO(authorizationRequest.getAuthorizationRequestUri());
     }
 
-    @GetMapping("/p/common/callback/auth/oauth2/code/google")
+    @GetMapping("/callback/auth/oauth2/code/google")
     public void googleAuthorizationCallback(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("Google OAuth2 callback received");
         String state = request.getParameter("state");
