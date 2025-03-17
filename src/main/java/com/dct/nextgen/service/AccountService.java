@@ -1,7 +1,7 @@
 package com.dct.nextgen.service;
 
 import com.dct.nextgen.dto.request.RegisterRequestDTO;
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.entity.base.Account;
 
 public interface AccountService {
 

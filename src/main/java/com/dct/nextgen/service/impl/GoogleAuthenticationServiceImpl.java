@@ -9,7 +9,7 @@ import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.BaseAuthTokenDTO;
 import com.dct.nextgen.dto.request.RegisterRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.exception.BaseAuthenticationException;
 import com.dct.nextgen.security.jwt.JwtProvider;
 import com.dct.nextgen.security.model.OAuth2TokenResponse;

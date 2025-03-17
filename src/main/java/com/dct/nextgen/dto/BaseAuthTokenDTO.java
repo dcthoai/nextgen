@@ -1,6 +1,6 @@
 package com.dct.nextgen.dto;
 
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.entity.base.Account;
 import org.springframework.security.core.Authentication;
 import com.dct.nextgen.security.jwt.JwtProvider;
 

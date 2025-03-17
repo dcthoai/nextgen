@@ -1,44 +1,29 @@
-package com.dct.nextgen.entity;
+package com.dct.nextgen.entity.base;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
-/**
- * Each record corresponds to a permission in the application, and one account can match multiple permissions
- * @author thoaidc
- */
 @Entity
-@Table(name = "authority")
 @DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
-@SuppressWarnings("unused")
-public class Authority extends AbstractAuditingEntity {
+@Table(name = "permission")
+public class Permission extends AbstractAuditingEntity {
 
-    @Column(name = "name", length = 45, nullable = false)
+    @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @Column(name = "code", length = 45, nullable = false, unique = true)
+    @Column(name = "code", nullable = false, length = 45, unique = true)
     private String code;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "parent_ID", nullable = false)
-    private int parentID;
+    @Column(name = "parent_ID")
+    private Integer parentID;
 
-    @Column(name = "parent_code", nullable = false)
+    @Column(name = "parent_code", length = 45)
     private String parentCode;
-
-    public Authority() {}
-
-    public Authority(String name, String code, int parentID, String parentCode, String description) {
-        this.name = name;
-        this.code = code;
-        this.parentID = parentID;
-        this.parentCode = parentCode;
-        this.description = description;
-    }
 
     public String getName() {
         return name;
@@ -64,11 +49,11 @@ public class Authority extends AbstractAuditingEntity {
         this.description = description;
     }
 
-    public int getParentID() {
+    public Integer getParentID() {
         return parentID;
     }
 
-    public void setParentID(int parentID) {
+    public void setParentID(Integer parentID) {
         this.parentID = parentID;
     }
 

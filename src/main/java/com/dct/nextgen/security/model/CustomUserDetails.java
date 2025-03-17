@@ -1,6 +1,6 @@
 package com.dct.nextgen.security.model;
 
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.entity.base.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 

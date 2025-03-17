@@ -1,4 +1,4 @@
-package com.dct.nextgen.entity;
+package com.dct.nextgen.entity.base;
 
 import com.dct.nextgen.config.PersistenceConfig;
 import jakarta.persistence.Column;

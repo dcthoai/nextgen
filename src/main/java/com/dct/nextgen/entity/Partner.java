@@ -1,5 +1,6 @@
 package com.dct.nextgen.entity;
 
+import com.dct.nextgen.entity.base.AbstractAuditingEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

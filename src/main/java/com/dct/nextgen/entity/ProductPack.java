@@ -1,5 +1,6 @@
 package com.dct.nextgen.entity;
 
+import com.dct.nextgen.entity.base.AbstractAuditingEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +32,7 @@ public class ProductPack extends AbstractAuditingEntity {
     @Column(name = "price", nullable = false)
     private long price;
 
-    @Column(name = "decription", length = 1000)
+    @Column(name = "description", length = 1000)
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

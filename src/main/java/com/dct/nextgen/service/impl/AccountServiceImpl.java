@@ -1,9 +1,8 @@
 package com.dct.nextgen.service.impl;
 
 import com.dct.nextgen.constants.ExceptionConstants;
-import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.request.RegisterRequestDTO;
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.exception.BaseBadRequestException;
 import com.dct.nextgen.repositories.AccountRepository;
 import com.dct.nextgen.service.AccountService;
@@ -61,8 +60,6 @@ public class AccountServiceImpl implements AccountService {
         String hashedPassword = passwordEncoder.encode(rawPassword);
 
         Account account = new Account(requestDTO.getUsername(), requestDTO.getEmail(), hashedPassword);
-        account.setRoles(SecurityConstants.ROLES.ROLE_USER);
-
         return accountRepository.save(account);
     }
 

@@ -2,7 +2,7 @@ package com.dct.nextgen.web.rest;
 
 import com.dct.nextgen.dto.response.AccountDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.service.AccountService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

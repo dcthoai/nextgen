@@ -1,7 +1,7 @@
 package com.dct.nextgen.constants;
 
 import com.dct.nextgen.dto.NotifyConfigMap;
-import com.dct.nextgen.entity.SystemConfig;
+import com.dct.nextgen.entity.base.SystemConfig;
 
 /**
  * <h3>Includes all configuration constants for the notification configuration.</h3>

@@ -6,7 +6,7 @@ import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.dto.request.AuthRequestDTO;
 import com.dct.nextgen.dto.request.RegisterRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.exception.BaseBadRequestException;
 import com.dct.nextgen.service.AccountService;
 import com.dct.nextgen.service.AuthenticationService;

@@ -1,6 +1,6 @@
 package com.dct.nextgen.repositories;
 
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.entity.base.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

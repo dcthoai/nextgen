@@ -1,9 +1,10 @@
 package com.dct.nextgen.security.service;
 
 import com.dct.nextgen.constants.ExceptionConstants;
-import com.dct.nextgen.entity.Account;
+import com.dct.nextgen.dto.authorities.PermissionDTO;
+import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.repositories.AccountRepository;
-import com.dct.nextgen.repositories.AuthorityRepository;
+import com.dct.nextgen.repositories.PermissionRepository;
 import com.dct.nextgen.security.model.CustomUserDetails;
 
 import org.slf4j.Logger;
@@ -15,24 +16,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
     private final AccountRepository accountRepository;
-    private final AuthorityRepository authorityRepository;
+    private final PermissionRepository permissionRepository;
 
     public CustomUserDetailsService(AccountRepository accountRepository,
-                                    AuthorityRepository authorityRepository) {
+                                    PermissionRepository permissionRepository) {
         this.accountRepository = accountRepository;
-        this.authorityRepository = authorityRepository;
+        this.permissionRepository = permissionRepository;
         log.debug("UserDetailsService 'CustomUserDetailsService' is configured for load user credentials info");
     }
 
@@ -44,13 +43,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (Objects.isNull(account))
             throw new UsernameNotFoundException(ExceptionConstants.ACCOUNT_NOT_FOUND);
 
-        String[] userRoles = account.getRoles().trim().split(",");
-        Set<String> userPermissions = authorityRepository.findAllByUserID(account.getId());
+        Set<PermissionDTO> userPermissions = permissionRepository.findAllByUserID(account.getId());
 
-        Collection<SimpleGrantedAuthority> userAuthorities = Stream.concat(
-            Arrays.stream(userRoles).filter(StringUtils::hasText).map(SimpleGrantedAuthority::new),
-            userPermissions.stream().filter(StringUtils::hasText).map(SimpleGrantedAuthority::new)
-        ).collect(Collectors.toSet());
+        Collection<SimpleGrantedAuthority> userAuthorities = userPermissions
+            .stream()
+            .filter(permissionDTO -> StringUtils.hasText(permissionDTO.getCode()))
+            .map(permissionDTO -> new SimpleGrantedAuthority(permissionDTO.getCode()))
+            .collect(Collectors.toSet());
 
         return new CustomUserDetails(account, userAuthorities);
     }
