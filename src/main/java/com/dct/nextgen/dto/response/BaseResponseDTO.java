@@ -20,6 +20,10 @@ public class BaseResponseDTO {
     private String message; // The response content follows the i18n standard
     private Object result; // The data after processing the request, is not required and can be null
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     // The builder allows for faster response creation
     public static class Builder {
         private final BaseResponseDTO instance = new BaseResponseDTO();
