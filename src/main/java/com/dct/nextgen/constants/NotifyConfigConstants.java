@@ -1,6 +1,6 @@
 package com.dct.nextgen.constants;
 
-import com.dct.nextgen.dto.NotifyConfigMap;
+import com.dct.nextgen.dto.config.NotifyConfigMap;
 import com.dct.nextgen.entity.base.SystemConfig;
 
 /**

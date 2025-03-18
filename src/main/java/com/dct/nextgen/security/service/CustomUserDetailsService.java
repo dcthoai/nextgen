@@ -1,7 +1,7 @@
 package com.dct.nextgen.security.service;
 
 import com.dct.nextgen.constants.ExceptionConstants;
-import com.dct.nextgen.dto.authorities.PermissionDTO;
+import com.dct.nextgen.dto.auth.PermissionDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.repositories.AccountRepository;
 import com.dct.nextgen.repositories.PermissionRepository;

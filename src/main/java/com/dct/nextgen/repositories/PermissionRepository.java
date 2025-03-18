@@ -1,6 +1,6 @@
 package com.dct.nextgen.repositories;
 
-import com.dct.nextgen.dto.authorities.PermissionDTO;
+import com.dct.nextgen.dto.auth.PermissionDTO;
 import com.dct.nextgen.entity.base.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

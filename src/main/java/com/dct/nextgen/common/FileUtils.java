@@ -2,7 +2,7 @@ package com.dct.nextgen.common;
 
 import com.dct.nextgen.config.properties.UploadResourceConfig;
 import com.dct.nextgen.constants.BaseConstants;
-import com.dct.nextgen.dto.ImageDTO;
+import com.dct.nextgen.dto.upload.ImageDTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

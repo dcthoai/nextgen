@@ -4,7 +4,7 @@ import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.HttpStatusConstants;
 import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.constants.SecurityConstants;
-import com.dct.nextgen.dto.BaseAuthTokenDTO;
+import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
 import com.dct.nextgen.dto.request.AuthRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.exception.BaseAuthenticationException;

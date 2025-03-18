@@ -6,7 +6,7 @@ import com.dct.nextgen.constants.HttpStatusConstants;
 import com.dct.nextgen.constants.PropertiesConstants;
 import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.constants.SecurityConstants;
-import com.dct.nextgen.dto.BaseAuthTokenDTO;
+import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
 import com.dct.nextgen.dto.request.RegisterRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;

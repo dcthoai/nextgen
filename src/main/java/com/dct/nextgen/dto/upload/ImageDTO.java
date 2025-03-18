@@ -1,4 +1,4 @@
-package com.dct.nextgen.dto;
+package com.dct.nextgen.dto.upload;
 
 import java.io.File;
 

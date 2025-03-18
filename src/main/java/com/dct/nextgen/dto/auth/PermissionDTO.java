@@ -1,4 +1,4 @@
-package com.dct.nextgen.dto.authorities;
+package com.dct.nextgen.dto.auth;
 
 public class PermissionDTO {
 

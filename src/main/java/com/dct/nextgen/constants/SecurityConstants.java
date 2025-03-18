@@ -1,7 +1,7 @@
 package com.dct.nextgen.constants;
 
 import com.dct.nextgen.config.InterceptorConfig;
-import com.dct.nextgen.dto.BaseAuthTokenDTO;
+import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
 import com.dct.nextgen.security.jwt.JwtProvider;
 import com.dct.nextgen.security.config.SecurityConfig;
 import com.dct.nextgen.aop.CheckAuthorize;

@@ -1,4 +1,4 @@
-package com.dct.nextgen.dto;
+package com.dct.nextgen.dto.auth;
 
 import com.dct.nextgen.entity.base.Account;
 import org.springframework.security.core.Authentication;

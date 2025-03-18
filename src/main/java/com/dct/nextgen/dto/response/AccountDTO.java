@@ -1,8 +1,6 @@
 package com.dct.nextgen.dto.response;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
 
 @SuppressWarnings("unused")
 public class AccountDTO {
@@ -13,7 +11,6 @@ public class AccountDTO {
     private String address;
     private String phone;
     private String deviceID;
-    private List<String> roles;
     private String createdBy;
     private Instant createdDate;
     private String lastModifiedBy;
@@ -65,14 +62,6 @@ public class AccountDTO {
 
     public void setDeviceID(String deviceID) {
         this.deviceID = deviceID;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = Arrays.stream(roles.split(",")).toList();
     }
 
     public String getCreatedBy() {

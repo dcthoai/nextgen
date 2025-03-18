@@ -3,7 +3,7 @@ package com.dct.nextgen.security.jwt;
 import com.dct.nextgen.config.properties.Security;
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.SecurityConstants;
-import com.dct.nextgen.dto.BaseAuthTokenDTO;
+import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
 import com.dct.nextgen.exception.BaseAuthenticationException;
 import com.dct.nextgen.exception.BaseBadRequestException;
 
