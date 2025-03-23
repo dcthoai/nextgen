@@ -34,5 +34,6 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     @Query(value = "SELECT r.id as ID, r.name, r.code FROM role r WHERE r.ID = ?1", nativeQuery = true)
     Optional<IRoleDTO> findByID(Integer roleID);
 
-    Optional<Role> findByCodeOrName(String code, String name);
+    boolean existsByCodeOrName(String code, String name);
+    boolean existsByCodeOrNameAndIdNot(String code, String name, Integer id);
 }

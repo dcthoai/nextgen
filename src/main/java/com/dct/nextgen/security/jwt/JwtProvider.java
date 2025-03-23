@@ -14,6 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
+import io.jsonwebtoken.security.SignatureException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,10 +94,16 @@ public class JwtProvider {
 
         try {
             return getAuthentication(authToken);
-        } catch (ExpiredJwtException | MalformedJwtException | SecurityException e) {
-            log.error("Invalid JWT token: {} - {}", e.getClass().getName(), e.getMessage());
+        } catch (MalformedJwtException e) {
+            log.error("[{}] - Invalid JWT: {}", ENTITY_NAME, e.getMessage());
+        } catch (SignatureException e) {
+            log.error("[{}] - Invalid JWT signature: {}", ENTITY_NAME, e.getMessage());
+        } catch (SecurityException e) {
+            log.error("[{}] - Unable to decode JWT: {}", ENTITY_NAME, e.getMessage());
+        } catch (ExpiredJwtException e) {
+            log.error("[{}] - Expired JWT: {}", ENTITY_NAME, e.getMessage());
         } catch (IllegalArgumentException e) {
-            log.error("Token validation error: {} - {}", e.getClass().getName(), e.getMessage());
+            log.error("[{}] - Invalid JWT string (null, empty,...): {}", ENTITY_NAME, e.getMessage());
         }
 
         throw new BaseAuthenticationException(ENTITY_NAME, ExceptionConstants.TOKEN_INVALID_OR_EXPIRED);
@@ -115,7 +122,7 @@ public class JwtProvider {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
 
-        User principal = new User(claims.getSubject(), "", userAuthorities);
+        User principal = new User(claims.getSubject(), "none-password", userAuthorities);
         return new UsernamePasswordAuthenticationToken(principal, token, userAuthorities);
     }
 }

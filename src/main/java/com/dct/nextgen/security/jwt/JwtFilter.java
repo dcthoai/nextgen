@@ -7,6 +7,7 @@ import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.exception.BaseAuthenticationException;
 import com.dct.nextgen.constants.SecurityConstants.REQUEST_MATCHERS;
+import com.dct.nextgen.exception.BaseBadRequestException;
 import com.dct.nextgen.exception.BaseException;
 
 import jakarta.annotation.Nonnull;
@@ -57,7 +58,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 String token = resolveToken(request);
                 Authentication authentication = this.jwtProvider.validateToken(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (BaseAuthenticationException exception) {
+            } catch (BaseBadRequestException | BaseAuthenticationException exception) {
                 handleException(response, exception);
                 return;
             } catch (Exception exception) {
@@ -72,7 +73,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private boolean ifAuthenticationRequired(HttpServletRequest request) {
         AntPathMatcher antPathMatcher = new AntPathMatcher();
         String requestURI = request.getRequestURI();
-        log.info("JWT filter {}: {}", request.getMethod(), requestURI);
+        log.info("Filtering {}: {}", request.getMethod(), requestURI);
 
         return Arrays.stream(REQUEST_MATCHERS.PUBLIC).noneMatch(pattern -> antPathMatcher.match(pattern, requestURI));
     }
@@ -102,7 +103,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private void handleException(HttpServletResponse response, BaseException exception) throws IOException {
-        log.error("{} handling exception {}", ENTITY_NAME, exception.getClass().getName());
+        log.error("[{}] - Handling exception {}", ENTITY_NAME, exception.getClass().getName(), exception);
         response.setStatus(HttpStatusConstants.UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());

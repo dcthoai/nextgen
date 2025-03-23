@@ -2,7 +2,6 @@ package com.dct.nextgen.service.impl;
 
 import com.dct.nextgen.common.BaseCommon;
 import com.dct.nextgen.constants.ExceptionConstants;
-import com.dct.nextgen.constants.HttpStatusConstants;
 import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.dto.auth.PermissionDTO;
 import com.dct.nextgen.dto.auth.PermissionTreeNode;
@@ -16,7 +15,7 @@ import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Permission;
 import com.dct.nextgen.entity.base.Role;
 import com.dct.nextgen.entity.base.RolePermission;
-import com.dct.nextgen.exception.BaseException;
+import com.dct.nextgen.exception.BaseBadRequestException;
 import com.dct.nextgen.repositories.common.PermissionRepository;
 import com.dct.nextgen.repositories.common.RolePermissionRepository;
 import com.dct.nextgen.repositories.common.RoleRepository;
@@ -66,29 +65,27 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public BaseResponseDTO getRoleDetail(Integer roleID) {
         Optional<IRoleDTO> roleDTO = roleRepository.findByID(roleID);
-        RoleDTO roleDetails;
 
-        if (roleDTO.isPresent()) {
-            List<PermissionDTO> rolePermissions = permissionRepository.findAllByRoleID(roleID).stream()
-                .map(iPermissionDTO -> {
-                    PermissionDTO permissionDTO = new PermissionDTO(iPermissionDTO);
-                    permissionDTO.setName(baseCommon.getMessageI18n(permissionDTO.getName()));
-                    permissionDTO.setDescription(baseCommon.getMessageI18n(permissionDTO.getDescription()));
-
-                    return permissionDTO;
-                })
-                .toList();
-
-            roleDetails = new RoleDTO(roleDTO.get());
-            roleDetails.setRolePermissions(rolePermissions);
-            return BaseResponseDTO.builder().ok(roleDetails);
+        if (roleDTO.isEmpty()) {
+            throw new BaseBadRequestException(ENTITY_NAME, ResultConstants.DATA_NOT_FOUND);
         }
 
-        return BaseResponseDTO.builder()
-            .code(HttpStatusConstants.NOT_FOUND)
-            .success(HttpStatusConstants.STATUS.FAILED)
-            .message(ResultConstants.DATA_NOT_FOUND)
-            .build();
+        List<PermissionDTO> rolePermissions = permissionRepository.findAllByRoleID(roleID)
+            .stream()
+            .map(iPermissionDTO -> {
+                PermissionDTO permissionDTO = new PermissionDTO(iPermissionDTO);
+
+                permissionDTO.setName(baseCommon.getMessageI18n(permissionDTO.getName()));
+                permissionDTO.setDescription(baseCommon.getMessageI18n(permissionDTO.getDescription()));
+
+                return permissionDTO;
+            })
+            .toList();
+
+        RoleDTO roleDetails = new RoleDTO(roleDTO.get());
+        roleDetails.setRolePermissions(rolePermissions);
+
+        return BaseResponseDTO.builder().ok(roleDetails);
     }
 
     @Override
@@ -128,10 +125,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public BaseResponseDTO getAccountRoles(Integer accountID) {
         if (Objects.isNull(accountID) || accountID <= 0) {
-            throw BaseException.builder()
-                .entityName(ENTITY_NAME)
-                .errorKey(ExceptionConstants.INVALID_REQUEST_DATA)
-                .buildBadRequestException();
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
         }
 
         return BaseResponseDTO.builder().ok(roleRepository.findAllByAccountID(accountID));
@@ -140,17 +134,14 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public BaseResponseDTO createNewRole(CreateRoleRequestDTO request) {
-        Role role = roleRepository.findByCodeOrName(request.getCode(), request.getName()).orElse(null);
+        boolean isRoleExisted = roleRepository.existsByCodeOrName(request.getCode(), request.getName());
 
-        if (Objects.nonNull(role)) {
-            throw BaseException.builder()
-                .entityName(ENTITY_NAME)
-                .errorKey(ExceptionConstants.ROLE_EXISTED)
-                .buildBadRequestException();
+        if (isRoleExisted) {
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ROLE_EXISTED);
         }
 
         List<RolePermission> rolePermissions = new ArrayList<>();
-        role = roleRepository.save(new Role(request.getName(), request.getCode()));
+        Role role = roleRepository.save(new Role(request.getName(), request.getCode()));
 
         for (Integer permissionID : request.getPermissionIDs()) {
             RolePermission rolePermission = new RolePermission();
@@ -169,29 +160,20 @@ public class RoleServiceImpl implements RoleService {
         Optional<Role> roleOptional = roleRepository.findById(request.getId());
 
         if (roleOptional.isEmpty()) {
-            throw BaseException.builder()
-                .entityName(ENTITY_NAME)
-                .errorKey(ResultConstants.DATA_NOT_FOUND)
-                .buildBadRequestException();
+            throw new BaseBadRequestException(ENTITY_NAME, ResultConstants.DATA_NOT_FOUND);
         }
 
         Role role = roleOptional.get();
-        Optional<Role> existingRoleOptional = roleRepository.findByCodeOrName(request.getCode(), request.getName());
 
-        if (existingRoleOptional.isPresent() && !existingRoleOptional.get().getId().equals(role.getId())) {
-            throw BaseException.builder()
-                .entityName(ENTITY_NAME)
-                .errorKey(ExceptionConstants.ROLE_EXISTED)
-                .buildBadRequestException();
+        // If the updated role content already exists
+        if (roleRepository.existsByCodeOrNameAndIdNot(request.getCode(), request.getName(), role.getId())) {
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ROLE_EXISTED);
         }
 
         List<Permission> permissionsForUpdate = permissionRepository.findAllById(request.getPermissionIDs());
 
         if (permissionsForUpdate.size() != request.getPermissionIDs().size()) {
-            throw BaseException.builder()
-                .entityName(ENTITY_NAME)
-                .errorKey(ExceptionConstants.INVALID_PERMISSION)
-                .buildBadRequestException();
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
         }
 
         role.setName(request.getName());
@@ -206,10 +188,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public BaseResponseDTO deleteRole(Integer roleID) {
         if (Objects.isNull(roleID) || roleID <= 0) {
-            throw BaseException.builder()
-                .entityName(ENTITY_NAME)
-                .errorKey(ExceptionConstants.INVALID_REQUEST_DATA)
-                .buildBadRequestException();
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
         }
 
         roleRepository.deleteById(roleID);

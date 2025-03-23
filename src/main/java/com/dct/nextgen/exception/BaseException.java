@@ -1,37 +1,24 @@
 package com.dct.nextgen.exception;
 
-import java.util.Arrays;
-
 /**
  * Custom class for proactive exceptions in the application <p>
  *
  * {@link BaseException#entityName}: Name of the class that throws the exception <p>
  * {@link BaseException#errorKey}: The i18n message key used for language internationalization <p>
- * {@link BaseException#args}: Parameters accompanying the message of the `errorKey` if required
+ * {@link BaseException#args}: Parameters accompanying the message of the `errorKey` if required <p>
+ * {@link BaseException#error}: The original cause of the exception is wrapped by this custom exception
  *
  * @author thoaidc
  */
 @SuppressWarnings("unused")
-public class BaseException extends RuntimeException {
+public abstract class BaseException extends RuntimeException {
 
     private final String entityName;
     private final String errorKey;
     private final Object[] args;
     private final Throwable error;
 
-    public BaseException(String entityName, String errorKey) {
-        this(entityName, errorKey, null, null);
-    }
-
-    public BaseException(String entityName, String errorKey, Throwable error) {
-        this(entityName, errorKey, null, error);
-    }
-
-    public BaseException(String entityName, String errorKey, Object[] args) {
-        this(entityName, errorKey, args, null);
-    }
-
-    public BaseException(String entityName, String errorKey, Object[] args, Throwable error) {
+    protected BaseException(String entityName, String errorKey, Object[] args, Throwable error) {
         super(entityName + '-' + errorKey, error);
         this.entityName = entityName;
         this.errorKey = errorKey;
@@ -53,14 +40,6 @@ public class BaseException extends RuntimeException {
 
     public Throwable getError() {
         return error;
-    }
-
-    @Override
-    public String toString() {
-        return "BaseException {" +
-                "\nentityName: " + entityName +
-                "\nerrorKey: " + errorKey +
-                "\nargs: " + Arrays.toString(args) + "\n}";
     }
 
     public static Builder builder() {
@@ -94,19 +73,19 @@ public class BaseException extends RuntimeException {
             return this;
         }
 
-        public BaseAuthenticationException buildAuthenticationException() {
+        public BaseAuthenticationException authenticationException() {
             return new BaseAuthenticationException(entityName, errorKey, args, error);
         }
 
-        public BaseBadRequestException buildBadRequestException() {
+        public BaseBadRequestException badRequestException() {
             return new BaseBadRequestException(entityName, errorKey, args, error);
         }
 
-        public BaseBadRequestAlertException buildBadRequestAlertException() {
+        public BaseBadRequestAlertException badRequestAlertException() {
             return new BaseBadRequestAlertException(entityName, errorKey, args, error);
         }
 
-        public BaseIllegalArgumentException buildIllegalArgumentException() {
+        public BaseIllegalArgumentException illegalArgumentException() {
             return new BaseIllegalArgumentException(entityName, errorKey, args, error);
         }
     }

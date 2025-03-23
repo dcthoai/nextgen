@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 public class DataUtils {
 
     private static final Logger log = LoggerFactory.getLogger(DataUtils.class);
@@ -27,7 +28,6 @@ public class DataUtils {
         return new QueryBuilder(entityManager);
     }
 
-    @SuppressWarnings("unused")
     public static class QueryBuilder {
 
         private final EntityManager entityManager;

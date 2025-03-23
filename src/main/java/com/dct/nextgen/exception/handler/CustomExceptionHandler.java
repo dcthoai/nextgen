@@ -105,7 +105,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({ BaseAuthenticationException.class })
     public ResponseEntity<BaseResponseDTO> handleBaseAuthenticationException(BaseAuthenticationException exception) {
         String reason = baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs());
-        log.error("[{}] Handle authentication exception: {}", exception.getEntityName(), reason, exception);
+        log.error("[{}] Handle authentication exception: {}", exception.getEntityName(), reason);
 
         BaseResponseDTO responseDTO = BaseResponseDTO.builder()
             .code(HttpStatusConstants.UNAUTHORIZED)
@@ -119,7 +119,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({ BaseBadRequestException.class })
     public ResponseEntity<BaseResponseDTO> handleBaseBadRequestException(BaseBadRequestException exception) {
         String reason = baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs());
-        log.error("[{}] Handle bad request alert exception: {}", exception.getEntityName(), reason, exception);
+        log.error("[{}] Handle bad request alert exception: {}", exception.getEntityName(), reason);
 
         BaseResponseDTO responseDTO = BaseResponseDTO.builder()
             .code(HttpStatusConstants.BAD_REQUEST)
@@ -133,7 +133,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({ BaseException.class })
     public ResponseEntity<BaseResponseDTO> handleBaseException(BaseException exception) {
         String reason = baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs());
-        log.error("[{}] Handle exception: {}", exception.getEntityName(), reason, exception);
+        log.error("[{}] Handle exception: {}", exception.getEntityName(), reason, exception.getError());
 
         BaseResponseDTO responseDTO = BaseResponseDTO.builder()
             .code(HttpStatusConstants.BAD_REQUEST)
@@ -145,8 +145,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({ MaxUploadSizeExceededException.class })
-    public ResponseEntity<Object> handleNullPointerException(MaxUploadSizeExceededException exception, WebRequest request) {
-        log.error("[{}] Maximum upload size exceeded: {}", request.getClass().getName(), exception.getMessage());
+    public ResponseEntity<Object> handleNullPointerException(MaxUploadSizeExceededException e, WebRequest request) {
+        log.error("[{}] Maximum upload size exceeded: {}", request.getClass().getName(), e.getMessage());
 
         BaseResponseDTO responseDTO = BaseResponseDTO.builder()
             .code(HttpStatusConstants.BAD_REQUEST)
