@@ -26,14 +26,14 @@
 
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
-        <spotless-maven-plugin.version>2.40.0</spotless-maven-plugin.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
-        <maven-javadoc-plugin.version>3.6.0</maven-javadoc-plugin.version>
-        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <frontend-maven-plugin.version>1.14.2</frontend-maven-plugin.version>
-        <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
+        <maven.war-plugin.version>3.4.0</maven.war-plugin.version>
+        <maven.spotless-plugin.version>2.40.0</maven.spotless-plugin.version>
+        <maven.compiler-plugin.version>3.11.0</maven.compiler-plugin.version>
+        <maven.enforcer-plugin.version>3.4.1</maven.enforcer-plugin.version>
+        <maven.javadoc-plugin.version>3.6.0</maven.javadoc-plugin.version>
+        <maven.resources-plugin.version>3.3.1</maven.resources-plugin.version>
+        <maven.frontend-plugin.version>1.14.2</maven.frontend-plugin.version>
+        <maven.clean-plugin.version>3.3.2</maven.clean-plugin.version>
 
         <hibernate.validator.version>8.0.1.Final</hibernate.validator.version>
         <mysql.version>8.2.0</mysql.version>
@@ -66,6 +66,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
             <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-crypto</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
                 <exclusion>
                     <groupId>com.nimbusds</groupId>
                     <artifactId>nimbus-jose-jwt</artifactId>
@@ -193,7 +213,7 @@
         <finalName>${project.artifactId}-${project.version}</finalName>
         <defaultGoal>spring-boot:run</defaultGoal>
 
-        <!--  Khai báo cấu hình mặc định cho các plugin trong dự án  -->
+        <!-- Declare default configuration for plugins in the project -->
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -211,7 +231,7 @@
                 <plugin>
                     <groupId>com.diffplug.spotless</groupId>
                     <artifactId>spotless-maven-plugin</artifactId>
-                    <version>${spotless-maven-plugin.version}</version>
+                    <version>${maven.spotless-plugin.version}</version>
                     <configuration>
                         <java>
                             <removeUnusedImports/>
@@ -233,7 +253,7 @@
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
-                    <version>${frontend-maven-plugin.version}</version>
+                    <version>${maven.frontend-plugin.version}</version>
                     <configuration>
                         <nodeVersion>${node.version}</nodeVersion>
                         <npmVersion>${npm.version}</npmVersion>
@@ -282,7 +302,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>${maven-clean-plugin.version}</version>
+                    <version>${maven.clean-plugin.version}</version>
                     <configuration>
                         <filesets>
                             <fileset>
@@ -295,7 +315,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
+                    <version>${maven.compiler-plugin.version}</version>
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
@@ -312,7 +332,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${maven-enforcer-plugin.version}</version>
+                    <version>${maven.enforcer-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>enforce-versions</id>
@@ -350,7 +370,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
+                    <version>${maven.javadoc-plugin.version}</version>
                     <configuration>
                         <source>${maven.compiler.source}</source>
                     </configuration>
@@ -359,7 +379,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>${maven-resources-plugin.version}</version>
+                    <version>${maven.resources-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>config-resources</id>
@@ -390,7 +410,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>${maven-war-plugin.version}</version>
+                    <version>${maven.war-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>default-war</id>
@@ -423,31 +443,31 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Check style code     -->
+            <!-- Check style code -->
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
             </plugin>
 
-            <!--  Xác định phiên bản Java build    -->
+            <!-- Determine version Java build -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
 
-            <!--  Xử lý tài nguyên tĩnh khi build    -->
+            <!-- Handling static resources during build -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
             </plugin>
 
-            <!--      Tạo tài liệu API docs từ comment Java docs-->
+            <!-- Generate API docs from Java docs comments -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
 
-            <!--  Kiểm soát môi trường build nhất quán . version của Maven, Java, dependencies.   -->
+            <!-- Control consistent build environment: versions of Maven, Java, dependencies -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -458,6 +478,7 @@
                 <artifactId>maven-war-plugin</artifactId>
             </plugin>
 
+            <!-- Build Angular with node and npm -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
