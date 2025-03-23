@@ -54,7 +54,7 @@ public class GoogleOAuth2Resource {
         String sessionAttributeName = sessionOAuth2AuthorizationRequestName + ".AUTHORIZATION_REQUEST";
         request.getSession().setAttribute(sessionAttributeName, authorizationRequest);
 
-        return new BaseResponseDTO(authorizationRequest.getAuthorizationRequestUri());
+        return BaseResponseDTO.builder().ok(authorizationRequest.getAuthorizationRequestUri());
     }
 
     @GetMapping("/callback/auth/oauth2/code/google")

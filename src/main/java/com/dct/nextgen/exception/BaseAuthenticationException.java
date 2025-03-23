@@ -6,7 +6,7 @@ public class BaseAuthenticationException extends BaseException {
         super(entityName, errorKey);
     }
 
-    public BaseAuthenticationException(String entityName, String errorKey, Object[] args) {
-        super(entityName, errorKey, args);
+    public BaseAuthenticationException(String entityName, String errorKey, Object[] args, Throwable error) {
+        super(entityName, errorKey, args, error);
     }
 }

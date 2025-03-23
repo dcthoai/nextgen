@@ -63,4 +63,7 @@ public interface ExceptionConstants {
 
     // Upload file request
     String MAXIMUM_UPLOAD_SIZE_EXCEEDED = "exception.upload.maximumSizeExceed";
+
+    // Request data error
+    String INVALID_REQUEST_DATA = "exception.request.data.invalid";
 }

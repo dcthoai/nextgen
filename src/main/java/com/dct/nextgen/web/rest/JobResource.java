@@ -20,30 +20,30 @@ public class JobResource {
     @GetMapping
     public BaseResponseDTO getAllJobsWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/{jobID}")
     public BaseResponseDTO getJobDetail(@PathVariable Integer jobID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping
     public BaseResponseDTO createNewJob() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
     public BaseResponseDTO updateJob() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/{jobID}")
     public BaseResponseDTO deleteJob(@PathVariable Integer jobID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

@@ -18,12 +18,12 @@ public class ConfigResource {
     @GetMapping("/{configID}")
     public BaseResponseDTO getConfigDetail(@PathVariable Integer configID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
     public BaseResponseDTO updateConfig() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

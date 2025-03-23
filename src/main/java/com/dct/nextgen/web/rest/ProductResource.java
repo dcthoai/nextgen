@@ -20,54 +20,54 @@ public class ProductResource {
     @GetMapping("/categories")
     public BaseResponseDTO getAllCategoriesWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping("/categories")
     public BaseResponseDTO createNewCategory() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping("/categories")
     public BaseResponseDTO updateCategory() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/categories/{categoryID}")
     public BaseResponseDTO deleteCategory(@PathVariable Integer categoryID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping
     public BaseResponseDTO getAllProductsWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/{productID}")
     public BaseResponseDTO getProductDetail(@PathVariable Integer productID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping
     public BaseResponseDTO createNewProduct() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
     public BaseResponseDTO updateProduct() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/{productID}")
     public BaseResponseDTO deleteProduct(@PathVariable Integer productID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

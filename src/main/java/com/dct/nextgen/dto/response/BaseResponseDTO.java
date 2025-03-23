@@ -3,6 +3,8 @@ package com.dct.nextgen.dto.response;
 import com.dct.nextgen.constants.HttpStatusConstants;
 import com.dct.nextgen.constants.ResultConstants;
 
+import java.util.Objects;
+
 /**
  * The format helps standardize the response for the client <p>
  * Other response types can inherit from it and extend it as needed for specific cases <p>
@@ -19,6 +21,7 @@ public class BaseResponseDTO {
     private Boolean status;
     private String message; // The response content follows the i18n standard
     private Object result; // The data after processing the request, is not required and can be null
+    private Long total; // Total records if query with pageable, is not required and can be null
 
     public static Builder builder() {
         return new Builder();
@@ -26,7 +29,7 @@ public class BaseResponseDTO {
 
     // The builder allows for faster response creation
     public static class Builder {
-        private final BaseResponseDTO instance = new BaseResponseDTO();
+        private final BaseResponseDTO instance = BaseResponseDTO.builder().ok();
 
         public Builder code(int code) {
             instance.code = code;
@@ -48,40 +51,33 @@ public class BaseResponseDTO {
             return this;
         }
 
+        public Builder total(Long totalRecords) {
+            instance.total = totalRecords;
+            return this;
+        }
+
+        public BaseResponseDTO ok() {
+            instance.code = HttpStatusConstants.OK;
+            instance.status = HttpStatusConstants.STATUS.SUCCESS;
+            instance.message = ResultConstants.SUCCESS;
+            instance.total = 0L;
+            return instance;
+        }
+
+        public BaseResponseDTO ok(Object result) {
+            instance.result = result;
+            return ok();
+        }
+
         public BaseResponseDTO build() {
+            if (Objects.isNull(instance.code) || Objects.isNull(instance.status))
+                return ok();
+
             return instance;
         }
     }
 
-    public BaseResponseDTO() {
-        this.code = HttpStatusConstants.OK;
-        this.status = HttpStatusConstants.STATUS.SUCCESS;
-    }
-
-    public BaseResponseDTO(Object result) {
-        this.code = HttpStatusConstants.OK;
-        this.status = HttpStatusConstants.STATUS.SUCCESS;
-        this.message = ResultConstants.GET_DATA_SUCCESS;
-        this.result = result;
-    }
-
-    public BaseResponseDTO(Integer code, Boolean status) {
-        this.code = code;
-        this.status = status;
-    }
-
-    public BaseResponseDTO(Integer code, Boolean status, String message) {
-        this.code = code;
-        this.status = status;
-        this.message = message;
-    }
-
-    public BaseResponseDTO(Integer code, Boolean status, String message, Object result) {
-        this.code = code;
-        this.status = status;
-        this.message = message;
-        this.result = result;
-    }
+    private BaseResponseDTO() {}
 
     public Integer getCode() {
         return code;

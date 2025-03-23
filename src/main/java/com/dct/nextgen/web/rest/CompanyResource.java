@@ -17,12 +17,12 @@ public class CompanyResource {
     @GetMapping
     public BaseResponseDTO getCompanyInfo() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
     public BaseResponseDTO updateCompanyInfo() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

@@ -45,12 +45,12 @@ public class AuthResource {
         if (Objects.isNull(account) || Objects.isNull(account.getId()) || account.getId() < 1)
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.REGISTER_FAILED);
 
-        return new BaseResponseDTO(
-            HttpStatusConstants.CREATED,
-            HttpStatusConstants.STATUS.SUCCESS,
-            ResultConstants.REGISTER_SUCCESS,
-            account
-        );
+        return BaseResponseDTO.builder()
+            .code(HttpStatusConstants.CREATED)
+            .success(HttpStatusConstants.STATUS.SUCCESS)
+            .message(ResultConstants.REGISTER_SUCCESS)
+            .result(account)
+            .build();
     }
 
     @PostMapping("/login")
@@ -74,6 +74,6 @@ public class AuthResource {
     @PostMapping("/logout")
     public BaseResponseDTO logout() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

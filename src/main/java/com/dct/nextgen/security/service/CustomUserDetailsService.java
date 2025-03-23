@@ -1,10 +1,10 @@
 package com.dct.nextgen.security.service;
 
 import com.dct.nextgen.constants.ExceptionConstants;
-import com.dct.nextgen.dto.auth.PermissionDTO;
+import com.dct.nextgen.dto.mapping.IPermissionDTO;
 import com.dct.nextgen.entity.base.Account;
-import com.dct.nextgen.repositories.AccountRepository;
-import com.dct.nextgen.repositories.PermissionRepository;
+import com.dct.nextgen.repositories.common.AccountRepository;
+import com.dct.nextgen.repositories.common.PermissionRepository;
 import com.dct.nextgen.security.model.CustomUserDetails;
 
 import org.slf4j.Logger;
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (Objects.isNull(account))
             throw new UsernameNotFoundException(ExceptionConstants.ACCOUNT_NOT_FOUND);
 
-        Set<PermissionDTO> userPermissions = permissionRepository.findAllByUserID(account.getId());
+        List<IPermissionDTO> userPermissions = permissionRepository.findAllByAccountID(account.getId());
 
         Collection<SimpleGrantedAuthority> userAuthorities = userPermissions
             .stream()

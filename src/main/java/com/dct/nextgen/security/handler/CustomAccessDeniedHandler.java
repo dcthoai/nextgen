@@ -53,11 +53,11 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setStatus(HttpStatusConstants.FORBIDDEN);
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.FORBIDDEN,
-            HttpStatusConstants.STATUS.FAILED,
-            baseCommon.getMessageI18n(ExceptionConstants.FORBIDDEN)
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.FORBIDDEN)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(baseCommon.getMessageI18n(ExceptionConstants.FORBIDDEN))
+            .build();
 
         response.getWriter().write(JsonUtils.toJsonString(responseDTO));
         response.flushBuffer();

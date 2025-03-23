@@ -20,90 +20,90 @@ public class AboutResource {
     @GetMapping("/stories")
     public BaseResponseDTO getAllStoriesWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/stories/{storyID}")
     public BaseResponseDTO getStoryDetail(@PathVariable Integer storyID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping("/stories")
     public BaseResponseDTO updateStory() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/mottos")
     public BaseResponseDTO getAllMottosWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/mottos/{mottoID}")
     public BaseResponseDTO getMottoDetail(@PathVariable Integer mottoID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping("/mottos")
     public BaseResponseDTO createNewMotto() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping("/mottos")
     public BaseResponseDTO updateMotto() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/mottos/{mottoID}")
     public BaseResponseDTO deleteMotto(@PathVariable Integer mottoID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/contact-form")
     public BaseResponseDTO getFormContactInfo() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping("/contact-form")
     public BaseResponseDTO updateContactFormInfo() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/partners")
     public BaseResponseDTO getAllPartnersWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/partners/{partnerID}")
     public BaseResponseDTO getPartnerDetail(@PathVariable Integer partnerID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping("/partners")
     public BaseResponseDTO createNewPartner() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping("/partners")
     public BaseResponseDTO updatePartner() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/partners/{partnerID}")
     public BaseResponseDTO deletePartner(@PathVariable Integer partnerID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

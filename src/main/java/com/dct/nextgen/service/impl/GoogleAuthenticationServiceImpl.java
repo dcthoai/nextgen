@@ -87,11 +87,11 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
         String jwtToken = tokenProvider.createToken(authTokenDTO);
         Cookie tokenCookie = new Cookie(SecurityConstants.COOKIES.HTTP_ONLY_COOKIE_ACCESS_TOKEN, jwtToken);
 
-        return new BaseResponseDTO(
-            HttpStatusConstants.ACCEPTED,
-            HttpStatusConstants.STATUS.SUCCESS,
-            ResultConstants.LOGIN_SUCCESS,
-            tokenCookie
-        );
+        return BaseResponseDTO.builder()
+            .code(HttpStatusConstants.ACCEPTED)
+            .message(ResultConstants.LOGIN_SUCCESS)
+            .success(HttpStatusConstants.STATUS.SUCCESS)
+            .result(tokenCookie)
+            .build();
     }
 }

@@ -14,30 +14,30 @@ public class HomeResource {
     @GetMapping("/banners")
     public BaseResponseDTO getAllBannersWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/banners/{bannerID}")
     public BaseResponseDTO getBannerDetail(@PathVariable Integer bannerID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping("/banners")
     public BaseResponseDTO updateBanner() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/videos")
     public BaseResponseDTO getVideoHome() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping("/videos")
     public BaseResponseDTO updateVideoHome() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

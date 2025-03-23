@@ -20,30 +20,30 @@ public class CustomerResource {
     @GetMapping
     public BaseResponseDTO getAllCustomersWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/{customerID}")
     public BaseResponseDTO getCustomerDetail(@PathVariable Integer customerID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping
     public BaseResponseDTO createNewCustomer() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
     public BaseResponseDTO updateCustomer() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/{customerID}")
     public BaseResponseDTO deleteCustomer(@PathVariable Integer customerID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

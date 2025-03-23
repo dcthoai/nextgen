@@ -60,11 +60,11 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setStatus(HttpStatusConstants.UNAUTHORIZED);
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.UNAUTHORIZED,
-            HttpStatusConstants.STATUS.FAILED,
-            baseCommon.getMessageI18n(ExceptionConstants.OAUTH2_AUTHORIZATION_CODE_EXCEPTION)
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.UNAUTHORIZED)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(baseCommon.getMessageI18n(ExceptionConstants.OAUTH2_AUTHORIZATION_CODE_EXCEPTION))
+            .build();
 
         response.getWriter().write(JsonUtils.toJsonString(responseDTO));
         response.flushBuffer();

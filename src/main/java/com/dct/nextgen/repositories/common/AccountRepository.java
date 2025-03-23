@@ -1,4 +1,4 @@
-package com.dct.nextgen.repositories;
+package com.dct.nextgen.repositories.common;
 
 import com.dct.nextgen.entity.base.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

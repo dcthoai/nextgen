@@ -1,7 +1,9 @@
 package com.dct.nextgen.aop;
 
+import com.dct.nextgen.aop.annotation.CheckAuthorize;
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.exception.BaseAuthenticationException;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Before;
@@ -53,7 +55,7 @@ public class CheckAuthorizeAspect {
      * (for example, in @{@link Around}, @{@link Before}, or @{@link After} annotations),
      * you can simply reference this function
      */
-    @Pointcut("@annotation(com.dct.nextgen.aop.CheckAuthorize)") // Full path to CustomAnnotation class
+    @Pointcut("@annotation(com.dct.nextgen.aop.annotation.CheckAuthorize)") // Full path to CustomAnnotation class
     public void checkAuthorizeByJwt() {}
 
     /**

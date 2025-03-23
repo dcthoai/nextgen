@@ -4,7 +4,7 @@ import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.dto.request.RegisterRequestDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.exception.BaseBadRequestException;
-import com.dct.nextgen.repositories.AccountRepository;
+import com.dct.nextgen.repositories.common.AccountRepository;
 import com.dct.nextgen.service.AccountService;
 
 import org.slf4j.Logger;

@@ -17,6 +17,7 @@ public interface ResultConstants {
 
     // Get data success
     String GET_DATA_SUCCESS = "result.data.success";
+    String SUCCESS = "result.success";
 
     // Account information processing result messages
     String REGISTER_SUCCESS = "result.account.register.success";

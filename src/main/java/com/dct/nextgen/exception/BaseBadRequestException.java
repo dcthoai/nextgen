@@ -6,7 +6,7 @@ public class BaseBadRequestException extends BaseException {
         super(entityName, errorKey);
     }
 
-    public BaseBadRequestException(String entityName, String errorKey, Object[] args) {
-        super(entityName, errorKey, args);
+    public BaseBadRequestException(String entityName, String errorKey, Object[] args, Throwable error) {
+        super(entityName, errorKey, args, error);
     }
 }

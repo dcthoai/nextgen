@@ -20,54 +20,54 @@ public class WorkResource {
     @GetMapping("/categories")
     public BaseResponseDTO getAllCategoriesWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping("/categories")
     public BaseResponseDTO createNewCategory() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping("/categories")
     public BaseResponseDTO updateCategory() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/categories/{categoryID}")
     public BaseResponseDTO deleteCategory(@PathVariable Integer categoryID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/projects")
     public BaseResponseDTO getAllProjectsWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/projects/{projectID}")
     public BaseResponseDTO getProjectDetail(@PathVariable Integer projectID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping("/projects")
     public BaseResponseDTO createNewProject() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
     public BaseResponseDTO updateProject() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/{projectID}")
     public BaseResponseDTO deleteProject(@PathVariable Integer projectID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

@@ -58,15 +58,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                                                                       @Nullable HttpHeaders headers,
                                                                       @Nullable HttpStatusCode status,
                                                                       @Nullable WebRequest request) {
-        String message = Objects.nonNull(e) ? e.getMessage() : "";
-        log.error("Handle method not allow exception. " + message);
+        log.error("Handle method not allow exception. {}", Objects.nonNull(e) ? e.getMessage() : "");
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.METHOD_NOT_ALLOWED,
-            HttpStatusConstants.STATUS.FAILED,
-            ExceptionConstants.METHOD_NOT_ALLOW,
-            message
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.METHOD_NOT_ALLOWED)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(ExceptionConstants.METHOD_NOT_ALLOW)
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.METHOD_NOT_ALLOWED);
     }
@@ -95,11 +93,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         String reason = baseCommon.getMessageI18n(errorKey);
         log.error("Handle validate request data exception: {}. {}", reason, exception.getMessage());
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.BAD_REQUEST,
-            HttpStatusConstants.STATUS.FAILED,
-            errorKey
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.BAD_REQUEST)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(errorKey)
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
@@ -109,11 +107,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         String reason = baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs());
         log.error("[{}] Handle authentication exception: {}", exception.getEntityName(), reason, exception);
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.UNAUTHORIZED,
-            HttpStatusConstants.STATUS.FAILED,
-            exception.getErrorKey()
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.UNAUTHORIZED)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(exception.getErrorKey())
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.UNAUTHORIZED);
     }
@@ -123,11 +121,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         String reason = baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs());
         log.error("[{}] Handle bad request alert exception: {}", exception.getEntityName(), reason, exception);
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.BAD_REQUEST,
-            HttpStatusConstants.STATUS.FAILED,
-            exception.getErrorKey()
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.BAD_REQUEST)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(exception.getErrorKey())
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
@@ -137,11 +135,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         String reason = baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs());
         log.error("[{}] Handle exception: {}", exception.getEntityName(), reason, exception);
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.BAD_REQUEST,
-            HttpStatusConstants.STATUS.FAILED,
-            exception.getErrorKey()
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.BAD_REQUEST)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(exception.getErrorKey())
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
@@ -150,11 +148,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleNullPointerException(MaxUploadSizeExceededException exception, WebRequest request) {
         log.error("[{}] Maximum upload size exceeded: {}", request.getClass().getName(), exception.getMessage());
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-                HttpStatusConstants.BAD_REQUEST,
-                HttpStatusConstants.STATUS.FAILED,
-                ExceptionConstants.MAXIMUM_UPLOAD_SIZE_EXCEEDED
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.BAD_REQUEST)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(ExceptionConstants.MAXIMUM_UPLOAD_SIZE_EXCEEDED)
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
@@ -164,11 +162,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         // Handle NullPointerException (include of Objects.requireNonNull())
         log.error("[{}] Null pointer exception occurred: {}", request.getClass().getName(), exception.getMessage());
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.INTERNAL_SERVER_ERROR,
-            HttpStatusConstants.STATUS.FAILED,
-            ExceptionConstants.NULL_EXCEPTION
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.INTERNAL_SERVER_ERROR)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(ExceptionConstants.NULL_EXCEPTION)
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -177,11 +175,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<BaseResponseDTO> handleRuntimeException(RuntimeException exception) {
         log.error("Handle runtime exception", exception);
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.INTERNAL_SERVER_ERROR,
-            HttpStatusConstants.STATUS.FAILED,
-            ExceptionConstants.UNCERTAIN_ERROR
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.INTERNAL_SERVER_ERROR)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(ExceptionConstants.UNCERTAIN_ERROR)
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -190,11 +188,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<BaseResponseDTO> handleException(Exception exception) {
         log.error("Handle unexpected exception", exception);
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.INTERNAL_SERVER_ERROR,
-            HttpStatusConstants.STATUS.FAILED,
-            ExceptionConstants.UNCERTAIN_ERROR
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.INTERNAL_SERVER_ERROR)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(ExceptionConstants.UNCERTAIN_ERROR)
+            .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }

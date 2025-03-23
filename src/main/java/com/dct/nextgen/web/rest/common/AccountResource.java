@@ -32,7 +32,7 @@ public class AccountResource {
     @GetMapping
     public BaseResponseDTO getAllAccountsWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/{userID}")
@@ -40,24 +40,24 @@ public class AccountResource {
         log.debug("REST request to get account info: {}", userID);
         Account account = accountService.findByID(userID);
         AccountDTO accountDTO = objectMapper.convertValue(account, AccountDTO.class);
-        return new BaseResponseDTO(accountDTO);
+        return BaseResponseDTO.builder().ok(accountDTO);
     }
 
     @PostMapping
     public BaseResponseDTO createNewAccount() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
     public BaseResponseDTO updateAccount() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/{userID}")
     public BaseResponseDTO deleteAccount(@PathVariable Integer userID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

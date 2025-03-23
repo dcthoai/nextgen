@@ -36,12 +36,12 @@ public class UploadResource {
             filePaths.add(imageFilePath);
         }
 
-        return new BaseResponseDTO(filePaths);
+        return BaseResponseDTO.builder().ok(filePaths);
     }
 
     @DeleteMapping("/images")
     public BaseResponseDTO deleteImages() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

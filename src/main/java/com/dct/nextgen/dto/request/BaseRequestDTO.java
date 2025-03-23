@@ -13,9 +13,9 @@ import org.springframework.util.StringUtils;
 public class BaseRequestDTO {
 
     private String deviceID;
-    private Integer page;
-    private Integer size;
-    private String sort;
+    private Integer page = 0;
+    private Integer size = 0;
+    private String sort = "";
 
     public Pageable getPageable() {
         if (page == null || size == null || page < 0 || size <= 0) {

@@ -7,8 +7,8 @@ import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.exception.BaseAuthenticationException;
 import com.dct.nextgen.constants.SecurityConstants.REQUEST_MATCHERS;
-
 import com.dct.nextgen.exception.BaseException;
+
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -107,11 +107,11 @@ public class JwtFilter extends OncePerRequestFilter {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
-        BaseResponseDTO responseDTO = new BaseResponseDTO(
-            HttpStatusConstants.UNAUTHORIZED,
-            HttpStatusConstants.STATUS.FAILED,
-            baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs())
-        );
+        BaseResponseDTO responseDTO = BaseResponseDTO.builder()
+            .code(HttpStatusConstants.UNAUTHORIZED)
+            .success(HttpStatusConstants.STATUS.FAILED)
+            .message(baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs()))
+            .build();
 
         response.getWriter().write(JsonUtils.toJsonString(responseDTO));
         response.flushBuffer();

@@ -20,30 +20,30 @@ public class StaffResource {
     @GetMapping
     public BaseResponseDTO getAllStaffsWithPaging() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @GetMapping("/{staffID}")
     public BaseResponseDTO getStaffDetail(@PathVariable Integer staffID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PostMapping
     public BaseResponseDTO createNewStaff() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
     public BaseResponseDTO updateStaff() {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 
     @DeleteMapping("/{staffID}")
     public BaseResponseDTO deleteStaff(@PathVariable Integer staffID) {
 
-        return new BaseResponseDTO();
+        return BaseResponseDTO.builder().ok();
     }
 }

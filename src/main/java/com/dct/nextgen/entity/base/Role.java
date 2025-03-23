@@ -16,6 +16,13 @@ public class Role extends AbstractAuditingEntity {
     @Column(name = "code", nullable = false, unique = true, length = 45)
     private String code;
 
+    public Role() {}
+
+    public Role(String name, String code) {
+        this.name = name;
+        this.code = code;
+    }
+
     public String getName() {
         return name;
     }
