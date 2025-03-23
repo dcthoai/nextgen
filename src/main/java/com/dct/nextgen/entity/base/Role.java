@@ -1,9 +1,17 @@
 package com.dct.nextgen.entity.base;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
@@ -15,6 +23,17 @@ public class Role extends AbstractAuditingEntity {
 
     @Column(name = "code", nullable = false, unique = true, length = 45)
     private String code;
+
+    @ManyToMany(
+        cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH },
+        fetch = FetchType.LAZY
+    )
+    @JoinTable(
+        name = "role_permission",
+        joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "ID"),
+        inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "ID")
+    )
+    private List<Permission> permissions = new ArrayList<>();
 
     public Role() {}
 
@@ -37,5 +56,13 @@ public class Role extends AbstractAuditingEntity {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

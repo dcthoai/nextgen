@@ -19,6 +19,9 @@ public interface ResultConstants {
     String GET_DATA_SUCCESS = "result.data.success";
     String SUCCESS = "result.success";
 
+    // Get data failed
+    String DATA_NOT_FOUND = "result.failed.data.notFound";
+
     // Account information processing result messages
     String REGISTER_SUCCESS = "result.account.register.success";
 

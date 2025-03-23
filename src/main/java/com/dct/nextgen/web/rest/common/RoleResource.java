@@ -1,6 +1,8 @@
 package com.dct.nextgen.web.rest.common;
 
 import com.dct.nextgen.dto.request.BaseRequestDTO;
+import com.dct.nextgen.dto.request.CreateRoleRequestDTO;
+import com.dct.nextgen.dto.request.UpdateRoleRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.service.RoleService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,15 +40,13 @@ public class RoleResource {
     }
 
     @PostMapping
-    public BaseResponseDTO createNewRole() {
-
-        return BaseResponseDTO.builder().build();
+    public BaseResponseDTO createNewRole(@RequestBody CreateRoleRequestDTO requestDTO) {
+        return roleService.createNewRole(requestDTO);
     }
 
     @PutMapping
-    public BaseResponseDTO updateRole() {
-
-        return BaseResponseDTO.builder().build();
+    public BaseResponseDTO updateRole(@RequestBody UpdateRoleRequestDTO requestDTO) {
+        return roleService.updateRole(requestDTO);
     }
 
     @DeleteMapping("/{roleID}")

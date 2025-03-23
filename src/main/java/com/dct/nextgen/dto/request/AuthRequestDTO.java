@@ -41,17 +41,10 @@ public class AuthRequestDTO extends BaseRequestDTO implements Serializable {
     @Pattern(regexp = BaseConstants.REGEX.PASSWORD_PATTERN, message = ExceptionConstants.PASSWORD_INVALID)
     private String password;
 
-    private boolean rememberMe;
+    private boolean rememberMe = false;
 
     public AuthRequestDTO() {
         super();
-    }
-
-    public AuthRequestDTO(String username, String password, String deviceID, boolean rememberMe) {
-        super(deviceID);
-        this.username = username;
-        this.password = password;
-        this.rememberMe = rememberMe;
     }
 
     public String getUsername() {

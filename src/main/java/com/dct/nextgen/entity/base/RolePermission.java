@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
 @Table(name = "role_permission")
+@SuppressWarnings("unused")
 public class RolePermission extends AbstractAuditingEntity {
 
     @Column(name = "role_ID", nullable = false)
@@ -15,9 +16,6 @@ public class RolePermission extends AbstractAuditingEntity {
 
     @Column(name = "permission_ID", nullable = false)
     private Integer permissionID;
-
-    @Column(name = "permission_code", nullable = false, length = 45)
-    private String permissionCode;
 
     public Integer getRoleID() {
         return roleID;
@@ -33,13 +31,5 @@ public class RolePermission extends AbstractAuditingEntity {
 
     public void setPermissionID(Integer permissionID) {
         this.permissionID = permissionID;
-    }
-
-    public String getPermissionCode() {
-        return permissionCode;
-    }
-
-    public void setPermissionCode(String permissionCode) {
-        this.permissionCode = permissionCode;
     }
 }

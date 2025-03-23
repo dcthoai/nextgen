@@ -66,4 +66,12 @@ public interface ExceptionConstants {
 
     // Request data error
     String INVALID_REQUEST_DATA = "exception.request.data.invalid";
+
+    // Validate data request
+    String ROLE_EXISTED = "exception.role.existed";
+    String ROLE_NAME_NOT_NULL = "exception.role.name.notNull";
+    String ROLE_CODE_NOT_NULL = "exception.role.code.notNull";
+    String ROLE_PERMISSIONS_NOT_EMPTY = "exception.role.permissions.notEmpty";
+    String ROLE_ID_INVALID = "exception.role.id.invalid";
+    String INVALID_PERMISSION = "exception.role.permission.invalidList";
 }

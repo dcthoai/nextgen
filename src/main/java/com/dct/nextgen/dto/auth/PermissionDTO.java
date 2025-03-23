@@ -1,5 +1,7 @@
 package com.dct.nextgen.dto.auth;
 
+import com.dct.nextgen.dto.mapping.IPermissionDTO;
+
 public class PermissionDTO {
 
     private Integer ID;
@@ -8,6 +10,17 @@ public class PermissionDTO {
     private String description;
     private Integer parentID;
     private String parentCode;
+
+    public PermissionDTO() {}
+
+    public PermissionDTO(IPermissionDTO permissionDTO) {
+        this.ID = permissionDTO.getId();
+        this.name = permissionDTO.getName();
+        this.code = permissionDTO.getCode();
+        this.description = permissionDTO.getDescription();
+        this.parentID = permissionDTO.getParentId();
+        this.parentCode = permissionDTO.getParentCode();
+    }
 
     public Integer getID() {
         return ID;

@@ -51,13 +51,6 @@ public class RegisterRequestDTO extends BaseRequestDTO implements Serializable {
         this.password = password;
     }
 
-    public RegisterRequestDTO(String username, String email, String password, String deviceID) {
-        super(deviceID);
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
     public String getUsername() {
         return username;
     }

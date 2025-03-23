@@ -38,7 +38,7 @@ public abstract class AbstractAuditingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "ID", nullable = false, unique = true)
+    @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -48,12 +48,12 @@ public abstract class AbstractAuditingEntity implements Serializable {
      * Use JPA Auditing configuration in {@link PersistenceConfig} to auto set values
      */
     @CreatedBy
-    @Column(name = "created_by", nullable = false, length = 45, updatable = false)
+    @Column(name = "created_by", length = 45, updatable = false)
     private String createdBy;
 
     // Automatically saves the time the record was created (usually using system time)
     @CreatedDate
-    @Column(name = "created_date", nullable = false, updatable = false)
+    @Column(name = "created_date", updatable = false)
     private Instant createdDate;
 
     /**
@@ -62,12 +62,12 @@ public abstract class AbstractAuditingEntity implements Serializable {
      * Use JPA Auditing configuration in {@link PersistenceConfig} to auto set values
      */
     @LastModifiedBy
-    @Column(name = "last_modified_by", nullable = false, length = 45, updatable = false)
+    @Column(name = "last_modified_by", length = 45, updatable = false)
     private String lastModifiedBy;
 
-    // Automatically saves the time of the last edit
+    // Automatically saves the time of the last edit (usually using system time)
     @LastModifiedDate
-    @Column(name = "last_modified_date", nullable = false, updatable = false)
+    @Column(name = "last_modified_date", updatable = false)
     private Instant lastModifiedDate;
 
     public Integer getId() {

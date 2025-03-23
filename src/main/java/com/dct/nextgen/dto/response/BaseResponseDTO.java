@@ -29,7 +29,7 @@ public class BaseResponseDTO {
 
     // The builder allows for faster response creation
     public static class Builder {
-        private final BaseResponseDTO instance = BaseResponseDTO.builder().ok();
+        private final BaseResponseDTO instance = new BaseResponseDTO();
 
         public Builder code(int code) {
             instance.code = code;
@@ -59,8 +59,7 @@ public class BaseResponseDTO {
         public BaseResponseDTO ok() {
             instance.code = HttpStatusConstants.OK;
             instance.status = HttpStatusConstants.STATUS.SUCCESS;
-            instance.message = ResultConstants.SUCCESS;
-            instance.total = 0L;
+            instance.message = instance.message != null ? instance.message : ResultConstants.SUCCESS;
             return instance;
         }
 
@@ -109,5 +108,13 @@ public class BaseResponseDTO {
 
     public void setResult(Object result) {
         this.result = result;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
     }
 }

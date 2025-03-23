@@ -10,7 +10,6 @@ CREATE INDEX idx_role_code ON role(code);
 -- Indexes for `account_role`
 CREATE INDEX idx_account_role_account_id ON account_role(account_ID);
 CREATE INDEX idx_account_role_role_id ON account_role(role_ID);
-CREATE INDEX idx_account_role_role_code ON account_role(role_code);
 
 -- Indexes for `permission`
 CREATE INDEX idx_permission_code ON permission(code);
@@ -20,7 +19,6 @@ CREATE INDEX idx_permission_parent_code ON permission(parent_code);
 -- Indexes for `role_permission`
 CREATE INDEX idx_role_permission_role_id ON role_permission(role_ID);
 CREATE INDEX idx_role_permission_permission_id ON role_permission(permission_ID);
-CREATE INDEX idx_role_permission_permission_code ON role_permission(permission_code);
 
 -- Indexes for `system_config`
 CREATE INDEX idx_system_config_code ON system_config(code);

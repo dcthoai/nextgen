@@ -1,9 +1,17 @@
 package com.dct.nextgen.entity.base;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stores information about users in the system <p>
@@ -37,6 +45,17 @@ public class Account extends AbstractAuditingEntity {
 
     @Column(name = "token", length = 512)
     private String token;
+
+    @ManyToMany(
+        cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH },
+        fetch = FetchType.LAZY
+    )
+    @JoinTable(
+        name = "account_role",
+        joinColumns = @JoinColumn(name = "account_ID", referencedColumnName = "ID"),
+        inverseJoinColumns = @JoinColumn(name = "role_ID", referencedColumnName = "ID")
+    )
+    private List<Role> roles = new ArrayList<>();
 
     public Account() {}
 
@@ -105,5 +124,13 @@ public class Account extends AbstractAuditingEntity {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

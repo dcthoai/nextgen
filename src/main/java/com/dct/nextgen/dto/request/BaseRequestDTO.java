@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
+import java.util.Objects;
+
 /**
  * Contains common information for all requests
  * @author thoaidc
@@ -13,39 +15,37 @@ import org.springframework.util.StringUtils;
 public class BaseRequestDTO {
 
     private String deviceID;
-    private Integer page = 0;
-    private Integer size = 0;
-    private String sort = "";
+    private Integer page;
+    private Integer size;
+    private String sort;
 
     public Pageable getPageable() {
         if (page == null || size == null || page < 0 || size <= 0) {
             return Pageable.unpaged();
         }
 
-        if (!StringUtils.hasText(sort)) {
-            return PageRequest.of(page, size);
-        }
+        if (StringUtils.hasText(sort)) {
+            String[] sortArray = sort.split(",");
+            Sort.Direction sortDirection = Sort.Direction.ASC;
 
-        String[] sortArray = sort.split(",");
-        String sortField = sortArray[0].trim();
-        Sort.Direction sortDirection = Sort.Direction.ASC;
+            if (sortArray.length > 1) {
+                String sortField = sortArray[0].trim();
+                String direction = sortArray[1].trim();
 
-        if (sortArray.length > 1) {
-            String direction = sortArray[1].trim();
+                if (Objects.equals(direction, "desc")) {
+                    sortDirection = Sort.Direction.DESC;
+                }
 
-            if ("desc".equalsIgnoreCase(direction)) {
-                sortDirection = Sort.Direction.DESC;
+                if (StringUtils.hasText(sortField)) {
+                    return PageRequest.of(page, size, Sort.by(sortDirection, sortField));
+                }
             }
         }
 
-        return PageRequest.of(page, size, Sort.by(sortDirection, sortField));
+        return PageRequest.of(page, size);
     }
 
     public BaseRequestDTO() {}
-
-    public BaseRequestDTO(String deviceID) {
-        this.deviceID = deviceID;
-    }
 
     public String getDeviceID() {
         return deviceID;
