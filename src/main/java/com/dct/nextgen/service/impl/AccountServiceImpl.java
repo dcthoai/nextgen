@@ -115,11 +115,32 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public BaseResponseDTO updateAccount(UpdateAccountRequestDTO request) {
-        Optional<Account> account = accountRepository.findById(request.getID());
+        boolean isExistedAccount = accountRepository.existsByUsernameOrEmailAndIdNot(
+            request.getUsername(),
+            request.getEmail(),
+            request.getID()
+        );
 
-        if (account.isEmpty()) {
+        if (isExistedAccount) {
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_EXISTED);
+        }
+
+        Optional<Account> accountOptional = accountRepository.findById(request.getID());
+
+        if (accountOptional.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_NOT_EXISTED);
         }
+
+        List<Role> accountRolesForUpdate = roleRepository.findAllById(request.getRoleIDs());
+
+        if (accountRolesForUpdate.isEmpty() || accountRolesForUpdate.size() != request.getRoleIDs().size()) {
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
+        }
+
+        Account account = accountOptional.get();
+        BeanUtils.copyProperties(request, account);
+        account.setRoles(accountRolesForUpdate);
+        accountRepository.save(account);
 
         return BaseResponseDTO.builder().ok();
     }

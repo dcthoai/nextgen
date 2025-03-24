@@ -10,6 +10,8 @@ import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpdateAccountRequestDTO extends BaseRequestDTO implements Serializable {
 
@@ -43,12 +45,23 @@ public class UpdateAccountRequestDTO extends BaseRequestDTO implements Serializa
     @Pattern(regexp = BaseConstants.REGEX.ACCOUNT_STATUS_PATTERN, message = ExceptionConstants.STATUS_INVALID)
     private String status;
 
+    @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)
+    private List<Integer> roleIDs = new ArrayList<>();
+
     public Integer getID() {
         return ID;
     }
 
     public void setID(Integer ID) {
         this.ID = ID;
+    }
+
+    public List<Integer> getRoleIDs() {
+        return roleIDs;
+    }
+
+    public void setRoleIDs(List<Integer> roleIDs) {
+        this.roleIDs = roleIDs;
     }
 
     public String getFullname() {

@@ -172,7 +172,7 @@ public class RoleServiceImpl implements RoleService {
 
         List<Permission> permissionsForUpdate = permissionRepository.findAllById(request.getPermissionIDs());
 
-        if (permissionsForUpdate.size() != request.getPermissionIDs().size()) {
+        if (permissionsForUpdate.isEmpty() || permissionsForUpdate.size() != request.getPermissionIDs().size()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
         }
 

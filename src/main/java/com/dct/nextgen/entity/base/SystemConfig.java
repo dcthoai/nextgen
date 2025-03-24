@@ -3,12 +3,14 @@ package com.dct.nextgen.entity.base;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * Store custom system configurations as JSON, such as optional notification settings
  * @author thoaidc
  */
 @Entity
+@DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
 @Table(name = "system_config")
 @SuppressWarnings("unused")
 public class SystemConfig extends AbstractAuditingEntity {
