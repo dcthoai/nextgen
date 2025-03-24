@@ -154,39 +154,4 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.deleteById(accountID);
         return BaseResponseDTO.builder().ok();
     }
-
-    @Override
-    public Account isExistsUser(RegisterAccountRequestDTO requestDTO) {
-        return isExistsUser(requestDTO.getUsername(), requestDTO.getEmail());
-    }
-
-    @Override
-    public Account isExistsUser(String username, String email) {
-        return accountRepository.findByUsernameOrEmail(username, email);
-    }
-
-    @Override
-    public Account findUserByUsername(String username) {
-        return accountRepository.findByUsername(username);
-    }
-
-    @Override
-    public Account findByID(int userID) {
-        return accountRepository.findById(userID).orElse(null);
-    }
-
-    @Override
-    public Account findUserByEmail(String email) {
-        return accountRepository.findByEmail(email);
-    }
-
-    @Override
-    public Account update(Account account) {
-        log.debug("Updating account: {}", account.getUsername());
-
-        if (accountRepository.existsById(account.getId()))
-            return accountRepository.save(account);
-
-        throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_NOT_EXISTED);
-    }
 }

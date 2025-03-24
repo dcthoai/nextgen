@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,12 +38,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("Load user by username: " + username);
-        Account account = accountRepository.findByUsername(username);
+        Optional<Account> accountOptional = accountRepository.findByUsername(username);
 
-        if (Objects.isNull(account))
+        if (accountOptional.isEmpty())
             throw new UsernameNotFoundException(ExceptionConstants.ACCOUNT_NOT_FOUND);
 
-        List<IPermissionDTO> userPermissions = permissionRepository.findAllByAccountID(account.getId());
+        List<IPermissionDTO> userPermissions = permissionRepository.findAllByAccountID(accountOptional.get().getId());
 
         Collection<SimpleGrantedAuthority> userAuthorities = userPermissions
             .stream()
@@ -51,6 +51,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             .map(permissionDTO -> new SimpleGrantedAuthority(permissionDTO.getCode()))
             .collect(Collectors.toSet());
 
-        return new CustomUserDetails(account, userAuthorities);
+        return new CustomUserDetails(accountOptional.get(), userAuthorities);
     }
 }
