@@ -123,12 +123,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public BaseResponseDTO getAccountRoles(Integer accountID) {
+    public List<IRoleDTO> getAccountRoles(Integer accountID) {
         if (Objects.isNull(accountID) || accountID <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
         }
 
-        return BaseResponseDTO.builder().ok(roleRepository.findAllByAccountID(accountID));
+        return roleRepository.findAllByAccountID(accountID);
     }
 
     @Override

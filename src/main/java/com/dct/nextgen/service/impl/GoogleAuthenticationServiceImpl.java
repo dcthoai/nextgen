@@ -7,7 +7,7 @@ import com.dct.nextgen.constants.PropertiesConstants;
 import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
-import com.dct.nextgen.dto.request.RegisterRequestDTO;
+import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.exception.BaseAuthenticationException;
@@ -73,7 +73,13 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
             username = CredentialGenerator.generateUsername(8);
             password = CredentialGenerator.generatePassword(8);
             log.debug("Authenticate for user '{}' via Google, no account yet", username);
-            account = accountService.create(new RegisterRequestDTO(username, userInfo.getEmail(), password));
+
+            RegisterAccountRequestDTO registerAccountRequest = new RegisterAccountRequestDTO();
+            registerAccountRequest.setUsername(username);
+            registerAccountRequest.setEmail(userInfo.getEmail());
+            registerAccountRequest.setPassword(password);
+
+            account = accountService.createNewAccount(registerAccountRequest);
         } else {
             username = account.getUsername();
         }

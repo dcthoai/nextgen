@@ -24,6 +24,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
     `ID` INT NOT NULL AUTO_INCREMENT,
+    `fullname` VARCHAR(255),
     `username` VARCHAR(45) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(100) NOT NULL,

@@ -25,6 +25,9 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Account extends AbstractAuditingEntity {
 
+    @Column(name = "fullname")
+    private String fullname;
+
     @Column(name = "username", length = 45, nullable = false, unique = true)
     private String username;
 
@@ -39,6 +42,9 @@ public class Account extends AbstractAuditingEntity {
 
     @Column(name = "phone", length = 20)
     private String phone;
+
+    @Column(name = "status", nullable = false)
+    private String status;
 
     @Column(name = "device_ID", length = 45, unique = true)
     private String deviceID;
@@ -59,15 +65,66 @@ public class Account extends AbstractAuditingEntity {
 
     public Account() {}
 
-    public Account(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public Account(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
+    public static class Builder {
+        private final Account instance = new Account();
+
+        public Builder username(String username) {
+            instance.username = username;
+            return this;
+        }
+
+        public Builder fullname(String fullname) {
+            instance.fullname = fullname;
+            return this;
+        }
+
+        public Builder password(String password) {
+            instance.password = password;
+            return this;
+        }
+
+        public Builder email(String email) {
+            instance.email = email;
+            return this;
+        }
+
+        public Builder address(String address) {
+            instance.address = address;
+            return this;
+        }
+
+        public Builder phone(String phone) {
+            instance.phone = phone;
+            return this;
+        }
+
+        public Builder status(String status) {
+            instance.status = status;
+            return this;
+        }
+
+        public Builder deviceID(String deviceID) {
+            instance.deviceID = deviceID;
+            return this;
+        }
+
+        public Builder token(String token) {
+            instance.token = token;
+            return this;
+        }
+
+        public Builder roles(List<Role> roles) {
+            instance.roles = roles;
+            return this;
+        }
+
+        public Account build() {
+            return instance;
+        }
     }
 
     public String getUsername() {
@@ -116,6 +173,14 @@ public class Account extends AbstractAuditingEntity {
 
     public void setDeviceID(String deviceID) {
         this.deviceID = deviceID;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getToken() {

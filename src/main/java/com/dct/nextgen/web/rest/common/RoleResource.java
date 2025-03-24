@@ -5,6 +5,7 @@ import com.dct.nextgen.dto.request.CreateRoleRequestDTO;
 import com.dct.nextgen.dto.request.UpdateRoleRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.service.RoleService;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/p/roles")
+@RequestMapping("/api/common/roles")
 public class RoleResource {
 
     private final RoleService roleService;
@@ -29,14 +30,14 @@ public class RoleResource {
         return roleService.getRolesWithPaging(request);
     }
 
-    @GetMapping("/permissions")
-    public BaseResponseDTO getPermissionTree() {
-        return roleService.getPermissionTree();
-    }
-
     @GetMapping("/{roleID}")
     public BaseResponseDTO getRoleDetail(@PathVariable Integer roleID) {
         return roleService.getRoleDetail(roleID);
+    }
+
+    @GetMapping("/permissions")
+    public BaseResponseDTO getPermissionTree() {
+        return roleService.getPermissionTree();
     }
 
     @PostMapping

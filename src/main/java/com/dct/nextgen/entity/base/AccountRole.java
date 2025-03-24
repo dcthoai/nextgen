@@ -19,6 +19,11 @@ public class AccountRole extends AbstractAuditingEntity {
 
     public AccountRole() {}
 
+    public AccountRole(Integer accountID, Integer roleID) {
+        this.accountID = accountID;
+        this.roleID = roleID;
+    }
+
     public Integer getAccountID() {
         return accountID;
     }

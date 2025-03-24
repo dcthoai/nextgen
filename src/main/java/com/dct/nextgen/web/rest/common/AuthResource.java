@@ -4,7 +4,7 @@ import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.HttpStatusConstants;
 import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.dto.request.AuthRequestDTO;
-import com.dct.nextgen.dto.request.RegisterRequestDTO;
+import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.exception.BaseBadRequestException;
@@ -38,9 +38,9 @@ public class AuthResource {
     }
 
     @PostMapping("/register")
-    public BaseResponseDTO register(@Valid @RequestBody RegisterRequestDTO requestDTO) {
+    public BaseResponseDTO register(@Valid @RequestBody RegisterAccountRequestDTO requestDTO) {
         log.debug("REST request to create an account: {}", requestDTO.getUsername());
-        Account account = accountService.createUserAccount(requestDTO);
+        Account account = accountService.createNewAccount(requestDTO);
 
         if (Objects.isNull(account) || Objects.isNull(account.getId()) || account.getId() < 1)
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.REGISTER_FAILED);

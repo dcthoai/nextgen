@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Used to map with register requests in a manual authenticate flow <p>
@@ -23,10 +25,13 @@ import java.io.Serializable;
  *
  * @author thoaidc
  */
-public class RegisterRequestDTO extends BaseRequestDTO implements Serializable {
+public class RegisterAccountRequestDTO extends BaseRequestDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    private String fullname;
+    private String phone;
 
     @NotBlank(message = ExceptionConstants.USERNAME_NOT_BLANK)
     @Size(min = 2, max = 45)
@@ -43,13 +48,8 @@ public class RegisterRequestDTO extends BaseRequestDTO implements Serializable {
     @Pattern(regexp = BaseConstants.REGEX.PASSWORD_PATTERN, message = ExceptionConstants.PASSWORD_INVALID)
     private String password;
 
-    public RegisterRequestDTO() {}
-
-    public RegisterRequestDTO(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+    @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)
+    private List<Integer> roleIDs = new ArrayList<>();
 
     public String getUsername() {
         return username;
@@ -73,5 +73,29 @@ public class RegisterRequestDTO extends BaseRequestDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Integer> getRoleIDs() {
+        return roleIDs;
+    }
+
+    public void setRoleIDs(List<Integer> roleIDs) {
+        this.roleIDs = roleIDs;
     }
 }

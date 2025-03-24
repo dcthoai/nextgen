@@ -1,20 +1,27 @@
 package com.dct.nextgen.dto.response;
 
+import com.dct.nextgen.dto.mapping.IRoleDTO;
+
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class AccountDTO {
 
     private int ID;
+    private String fullname;
     private String username;
     private String email;
     private String address;
     private String phone;
+    private String status;
     private String deviceID;
     private String createdBy;
     private Instant createdDate;
     private String lastModifiedBy;
     private Instant lastModifiedDate;
+    private List<IRoleDTO> accountRoles = new ArrayList<>();
 
     public int getID() {
         return ID;
@@ -30,6 +37,30 @@ public class AccountDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<IRoleDTO> getAccountRoles() {
+        return accountRoles;
+    }
+
+    public void setAccountRoles(List<IRoleDTO> accountRoles) {
+        this.accountRoles = accountRoles;
     }
 
     public String getEmail() {

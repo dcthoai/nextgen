@@ -1,63 +1,53 @@
 package com.dct.nextgen.web.rest.common;
 
-import com.dct.nextgen.dto.response.AccountDTO;
+import com.dct.nextgen.dto.request.BaseRequestDTO;
+import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
+import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
-import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.service.AccountService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/common/users")
+@RequestMapping("/api/p/accounts")
 public class AccountResource {
 
-    private static final Logger log = LoggerFactory.getLogger(AccountResource.class);
     private final AccountService accountService;
-    private final ObjectMapper objectMapper;
 
-    public AccountResource(AccountService accountService, ObjectMapper objectMapper) {
+    public AccountResource(AccountService accountService) {
         this.accountService = accountService;
-        this.objectMapper = objectMapper;
     }
 
     @GetMapping
-    public BaseResponseDTO getAllAccountsWithPaging() {
-
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO getAccountsWithPaging(@RequestBody BaseRequestDTO request) {
+        return accountService.getAccountsWithPaging(request);
     }
 
-    @GetMapping("/{userID}")
-    public BaseResponseDTO getAccountDetail(@PathVariable Integer userID) {
-        log.debug("REST request to get account info: {}", userID);
-        Account account = accountService.findByID(userID);
-        AccountDTO accountDTO = objectMapper.convertValue(account, AccountDTO.class);
-        return BaseResponseDTO.builder().ok(accountDTO);
+    @GetMapping("/{accountID}")
+    public BaseResponseDTO getAccountDetail(@PathVariable Integer accountID) {
+        return accountService.getAccountDetail(accountID);
     }
 
     @PostMapping
-    public BaseResponseDTO createNewAccount() {
-
+    public BaseResponseDTO createNewAccount(@RequestBody RegisterAccountRequestDTO request) {
+        accountService.createNewAccount(request);
         return BaseResponseDTO.builder().ok();
     }
 
     @PutMapping
-    public BaseResponseDTO updateAccount() {
-
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO updateAccount(@RequestBody UpdateAccountRequestDTO request) {
+        return accountService.updateAccount(request);
     }
 
-    @DeleteMapping("/{userID}")
-    public BaseResponseDTO deleteAccount(@PathVariable Integer userID) {
-
-        return BaseResponseDTO.builder().ok();
+    @DeleteMapping("/{accountID}")
+    public BaseResponseDTO deleteAccount(@PathVariable Integer accountID) {
+        return accountService.deleteAccount(accountID);
     }
 }

@@ -60,6 +60,8 @@ public interface ExceptionConstants {
     String FULL_NAME_INVALID = "exception.account.fullName.invalid";
     String ADDRESS_NOT_BLANK = "exception.account.address.notBlank";
     String ADDRESS_INVALID = "exception.account.address.invalid";
+    String STATUS_NOT_BLANK = "exception.account.status.notBlank";
+    String STATUS_INVALID = "exception.account.status.invalid";
 
     // Upload file request
     String MAXIMUM_UPLOAD_SIZE_EXCEEDED = "exception.upload.maximumSizeExceed";
@@ -68,6 +70,7 @@ public interface ExceptionConstants {
     String INVALID_REQUEST_DATA = "exception.request.data.invalid";
 
     // Validate data request
+    String ID_NOT_NULL = "exception.id.notNull";
     String ROLE_EXISTED = "exception.role.existed";
     String ROLE_NAME_NOT_NULL = "exception.role.name.notNull";
     String ROLE_CODE_NOT_NULL = "exception.role.code.notNull";
