@@ -43,4 +43,7 @@ public interface PermissionRepository extends JpaRepository<Permission, Integer>
         nativeQuery = true
     )
     List<IPermissionDTO> findAllByRoleID(Integer roleID);
+
+    @Query(value = "SELECT p.ID as id, p.name, p.code FROM permission p WHERE p.ID in (?1)", nativeQuery = true)
+    List<IPermissionDTO> findAllByIDs(Iterable<Integer> permissionIDs);
 }

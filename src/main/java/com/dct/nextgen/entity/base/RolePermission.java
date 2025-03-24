@@ -17,6 +17,13 @@ public class RolePermission extends AbstractAuditingEntity {
     @Column(name = "permission_ID", nullable = false)
     private Integer permissionID;
 
+    public RolePermission() {}
+
+    public RolePermission(Integer roleID, Integer permissionID) {
+        this.roleID = roleID;
+        this.permissionID = permissionID;
+    }
+
     public Integer getRoleID() {
         return roleID;
     }

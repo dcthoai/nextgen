@@ -140,17 +140,17 @@ public class RoleServiceImpl implements RoleService {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ROLE_EXISTED);
         }
 
-        List<RolePermission> rolePermissions = new ArrayList<>();
         Role role = roleRepository.save(new Role(request.getName(), request.getCode()));
+        List<IPermissionDTO> permissions = permissionRepository.findAllByIDs(request.getPermissionIDs());
+        List<RolePermission> rolePermissions = new ArrayList<>();
 
-        for (Integer permissionID : request.getPermissionIDs()) {
-            RolePermission rolePermission = new RolePermission();
-            rolePermission.setRoleID(role.getId());
-            rolePermission.setPermissionID(permissionID);
-            rolePermissions.add(rolePermission);
+        if (permissions.isEmpty() || permissions.size() != request.getPermissionIDs().size()) {
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
         }
 
+        permissions.forEach(permission -> rolePermissions.add(new RolePermission(role.getId(), permission.getId())));
         rolePermissionRepository.saveAll(rolePermissions);
+
         return BaseResponseDTO.builder().ok();
     }
 

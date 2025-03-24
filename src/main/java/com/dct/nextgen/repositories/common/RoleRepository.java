@@ -31,6 +31,9 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     @Query(value = "SELECT r.id as ID, r.name, r.code FROM role r LIMIT 100", nativeQuery = true)
     List<IRoleDTO> findAllNonPaging();
 
+    @Query(value = "SELECT r.id as ID, r.name, r.code FROM role r WHERE r.ID in (?1)", nativeQuery = true)
+    List<IRoleDTO> findAllByIDs(Iterable<Integer> roleIDs);
+
     @Query(value = "SELECT r.id as ID, r.name, r.code FROM role r WHERE r.ID = ?1", nativeQuery = true)
     Optional<IRoleDTO> findByID(Integer roleID);
 

@@ -19,8 +19,6 @@ import com.dct.nextgen.repositories.common.RoleRepository;
 import com.dct.nextgen.service.AccountService;
 import com.dct.nextgen.service.RoleService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,7 +32,6 @@ import java.util.Optional;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
     private static final String ENTITY_NAME = "AccountServiceImpl";
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
@@ -89,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_EXISTED);
         }
 
-        List<Role> roles = roleRepository.findAllById(request.getRoleIDs());
+        List<IRoleDTO> roles = roleRepository.findAllByIDs(request.getRoleIDs());
 
         if (roles.isEmpty() || roles.size() != request.getRoleIDs().size()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
@@ -107,7 +104,7 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepository.save(account);
         List<AccountRole> accountRoles = new ArrayList<>();
-        roles.forEach(role -> accountRoles.add(new AccountRole(account.getId(), role.getId())));
+        roles.forEach(role -> accountRoles.add(new AccountRole(account.getId(), role.getID())));
 
         accountRoleRepository.saveAll(accountRoles);
         return account;
