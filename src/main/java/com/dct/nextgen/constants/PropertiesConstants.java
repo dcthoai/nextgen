@@ -17,4 +17,5 @@ public interface PropertiesConstants {
     String OAUTH2_ACTIVE_STATUS = "dct-base.security.oauth2.enabled";
     String GOOGLE_OAUTH2_PROPERTIES = "dct-base.security.oauth2.google";
     String UPLOAD_RESOURCE_PROPERTIES = "dct-base.resources.upload";
+    String RABBIT_MQ_PROPERTIES = "spring.rabbitmq";
 }

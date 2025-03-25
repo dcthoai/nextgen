@@ -77,4 +77,6 @@ public interface ExceptionConstants {
     String ROLE_PERMISSIONS_NOT_EMPTY = "exception.role.permissions.notEmpty";
     String ROLE_ID_INVALID = "exception.role.id.invalid";
     String INVALID_PERMISSION = "exception.role.permission.invalidList";
+
+    String DIRECT_EXCHANGE_NULL = "exception.rabbitmq.exchange.directExchangeNull";
 }
