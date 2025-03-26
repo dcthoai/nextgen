@@ -1,6 +1,5 @@
 package com.dct.nextgen.dto.auth;
 
-import com.dct.nextgen.entity.base.Account;
 import org.springframework.security.core.Authentication;
 import com.dct.nextgen.security.jwt.JwtProvider;
 
@@ -15,23 +14,48 @@ public class BaseAuthTokenDTO {
 
     private Authentication authentication; // Contains user authorities information
     private String username;
-    private String deviceID = "";
+    private String deviceID;
     private Integer userID;
     private Boolean isRememberMe = false;
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private final BaseAuthTokenDTO instance = new BaseAuthTokenDTO();
+
+        public Builder authentication(Authentication authentication) {
+            instance.authentication = authentication;
+            return this;
+        }
+
+        public Builder username(String username) {
+            instance.username = username;
+            return this;
+        }
+
+        public Builder deviceID(String deviceID) {
+            instance.deviceID = deviceID;
+            return this;
+        }
+
+        public Builder userID(Integer userID) {
+            instance.userID = userID;
+            return this;
+        }
+
+        public Builder rememberMe(boolean rememberMe) {
+            instance.isRememberMe = rememberMe;
+            return this;
+        }
+
+        public BaseAuthTokenDTO build() {
+            return instance;
+        }
+    }
+
     public BaseAuthTokenDTO() {}
-
-    public BaseAuthTokenDTO(Authentication authentication, Account account) {
-        this.authentication = authentication;
-        this.username = account.getUsername();
-        this.userID = account.getId();
-    }
-
-    public BaseAuthTokenDTO(Authentication authentication, Account account, String deviceID, boolean isRememberMe) {
-        this(authentication, account);
-        this.deviceID = deviceID;
-        this.isRememberMe = isRememberMe;
-    }
 
     public Authentication getAuthentication() {
         return authentication;

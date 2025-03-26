@@ -107,9 +107,10 @@ dct-base:
 
   security:
     auth:
+      enabled-tls: false
       base64-secret-key: ZGN0LWJhc2Utc2VjcmV0LWtleS10b2tlbi12YWxpZGl0eS04NjQwMDAwMG1zLWZvci1yZW1lbWJlci1tZS04NjQwMDAwMG1z
-      # Token is valid 24 hours
-      token-validity: 86400000 # milliseconds
+      # Token is valid default in 1 hour and 24 hours for remember me
+      token-validity: 3600000 # milliseconds
       token-validity-for-remember-me: 86400000 # milliseconds
     oauth2:
       enabled: false

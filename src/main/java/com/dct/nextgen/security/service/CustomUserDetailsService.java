@@ -43,7 +43,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (accountOptional.isEmpty())
             throw new UsernameNotFoundException(ExceptionConstants.ACCOUNT_NOT_FOUND);
 
-        List<IPermissionDTO> userPermissions = permissionRepository.findAllByAccountID(accountOptional.get().getId());
+        Account account = accountOptional.get();
+        List<IPermissionDTO> userPermissions = permissionRepository.findAllByAccountID(account.getId());
 
         Collection<SimpleGrantedAuthority> userAuthorities = userPermissions
             .stream()
@@ -51,6 +52,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             .map(permissionDTO -> new SimpleGrantedAuthority(permissionDTO.getCode()))
             .collect(Collectors.toSet());
 
-        return new CustomUserDetails(accountOptional.get(), userAuthorities);
+        return new CustomUserDetails(account, userAuthorities);
     }
 }

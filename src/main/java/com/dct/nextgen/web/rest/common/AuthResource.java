@@ -14,8 +14,10 @@ import com.dct.nextgen.service.AuthenticationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,8 @@ public class AuthResource {
     private final AccountService accountService;
     private final AuthenticationService authService;
 
-    public AuthResource(AccountService accountService, AuthenticationService authService) {
+    public AuthResource(AccountService accountService,
+                        AuthenticationService authService) {
         this.accountService = accountService;
         this.authService = authService;
     }
@@ -55,24 +58,24 @@ public class AuthResource {
 
     @PostMapping("/login")
     public BaseResponseDTO login(@Valid @RequestBody AuthRequestDTO requestDTO, HttpServletResponse response) {
-        log.debug("REST request to authenticate account: {}", requestDTO.getUsername());
-
         BaseResponseDTO responseDTO = authService.authenticate(requestDTO);
-        Cookie tokenCookie = (Cookie) responseDTO.getResult();
+        String jwt = (String) responseDTO.getResult();
+        Cookie secureCookie = authService.createSecureCookie(jwt, requestDTO.getRememberMe());
 
-        tokenCookie.setHttpOnly(true);
-        tokenCookie.setSecure(false); // Set true for HTTPS protocol only
-        tokenCookie.setPath("/");
-
-        response.addCookie(tokenCookie);
-        responseDTO.setResult(null);
-        log.debug("Set token in secure cookie successful");
+        response.addCookie(secureCookie); // Send secure cookie with token to client in HttpOnly
+        responseDTO.setResult(null); // Clear token in response body
 
         return responseDTO;
     }
 
     @PostMapping("/logout")
-    public BaseResponseDTO logout() {
+    public BaseResponseDTO logout(HttpServletResponse response) {
+        SecurityContextHolder.getContext().setAuthentication(null);
+
+        // Create cookie with token is null
+        Cookie secureCookie = authService.createSecureCookie(null, false);
+        secureCookie.setMaxAge(0); // Delete cookies immediately
+        response.addCookie(secureCookie); // Send new cookie to client to overwrite old cookie
 
         return BaseResponseDTO.builder().ok();
     }

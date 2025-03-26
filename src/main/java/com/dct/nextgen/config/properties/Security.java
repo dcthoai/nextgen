@@ -22,9 +22,19 @@ import org.springframework.beans.factory.annotation.Value;
 @Configuration
 @ConfigurationProperties(prefix = PropertiesConstants.SECURITY_CONFIG)
 public class Security {
+
+    private boolean enabledTls;
     private String base64SecretKey;
     private Long tokenValidity;
     private Long tokenValidityForRememberMe;
+
+    public boolean isEnabledTls() {
+        return enabledTls;
+    }
+
+    public void setEnabledTls(boolean enabledTls) {
+        this.enabledTls = enabledTls;
+    }
 
     public String getBase64SecretKey() {
         return base64SecretKey;

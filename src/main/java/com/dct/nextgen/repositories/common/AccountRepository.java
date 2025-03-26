@@ -16,7 +16,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.ID, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceID
+            SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceId
             FROM account a
         """,
         nativeQuery = true
@@ -25,7 +25,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.ID, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceID
+            SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceId
             FROM account a LIMIT 100
         """,
         nativeQuery = true
@@ -34,7 +34,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.ID, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceID
+            SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceId
             FROM account a WHERE a.ID = ?1
         """,
         nativeQuery = true
@@ -43,24 +43,14 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.ID, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceID
+            SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceId
             FROM account a WHERE a.username = ?1
         """,
         nativeQuery = true
     )
     Optional<IAccountDTO> findAccountByUsername(String username);
 
-    @Query(
-        value = """
-            SELECT a.ID, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.token, a.device_ID as deviceID
-            FROM account a WHERE a.email = ?1
-        """,
-        nativeQuery = true
-    )
-    Optional<IAccountDTO> findAccountByEmail(String username);
-
     boolean existsByUsernameOrEmail(String username, String email);
     boolean existsByUsernameOrEmailAndIdNot(String username, String email, Integer accountID);
     Optional<Account> findByUsername(String username);
-    Optional<Account> findByEmail(String email);
 }

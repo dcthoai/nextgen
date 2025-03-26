@@ -7,6 +7,7 @@ import com.dct.nextgen.constants.PropertiesConstants;
 import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
+import com.dct.nextgen.dto.mapping.IAccountDTO;
 import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;
@@ -19,9 +20,9 @@ import com.dct.nextgen.security.service.GoogleOAuth2Service;
 import com.dct.nextgen.service.AccountService;
 import com.dct.nextgen.service.GoogleAuthenticationService;
 
-import jakarta.servlet.http.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -70,8 +71,8 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
     @Override
     public BaseResponseDTO authorize(OAuth2UserInfoResponse userInfo) {
         log.debug("Authorize for user '{}'", userInfo.getEmail());
-        Optional<Account> accountOptional = accountRepository.findByEmail(userInfo.getEmail());
-        Account account;
+        Optional<IAccountDTO> accountOptional = accountRepository.findAccountByUsername(userInfo.getEmail());
+        Account account = new Account();
         String username, password;
 
         if (accountOptional.isEmpty()) {
@@ -86,24 +87,28 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
 
             account = accountService.createNewAccount(registerAccountRequest);
         } else {
-            account = accountOptional.get();
+            BeanUtils.copyProperties(accountOptional.get(), account);
             username = account.getUsername();
         }
 
         Set<SimpleGrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority(SecurityConstants.ROLES.ROLE_USER));
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, username, authorities);
         SecurityContextHolder.getContext().setAuthentication(token);
-        BaseAuthTokenDTO authTokenDTO = new BaseAuthTokenDTO(token, account);
+        BaseAuthTokenDTO authTokenDTO = BaseAuthTokenDTO.builder()
+            .authentication(token)
+            .username(account.getUsername())
+            .userID(account.getId())
+            .rememberMe(true)
+            .build();
 
         log.debug("Authorize successful. Generating token for user '{}'", username);
         String jwtToken = tokenProvider.createToken(authTokenDTO);
-        Cookie tokenCookie = new Cookie(SecurityConstants.COOKIES.HTTP_ONLY_COOKIE_ACCESS_TOKEN, jwtToken);
 
         return BaseResponseDTO.builder()
             .code(HttpStatusConstants.ACCEPTED)
             .message(ResultConstants.LOGIN_SUCCESS)
             .success(HttpStatusConstants.STATUS.SUCCESS)
-            .result(tokenCookie)
+            .result(jwtToken)
             .build();
     }
 }

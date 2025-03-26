@@ -2,13 +2,13 @@ package com.dct.nextgen.dto.mapping;
 
 public interface IAccountDTO {
 
-    Integer getID();
+    Integer getId();
     String getFullname();
     String getUsername();
     String getEmail();
     String getAddress();
     String getPhone();
     String getStatus();
-    String getDeviceID();
+    String getDeviceId();
     String getToken();
 }

@@ -3,9 +3,10 @@ package com.dct.nextgen.security.handler;
 import com.dct.nextgen.constants.PropertiesConstants;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.security.model.OAuth2UserInfoResponse;
+import com.dct.nextgen.service.AuthenticationService;
 import com.dct.nextgen.service.GoogleAuthenticationService;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,11 +36,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private static final Logger log = LoggerFactory.getLogger(OAuth2AuthenticationSuccessHandler.class);
     private final GoogleAuthenticationService googleAuthenticationService;
+    private final AuthenticationService authenticationService;
     private final ObjectMapper objectMapper;
 
     public OAuth2AuthenticationSuccessHandler(@Lazy GoogleAuthenticationService googleAuthenticationService,
+                                              AuthenticationService authenticationService,
                                               ObjectMapper objectMapper) {
         this.googleAuthenticationService = googleAuthenticationService;
+        this.authenticationService = authenticationService;
         this.objectMapper = objectMapper;
         log.debug("Configured 'OAuth2AuthenticationSuccessHandler' for use");
     }
@@ -67,15 +71,10 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // Check and create default account information for the user and create an access token stored in cookies
         BaseResponseDTO responseDTO = googleAuthenticationService.authorize(userInfoResponse);
-        Cookie tokenCookie = (Cookie) responseDTO.getResult();
+        String jwt = (String) responseDTO.getResult();
+        Cookie secureCookie = authenticationService.createSecureCookie(jwt, true);
 
-        tokenCookie.setHttpOnly(true);
-        tokenCookie.setSecure(false); // Set true for HTTPS protocol only
-        tokenCookie.setPath("/");
-
-        response.addCookie(tokenCookie);
-        log.debug("Set token in secure cookie successful");
-
+        response.addCookie(secureCookie);
         response.setHeader("Content-Type", "text/html");
         response.getWriter().write("<script>window.opener.postMessage('auth-success', '*'); window.close();</script>");
         response.flushBuffer();

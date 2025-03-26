@@ -112,9 +112,10 @@ dct-base:
 
   security:
     auth:
+      enabled-tls: true
       base64-secret-key: ${NEXTGEN_BRAND_SECRET_KEY}
-      # Token is valid 24 hours
-      token-validity: 86400000 # milliseconds
+      # Token is valid default in 1 hour and 24 hours for remember me
+      token-validity: 3600000 # milliseconds
       token-validity-for-remember-me: 86400000 # milliseconds
     oauth2:
       enabled: false
