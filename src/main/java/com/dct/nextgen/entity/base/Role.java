@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 @DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
 @Table(name = "role")
+@SuppressWarnings("unused")
 public class Role extends AbstractAuditingEntity {
 
     @Column(name = "name", nullable = false, length = 45)
@@ -30,8 +31,8 @@ public class Role extends AbstractAuditingEntity {
     )
     @JoinTable(
         name = "role_permission",
-        joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "ID"),
-        inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "ID")
+        joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")
     )
     private List<Permission> permissions = new ArrayList<>();
 

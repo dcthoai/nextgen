@@ -15,7 +15,7 @@ public class UpdateAccountRequestDTO extends BaseRequestDTO {
 
     @NotNull
     @Min(value = 1, message = ExceptionConstants.ID_NOT_NULL)
-    private Integer ID;
+    private Integer id;
 
     @NotBlank(message = ExceptionConstants.FULL_NAME_NOT_BLANK)
     private String fullname;
@@ -41,22 +41,22 @@ public class UpdateAccountRequestDTO extends BaseRequestDTO {
     private String status;
 
     @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)
-    private List<Integer> roleIDs = new ArrayList<>();
+    private List<Integer> roleIds = new ArrayList<>();
 
-    public Integer getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public List<Integer> getRoleIDs() {
-        return roleIDs;
+    public List<Integer> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoleIDs(List<Integer> roleIDs) {
-        this.roleIDs = roleIDs;
+    public void setRoleIds(List<Integer> roleIds) {
+        this.roleIds = roleIds;
     }
 
     public String getFullname() {

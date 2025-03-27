@@ -37,10 +37,6 @@ public class AuthRequestDTO extends BaseRequestDTO {
 
     private boolean rememberMe = false;
 
-    public AuthRequestDTO() {
-        super();
-    }
-
     public String getUsername() {
         return username;
     }

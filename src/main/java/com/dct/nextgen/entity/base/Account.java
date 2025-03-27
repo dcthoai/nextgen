@@ -46,8 +46,8 @@ public class Account extends AbstractAuditingEntity {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(name = "device_ID", length = 45, unique = true)
-    private String deviceID;
+    @Column(name = "device_id", length = 45, unique = true)
+    private String deviceId;
 
     @ManyToMany(
         cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH },
@@ -55,8 +55,8 @@ public class Account extends AbstractAuditingEntity {
     )
     @JoinTable(
         name = "account_role",
-        joinColumns = @JoinColumn(name = "account_ID", referencedColumnName = "ID"),
-        inverseJoinColumns = @JoinColumn(name = "role_ID", referencedColumnName = "ID")
+        joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private List<Role> roles = new ArrayList<>();
 
@@ -104,8 +104,8 @@ public class Account extends AbstractAuditingEntity {
             return this;
         }
 
-        public Builder deviceID(String deviceID) {
-            instance.deviceID = deviceID;
+        public Builder deviceId(String deviceId) {
+            instance.deviceId = deviceId;
             return this;
         }
 
@@ -117,6 +117,14 @@ public class Account extends AbstractAuditingEntity {
         public Account build() {
             return instance;
         }
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getUsername() {
@@ -159,20 +167,20 @@ public class Account extends AbstractAuditingEntity {
         this.phone = phone;
     }
 
-    public String getDeviceID() {
-        return deviceID;
-    }
-
-    public void setDeviceID(String deviceID) {
-        this.deviceID = deviceID;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public List<Role> getRoles() {

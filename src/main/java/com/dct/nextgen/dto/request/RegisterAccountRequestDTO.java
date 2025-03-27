@@ -44,7 +44,7 @@ public class RegisterAccountRequestDTO extends BaseRequestDTO {
     private String password;
 
     @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)
-    private List<Integer> roleIDs = new ArrayList<>();
+    private List<Integer> roleIds = new ArrayList<>();
 
     public String getUsername() {
         return username;
@@ -86,11 +86,11 @@ public class RegisterAccountRequestDTO extends BaseRequestDTO {
         this.phone = phone;
     }
 
-    public List<Integer> getRoleIDs() {
-        return roleIDs;
+    public List<Integer> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoleIDs(List<Integer> roleIDs) {
-        this.roleIDs = roleIDs;
+    public void setRoleIds(List<Integer> roleIds) {
+        this.roleIds = roleIds;
     }
 }

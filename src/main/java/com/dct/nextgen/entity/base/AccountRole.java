@@ -11,32 +11,32 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class AccountRole extends AbstractAuditingEntity {
 
-    @Column(name = "account_ID", nullable = false)
-    private Integer accountID;
+    @Column(name = "account_id", nullable = false)
+    private Integer accountId;
 
-    @Column(name = "role_ID", nullable = false)
-    private Integer roleID;
+    @Column(name = "role_id", nullable = false)
+    private Integer roleId;
 
     public AccountRole() {}
 
-    public AccountRole(Integer accountID, Integer roleID) {
-        this.accountID = accountID;
-        this.roleID = roleID;
+    public AccountRole(Integer accountId, Integer roleId) {
+        this.accountId = accountId;
+        this.roleId = roleId;
     }
 
-    public Integer getAccountID() {
-        return accountID;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setAccountID(Integer accountID) {
-        this.accountID = accountID;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
-    public Integer getRoleID() {
-        return roleID;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRoleID(Integer roleID) {
-        this.roleID = roleID;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }

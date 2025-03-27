@@ -80,8 +80,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         BaseAuthTokenDTO authTokenDTO = BaseAuthTokenDTO.builder()
             .authentication(authentication)
             .username(account.getUsername())
-            .userID(account.getId())
-            .deviceID(authRequestDTO.getDeviceID())
+            .userId(account.getId())
+            .deviceId(authRequestDTO.getDeviceId())
             .rememberMe(authRequestDTO.getRememberMe())
             .build();
 

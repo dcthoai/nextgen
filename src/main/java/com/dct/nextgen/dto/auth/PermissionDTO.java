@@ -4,30 +4,30 @@ import com.dct.nextgen.dto.mapping.IPermissionDTO;
 
 public class PermissionDTO {
 
-    private Integer ID;
+    private Integer id;
     private String name;
     private String code;
     private String description;
-    private Integer parentID;
+    private Integer parentId;
     private String parentCode;
 
     public PermissionDTO() {}
 
     public PermissionDTO(IPermissionDTO permissionDTO) {
-        this.ID = permissionDTO.getId();
+        this.id = permissionDTO.getId();
         this.name = permissionDTO.getName();
         this.code = permissionDTO.getCode();
         this.description = permissionDTO.getDescription();
-        this.parentID = permissionDTO.getParentId();
+        this.parentId = permissionDTO.getParentId();
         this.parentCode = permissionDTO.getParentCode();
     }
 
-    public Integer getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -54,12 +54,12 @@ public class PermissionDTO {
         this.description = description;
     }
 
-    public Integer getParentID() {
-        return parentID;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setParentID(Integer parentID) {
-        this.parentID = parentID;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public String getParentCode() {

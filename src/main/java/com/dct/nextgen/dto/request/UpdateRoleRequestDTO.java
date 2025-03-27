@@ -20,7 +20,7 @@ public class UpdateRoleRequestDTO extends BaseRequestDTO {
     private String code;
 
     @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)
-    private List<Integer> permissionIDs = new ArrayList<>();
+    private List<Integer> permissionIds = new ArrayList<>();
 
     public UpdateRoleRequestDTO() {}
 
@@ -48,11 +48,11 @@ public class UpdateRoleRequestDTO extends BaseRequestDTO {
         this.code = code;
     }
 
-    public List<Integer> getPermissionIDs() {
-        return permissionIDs;
+    public List<Integer> getPermissionIds() {
+        return permissionIds;
     }
 
-    public void setPermissionIDs(List<Integer> permissionIDs) {
-        this.permissionIDs = permissionIDs;
+    public void setPermissionIds(List<Integer> permissionIds) {
+        this.permissionIds = permissionIds;
     }
 }

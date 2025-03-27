@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,11 +37,11 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query(
         value = """
             SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_ID as deviceId
-            FROM account a WHERE a.ID = ?1;
+            FROM account a WHERE a.ID = :accountID
         """,
         nativeQuery = true
     )
-    Optional<IAccountDTO> findAccountByID(Integer accountID);
+    Optional<IAccountDTO> findIAccountById(@Param("accountID") Integer accountID);
 
     @Query(
         value = """

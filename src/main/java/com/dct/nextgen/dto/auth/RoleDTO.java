@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RoleDTO {
 
-    private Integer ID;
+    private Integer id;
     private String name;
     private String code;
     List<PermissionDTO> rolePermissions = new ArrayList<>();
@@ -16,23 +16,23 @@ public class RoleDTO {
     public RoleDTO() {}
 
     public RoleDTO(IRoleDTO roleDTO) {
-        this.ID = roleDTO.getID();
+        this.id = roleDTO.getId();
         this.name = roleDTO.getName();
         this.code = roleDTO.getCode();
     }
 
     public RoleDTO(Tuple tuple) {
-        this.ID = tuple.get("id", Integer.class);
+        this.id = tuple.get("id", Integer.class);
         this.name = tuple.get("name", String.class);
         this.code = tuple.get("code", String.class);
     }
 
-    public Integer getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

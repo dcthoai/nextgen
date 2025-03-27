@@ -1,4 +1,4 @@
-package com.dct.nextgen.dto.response;
+package com.dct.nextgen.dto.auth;
 
 import com.dct.nextgen.dto.mapping.IRoleDTO;
 

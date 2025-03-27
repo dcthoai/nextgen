@@ -1,7 +1,7 @@
 USE `nextgen_brand`;
 
 CREATE TABLE company (
-    `ID` INT AUTO_INCREMENT PRIMARY KEY,
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
     `logo` VARCHAR(255) NOT NULL,
     `image` VARCHAR(255) NOT NULL,
     `video_intro` VARCHAR(255),
@@ -28,7 +28,7 @@ CREATE TABLE company (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE banner (
-    `ID` INT AUTO_INCREMENT PRIMARY KEY,
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
     `text_stroke_1` VARCHAR(45),
     `text_stroke_2` VARCHAR(45),
     `text_uppercase_1` VARCHAR(45),

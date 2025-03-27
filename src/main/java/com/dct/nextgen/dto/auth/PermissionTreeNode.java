@@ -1,5 +1,6 @@
 package com.dct.nextgen.dto.auth;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class PermissionTreeNode implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private String name;
     private String code;

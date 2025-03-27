@@ -7,7 +7,7 @@ import com.dct.nextgen.dto.mapping.IRoleDTO;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
-import com.dct.nextgen.dto.response.AccountDTO;
+import com.dct.nextgen.dto.auth.AccountDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.entity.base.AccountRole;
@@ -64,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public BaseResponseDTO getAccountDetail(Integer accountID) {
-        Optional<IAccountDTO> iAccountDTO = accountRepository.findAccountByID(accountID);
+        Optional<IAccountDTO> iAccountDTO = accountRepository.findIAccountById(accountID);
 
         if (iAccountDTO.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_NOT_EXISTED);
@@ -86,9 +86,9 @@ public class AccountServiceImpl implements AccountService {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_EXISTED);
         }
 
-        List<IRoleDTO> roles = roleRepository.findAllByIDs(request.getRoleIDs());
+        List<IRoleDTO> roles = roleRepository.findAllByIDs(request.getRoleIds());
 
-        if (roles.isEmpty() || roles.size() != request.getRoleIDs().size()) {
+        if (roles.isEmpty() || roles.size() != request.getRoleIds().size()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
         }
 
@@ -104,7 +104,7 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepository.save(account);
         List<AccountRole> accountRoles = new ArrayList<>();
-        roles.forEach(role -> accountRoles.add(new AccountRole(account.getId(), role.getID())));
+        roles.forEach(role -> accountRoles.add(new AccountRole(account.getId(), role.getId())));
 
         accountRoleRepository.saveAll(accountRoles);
         return account;
@@ -115,22 +115,22 @@ public class AccountServiceImpl implements AccountService {
         boolean isExistedAccount = accountRepository.existsByUsernameOrEmailAndIdNot(
             request.getUsername(),
             request.getEmail(),
-            request.getID()
+            request.getId()
         );
 
         if (isExistedAccount) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_EXISTED);
         }
 
-        Optional<Account> accountOptional = accountRepository.findById(request.getID());
+        Optional<Account> accountOptional = accountRepository.findById(request.getId());
 
         if (accountOptional.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_NOT_EXISTED);
         }
 
-        List<Role> accountRolesForUpdate = roleRepository.findAllById(request.getRoleIDs());
+        List<Role> accountRolesForUpdate = roleRepository.findAllById(request.getRoleIds());
 
-        if (accountRolesForUpdate.isEmpty() || accountRolesForUpdate.size() != request.getRoleIDs().size()) {
+        if (accountRolesForUpdate.isEmpty() || accountRolesForUpdate.size() != request.getRoleIds().size()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
         }
 

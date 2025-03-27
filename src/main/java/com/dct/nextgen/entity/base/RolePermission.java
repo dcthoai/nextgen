@@ -11,32 +11,32 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class RolePermission extends AbstractAuditingEntity {
 
-    @Column(name = "role_ID", nullable = false)
-    private Integer roleID;
+    @Column(name = "role_id", nullable = false)
+    private Integer roleId;
 
-    @Column(name = "permission_ID", nullable = false)
-    private Integer permissionID;
+    @Column(name = "permission_id", nullable = false)
+    private Integer permissionId;
 
     public RolePermission() {}
 
-    public RolePermission(Integer roleID, Integer permissionID) {
-        this.roleID = roleID;
-        this.permissionID = permissionID;
+    public RolePermission(Integer roleId, Integer permissionId) {
+        this.roleId = roleId;
+        this.permissionId = permissionId;
     }
 
-    public Integer getRoleID() {
-        return roleID;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRoleID(Integer roleID) {
-        this.roleID = roleID;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
-    public Integer getPermissionID() {
-        return permissionID;
+    public Integer getPermissionId() {
+        return permissionId;
     }
 
-    public void setPermissionID(Integer permissionID) {
-        this.permissionID = permissionID;
+    public void setPermissionId(Integer permissionId) {
+        this.permissionId = permissionId;
     }
 }

@@ -2,7 +2,7 @@ package com.dct.nextgen.dto.mapping;
 
 public interface IRoleDTO {
 
-    Integer getID();
+    Integer getId();
     String getName();
     String getCode();
 }

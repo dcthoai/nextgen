@@ -27,18 +27,18 @@ public interface PermissionRepository extends JpaRepository<Permission, Integer>
             FROM permission p
             JOIN role_permission rp on p.ID = rp.permission_ID
             JOIN account_role ar on ar.role_ID = rp.role_ID
-            WHERE ar.account_ID = :accountID
+            WHERE ar.account_ID = ?1
         """,
         nativeQuery = true
     )
-    List<IPermissionDTO> findAllByAccountID(int accountID);
+    List<IPermissionDTO> findAllByAccountID(Integer accountID);
 
     @Query(
         value = """
             SELECT p.ID as id, p.name, p.code, p.description, p.parent_ID as parentId, p.parent_code as parentCode
             FROM permission p
             JOIN role_permission rp on p.ID = rp.permission_ID
-            WHERE rp.role_ID = :roleID
+            WHERE rp.role_ID = ?1
         """,
         nativeQuery = true
     )

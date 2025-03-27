@@ -14,8 +14,8 @@ public class BaseAuthTokenDTO {
 
     private Authentication authentication; // Contains user authorities information
     private String username;
-    private String deviceID;
-    private Integer userID;
+    private String deviceId;
+    private Integer userId;
     private Boolean isRememberMe = false;
 
     public static Builder builder() {
@@ -35,13 +35,13 @@ public class BaseAuthTokenDTO {
             return this;
         }
 
-        public Builder deviceID(String deviceID) {
-            instance.deviceID = deviceID;
+        public Builder deviceId(String deviceId) {
+            instance.deviceId = deviceId;
             return this;
         }
 
-        public Builder userID(Integer userID) {
-            instance.userID = userID;
+        public Builder userId(Integer userId) {
+            instance.userId = userId;
             return this;
         }
 
@@ -73,20 +73,24 @@ public class BaseAuthTokenDTO {
         this.username = username;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public String getDeviceID() {
-        return deviceID;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setDeviceID(String deviceID) {
-        this.deviceID = deviceID;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Boolean getRememberMe() {
+        return isRememberMe;
     }
 
     public Boolean isRememberMe() {

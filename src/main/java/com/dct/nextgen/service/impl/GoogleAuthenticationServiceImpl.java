@@ -97,7 +97,7 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
         BaseAuthTokenDTO authTokenDTO = BaseAuthTokenDTO.builder()
             .authentication(token)
             .username(account.getUsername())
-            .userID(account.getId())
+            .userId(account.getId())
             .rememberMe(true)
             .build();
 

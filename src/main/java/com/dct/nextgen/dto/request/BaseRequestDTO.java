@@ -18,7 +18,7 @@ public class BaseRequestDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private String deviceID;
+    private String deviceId;
     private Integer page;
     private Integer size;
     private String sort;
@@ -49,14 +49,12 @@ public class BaseRequestDTO implements Serializable {
         return PageRequest.of(page, size);
     }
 
-    public BaseRequestDTO() {}
-
-    public String getDeviceID() {
-        return deviceID;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setDeviceID(String deviceID) {
-        this.deviceID = deviceID;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public Integer getPage() {
