@@ -15,7 +15,7 @@ public interface PermissionRepository extends JpaRepository<Permission, Integer>
         value = """
             SELECT p.ID as id, p.name, p.code, p.parent_ID as parentId, p.parent_code as parentCode
             FROM permission p
-            ORDER BY p.code
+            ORDER BY p.code;
         """,
         nativeQuery = true
     )
@@ -44,6 +44,6 @@ public interface PermissionRepository extends JpaRepository<Permission, Integer>
     )
     List<IPermissionDTO> findAllByRoleID(Integer roleID);
 
-    @Query(value = "SELECT p.ID as id, p.name, p.code FROM permission p WHERE p.ID in (?1)", nativeQuery = true)
+    @Query(value = "SELECT p.ID as id, p.name, p.code FROM permission p WHERE p.ID in (?1);", nativeQuery = true)
     List<IPermissionDTO> findAllByIDs(Iterable<Integer> permissionIDs);
 }

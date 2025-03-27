@@ -5,7 +5,6 @@ import com.dct.nextgen.dto.response.BaseResponseDTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,11 +36,5 @@ public class UploadResource {
         }
 
         return BaseResponseDTO.builder().ok(filePaths);
-    }
-
-    @DeleteMapping("/images")
-    public BaseResponseDTO deleteImages() {
-
-        return BaseResponseDTO.builder().ok();
     }
 }

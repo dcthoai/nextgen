@@ -2,41 +2,28 @@ package com.dct.nextgen.dto.response;
 
 import com.dct.nextgen.dto.mapping.IRoleDTO;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class AccountDTO {
 
-    private int ID;
+    private Integer id;
     private String fullname;
     private String username;
     private String email;
     private String address;
     private String phone;
     private String status;
-    private String deviceID;
-    private String createdBy;
-    private Instant createdDate;
-    private String lastModifiedBy;
-    private Instant lastModifiedDate;
+    private String deviceId;
     private List<IRoleDTO> accountRoles = new ArrayList<>();
 
-    public int getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFullname() {
@@ -47,20 +34,12 @@ public class AccountDTO {
         this.fullname = fullname;
     }
 
-    public String getStatus() {
-        return status;
+    public String getUsername() {
+        return username;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public List<IRoleDTO> getAccountRoles() {
-        return accountRoles;
-    }
-
-    public void setAccountRoles(List<IRoleDTO> accountRoles) {
-        this.accountRoles = accountRoles;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -87,43 +66,27 @@ public class AccountDTO {
         this.phone = phone;
     }
 
-    public String getDeviceID() {
-        return deviceID;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDeviceID(String deviceID) {
-        this.deviceID = deviceID;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
+    public List<IRoleDTO> getAccountRoles() {
+        return accountRoles;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+    public void setAccountRoles(List<IRoleDTO> accountRoles) {
+        this.accountRoles = accountRoles;
     }
 }

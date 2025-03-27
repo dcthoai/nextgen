@@ -44,6 +44,7 @@ public interface SecurityConstants {
             "/**.ico",
             "/i18n/**",
             "/content/**",
+            "/uploads/**",
             "/static/**",
             "/register",
             "/login",

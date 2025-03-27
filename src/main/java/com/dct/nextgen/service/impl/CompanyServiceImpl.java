@@ -9,10 +9,13 @@ import com.dct.nextgen.entity.Company;
 import com.dct.nextgen.exception.BaseBadRequestException;
 import com.dct.nextgen.repositories.CompanyRepository;
 import com.dct.nextgen.service.CompanyService;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,6 +44,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public BaseResponseDTO updateCompanyInfo(UpdateCompanyRequestDTO request) {
         Optional<Company> companyOptional = companyRepository.findById(request.getId());
+        List<String> oldImageUrlToDelete = new ArrayList<>();
         Company company;
 
         if (companyOptional.isEmpty()) {
@@ -48,6 +52,10 @@ public class CompanyServiceImpl implements CompanyService {
             request.setId(null);
         } else {
             company = companyOptional.get();
+            oldImageUrlToDelete.add(company.getLogo());
+            oldImageUrlToDelete.add(company.getImage());
+            oldImageUrlToDelete.add(company.getMapImage());
+            oldImageUrlToDelete.add(company.getVideoIntro());
         }
 
         BeanUtils.copyProperties(request, company);
@@ -56,19 +64,25 @@ public class CompanyServiceImpl implements CompanyService {
         String companyMapImageUrl = fileUtils.autoCompressImageAndSave(request.getMapImageFile());
         String companyVideoIntroUrl = fileUtils.autoCompressImageAndSave(request.getVideoIntroFile());
 
-        if (StringUtils.hasText(companyLogoUrl))
+        if (StringUtils.hasText(companyLogoUrl)) {
             company.setLogo(companyLogoUrl);
+        }
 
-        if (StringUtils.hasText(companyImageUrl))
+        if (StringUtils.hasText(companyImageUrl)) {
             company.setImage(companyImageUrl);
+        }
 
-        if (StringUtils.hasText(companyMapImageUrl))
+        if (StringUtils.hasText(companyMapImageUrl)) {
             company.setMapImage(companyMapImageUrl);
+        }
 
-        if (StringUtils.hasText(companyVideoIntroUrl))
+        if (StringUtils.hasText(companyVideoIntroUrl)) {
             company.setVideoIntro(companyVideoIntroUrl);
+        }
 
         companyRepository.save(company);
+        fileUtils.delete(oldImageUrlToDelete);
+
         return BaseResponseDTO.builder().ok();
     }
 }

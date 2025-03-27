@@ -1,8 +1,10 @@
 package com.dct.nextgen.config;
 
+import com.dct.nextgen.config.properties.UploadResourceConfig;
 import com.dct.nextgen.constants.BaseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -16,6 +18,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class StaticResourcesResolver implements WebMvcConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(StaticResourcesResolver.class);
+    private final UploadResourceConfig uploadResourceConfig;
+
+    public StaticResourcesResolver(@Qualifier("uploadResourceConfig") UploadResourceConfig uploadResourceConfig) {
+        this.uploadResourceConfig = uploadResourceConfig;
+    }
 
     /**
      * The {@link StaticResourcesResolver} configures Spring to serve static resources
@@ -30,5 +37,6 @@ public class StaticResourcesResolver implements WebMvcConfigurer {
         log.debug("Configured custom resources handler");
         ResourceHandlerRegistration resourceHandler = registry.addResourceHandler(BaseConstants.STATIC_RESOURCES.PATHS);
         resourceHandler.addResourceLocations(BaseConstants.STATIC_RESOURCES.LOCATIONS);
+        resourceHandler.addResourceLocations("file:" + uploadResourceConfig.getUploadPath());
     }
 }

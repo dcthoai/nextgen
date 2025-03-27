@@ -49,9 +49,6 @@ public class Account extends AbstractAuditingEntity {
     @Column(name = "device_ID", length = 45, unique = true)
     private String deviceID;
 
-    @Column(name = "token", length = 512)
-    private String token;
-
     @ManyToMany(
         cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH },
         fetch = FetchType.LAZY
@@ -109,11 +106,6 @@ public class Account extends AbstractAuditingEntity {
 
         public Builder deviceID(String deviceID) {
             instance.deviceID = deviceID;
-            return this;
-        }
-
-        public Builder token(String token) {
-            instance.token = token;
             return this;
         }
 
@@ -181,14 +173,6 @@ public class Account extends AbstractAuditingEntity {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public List<Role> getRoles() {

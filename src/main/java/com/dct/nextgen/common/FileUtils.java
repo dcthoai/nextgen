@@ -7,6 +7,7 @@ import com.dct.nextgen.dto.upload.ImageDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -174,7 +175,9 @@ public class FileUtils {
         if (!StringUtils.hasText(filePath))
             return false;
 
-        String fileName = filePath.substring(filePath.lastIndexOf(File.separator) + 1);
+        int positionPrefixPath = filePath.lastIndexOf(BaseConstants.UPLOAD_RESOURCES.PREFIX_PATH);
+        int prefixSize = BaseConstants.UPLOAD_RESOURCES.PREFIX_PATH.length();
+        String fileName = filePath.substring(positionPrefixPath + prefixSize);
         File file = getFileToSave(fileName, false);
 
         if (Objects.isNull(file))
@@ -183,14 +186,15 @@ public class FileUtils {
         return file.delete();
     }
 
-    public boolean delete(List<String> filePaths) {
+    @Async
+    public void delete(List<String> filePaths) {
         if (Objects.isNull(filePaths) || filePaths.isEmpty())
-            return false;
+            return;
 
-        for (String filePath : filePaths)
-            if (!delete(filePath))
+        for (String filePath : filePaths) {
+            if (!delete(filePath)) {
                 log.error("Could not delete file: {}", filePath);
-
-        return true;
+            }
+        }
     }
 }

@@ -51,6 +51,7 @@ public interface BaseConstants {
             "/**.png",
             "/**.ico",
             "/content/**",
+            "/uploads/**",
             "/i18n/**"
         };
 

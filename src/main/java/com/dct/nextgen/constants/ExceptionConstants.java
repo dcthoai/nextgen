@@ -96,4 +96,12 @@ public interface ExceptionConstants {
     String COMPANY_MAP_MAX_SIZE = "exception.company.map.maxSize";
     String COMPANY_MAP_IMAGE_NOT_NULL = "exception.company.mapImage.notNull";
     String COMPANY_MAP_SLIDE_TEXT_MAX_SIZE = "exception.company.mapSlideText.maxSize";
+
+    // Banner
+    String BANNER_NOT_FOUND = "exception.banner.notFound";
+    String TEXT_STROKE_MAX_SIZE = "exception.banner.textStroke.maxSize";
+    String TEXT_UPPERCASE_MAX_SIZE = "exception.banner.textUppercase.maxSize";
+    String BANNER_POSITION_MAX_SIZE = "exception.banner.position.maxSize";
+    String BANNER_POSITION_NOT_NULL = "exception.banner.position.notNull";
+    String CANNOT_SAVE_VIDEO = "exception.home.video.canNotSaveFile";
 }
