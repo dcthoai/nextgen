@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateRoleRequestDTO {
+public class UpdateRoleRequestDTO extends BaseRequestDTO {
 
     @Min(value = 1, message = ExceptionConstants.ROLE_ID_INVALID)
     private Integer id;

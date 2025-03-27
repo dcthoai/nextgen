@@ -1,3 +1,5 @@
+USE `nextgen_brand`;
+
 -- Indexes for `account`
 CREATE INDEX idx_account_email ON account(email);
 CREATE INDEX idx_account_username ON account(username);

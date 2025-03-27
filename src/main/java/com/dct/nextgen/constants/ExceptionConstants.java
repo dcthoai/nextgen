@@ -78,5 +78,22 @@ public interface ExceptionConstants {
     String ROLE_ID_INVALID = "exception.role.id.invalid";
     String INVALID_PERMISSION = "exception.role.permission.invalidList";
 
+    // RabbitMQ
     String DIRECT_EXCHANGE_NULL = "exception.rabbitmq.exchange.directExchangeNull";
+
+    // Company info
+    String COMPANY_NULL = "exception.company.null";
+    String LOGO_NOT_NULL = "exception.company.logo.notNull";
+    String IMAGE_NOT_NULL = "exception.company.image.notNull";
+    String LICENSE_CODE_MAX_SIZE = "exception.company.licenseCode.maxSize";
+    String COMPANY_NAME_NOT_NULL = "exception.company.name.notNull";
+    String COMPANY_NAME_MAX_SIZE = "exception.company.name.maxSize";
+    String COMPANY_DESCRIPTION_MAX_SIZE = "exception.company.description.maxSize";
+    String EMAIL_MAX_SIZE = "exception.company.email.maxSize";
+    String PHONE_MAX_SIZE = "exception.company.phone.maxSize";
+    String WEBSITE_MAX_SIZE = "exception.company.website.maxSize";
+    String COMPANY_MAP_NOT_NULL = "exception.company.map.notNull";
+    String COMPANY_MAP_MAX_SIZE = "exception.company.map.maxSize";
+    String COMPANY_MAP_IMAGE_NOT_NULL = "exception.company.mapImage.notNull";
+    String COMPANY_MAP_SLIDE_TEXT_MAX_SIZE = "exception.company.mapSlideText.maxSize";
 }

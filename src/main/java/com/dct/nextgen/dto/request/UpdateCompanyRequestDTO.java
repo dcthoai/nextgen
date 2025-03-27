@@ -1,73 +1,83 @@
-package com.dct.nextgen.entity;
+package com.dct.nextgen.dto.request;
 
-import com.dct.nextgen.entity.base.AbstractAuditingEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.DynamicUpdate;
+import com.dct.nextgen.constants.BaseConstants;
+import com.dct.nextgen.constants.ExceptionConstants;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
-@Entity
-@Table(name = "company")
-@DynamicUpdate
-@SuppressWarnings("unused")
-public class Company extends AbstractAuditingEntity {
+public class UpdateCompanyRequestDTO extends BaseRequestDTO {
 
-    @Column(name = "logo", nullable = false)
+    @NotNull(message = ExceptionConstants.ID_NOT_NULL)
+    @Min(value = 1, message = ExceptionConstants.ID_NOT_NULL)
+    private Integer id;
+
+    @NotBlank(message = ExceptionConstants.LOGO_NOT_NULL)
     private String logo;
 
-    @Column(name = "image", nullable = false)
+    @NotBlank(message = ExceptionConstants.IMAGE_NOT_NULL)
     private String image;
 
-    @Column(name = "video_intro")
     private String videoIntro;
 
-    @Column(name = "license_code", length = 20)
+    @Size(max = 20, message = ExceptionConstants.LICENSE_CODE_MAX_SIZE)
     private String licenseCode;
 
-    @Column(name = "license_date")
     private String licenseDate;
-
-    @Column(name = "license_address")
     private String licenseAddress;
 
-    @Column(name = "name", length = 100, nullable = false)
+    @NotBlank(message = ExceptionConstants.COMPANY_NAME_NOT_NULL)
+    @Size(max = 100, message = ExceptionConstants.COMPANY_NAME_MAX_SIZE)
     private String name;
 
-    @Column(name = "description", length = 500)
+    @Size(max = 500, message = ExceptionConstants.COMPANY_DESCRIPTION_MAX_SIZE)
     private String description;
 
-    @Column(name = "address", nullable = false)
-    private String address;
-
-    @Column(name = "phone", length = 20, nullable = false)
-    private String phone;
-
-    @Column(name = "email", length = 100, nullable = false)
+    @NotBlank(message = ExceptionConstants.EMAIL_NOT_BANK)
+    @Size(max = 100, message = ExceptionConstants.EMAIL_MAX_SIZE)
+    @Pattern(regexp = BaseConstants.REGEX.EMAIL_PATTERN, message = ExceptionConstants.EMAIL_INVALID)
     private String email;
 
-    @Column(name = "website", length = 100)
+    @NotBlank(message = ExceptionConstants.PHONE_NOT_BLANK)
+    @Size(max = 20, message = ExceptionConstants.PHONE_MAX_SIZE)
+    @Pattern(regexp = BaseConstants.REGEX.PHONE_PATTERN, message = ExceptionConstants.PHONE_INVALID)
+    private String phone;
+
+    @NotBlank(message = ExceptionConstants.ADDRESS_NOT_BLANK)
+    private String address;
+
+    @Size(max = 100, message = ExceptionConstants.WEBSITE_MAX_SIZE)
     private String website;
 
-    @Column(name = "map", length = 3000, nullable = false)
+    @NotBlank(message = ExceptionConstants.COMPANY_MAP_NOT_NULL)
+    @Size(max = 3000, message = ExceptionConstants.COMPANY_MAP_MAX_SIZE)
     private String map;
 
-    @Column(name = "map_image", nullable = false)
+    @NotBlank(message = ExceptionConstants.COMPANY_MAP_IMAGE_NOT_NULL)
     private String mapImage;
 
-    @Column(name = "map_slide_text", length = 25)
+    @Size(max = 100, message = ExceptionConstants.COMPANY_MAP_SLIDE_TEXT_MAX_SIZE)
     private String mapSlideText;
 
-    @Column(name = "facebook")
     private String facebook;
-
-    @Column(name = "instagram")
     private String instagram;
-
-    @Column(name = "zalo")
     private String zalo;
-
-    @Column(name = "youtube")
     private String youtube;
+    private MultipartFile logoFile;
+    private MultipartFile imageFile;
+    private MultipartFile mapImageFile;
+    private MultipartFile videoIntroFile;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getLogo() {
         return logo;
@@ -219,5 +229,37 @@ public class Company extends AbstractAuditingEntity {
 
     public void setYoutube(String youtube) {
         this.youtube = youtube;
+    }
+
+    public MultipartFile getLogoFile() {
+        return logoFile;
+    }
+
+    public void setLogoFile(MultipartFile logoFile) {
+        this.logoFile = logoFile;
+    }
+
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public MultipartFile getMapImageFile() {
+        return mapImageFile;
+    }
+
+    public void setMapImageFile(MultipartFile mapImageFile) {
+        this.mapImageFile = mapImageFile;
+    }
+
+    public MultipartFile getVideoIntroFile() {
+        return videoIntroFile;
+    }
+
+    public void setVideoIntroFile(MultipartFile videoIntroFile) {
+        this.videoIntroFile = videoIntroFile;
     }
 }

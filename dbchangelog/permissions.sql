@@ -18,9 +18,7 @@
 --      Manage Recruitment (jobs): view, create, update, delete
 --      Manage Company Infos: view, update
 
-
--- Delete all permission table data
-DELETE FROM `permission`;
+USE `nextgen_brand`;
 
 -- Reset AUTO_INCREMENT to 1
 ALTER TABLE `permission` AUTO_INCREMENT = 1;

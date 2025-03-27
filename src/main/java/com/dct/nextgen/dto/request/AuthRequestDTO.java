@@ -11,9 +11,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 /**
  * Used to map with authentication requests in a manual authenticate flow <p>
  * The @{@link Valid} annotation is used along with @{@link ResponseBody} to validate input data format <p>
@@ -25,10 +22,7 @@ import java.io.Serializable;
  * @author thoaidc
  */
 @SuppressWarnings("unused")
-public class AuthRequestDTO extends BaseRequestDTO implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class AuthRequestDTO extends BaseRequestDTO {
 
     @NotBlank(message = ExceptionConstants.USERNAME_NOT_BLANK)
     @Size(min = 2, max = 45)

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateRoleRequestDTO {
+public class CreateRoleRequestDTO extends BaseRequestDTO {
 
     @NotBlank(message = ExceptionConstants.ROLE_NAME_NOT_NULL)
     private String name;

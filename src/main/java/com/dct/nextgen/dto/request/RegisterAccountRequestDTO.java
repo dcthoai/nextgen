@@ -10,8 +10,6 @@ import jakarta.validation.constraints.Size;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +23,7 @@ import java.util.List;
  *
  * @author thoaidc
  */
-public class RegisterAccountRequestDTO extends BaseRequestDTO implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class RegisterAccountRequestDTO extends BaseRequestDTO {
 
     private String fullname;
     private String phone;

@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -12,8 +14,10 @@ import java.util.Objects;
  * @author thoaidc
  */
 @SuppressWarnings("unused")
-public class BaseRequestDTO {
+public class BaseRequestDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
     private String deviceID;
     private Integer page;
     private Integer size;
