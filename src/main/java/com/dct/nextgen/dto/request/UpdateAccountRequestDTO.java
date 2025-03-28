@@ -13,27 +13,31 @@ import java.util.List;
 
 public class UpdateAccountRequestDTO extends BaseRequestDTO {
 
-    @NotNull
-    @Min(value = 1, message = ExceptionConstants.ID_NOT_NULL)
+    @NotNull(message = ExceptionConstants.ID_NOT_NULL)
+    @Min(value = 1, message = ExceptionConstants.ID_INVALID)
     private Integer id;
 
-    @NotBlank(message = ExceptionConstants.FULL_NAME_NOT_BLANK)
+    @Size(max = 100, message = ExceptionConstants.NAME_MAX_LENGTH)
     private String fullname;
 
     @NotBlank(message = ExceptionConstants.USERNAME_NOT_BLANK)
-    @Size(min = 2, max = 45)
+    @Size(min = 2, message = ExceptionConstants.USERNAME_MIN_LENGTH)
+    @Size(max = 45, message = ExceptionConstants.USERNAME_MAX_LENGTH)
     @Pattern(regexp = BaseConstants.REGEX.USERNAME_PATTERN, message = ExceptionConstants.USERNAME_INVALID)
     private String username;
 
-    @NotBlank(message = ExceptionConstants.EMAIL_NOT_BANK)
+    @NotBlank(message = ExceptionConstants.EMAIL_NOT_BLANK)
+    @Size(min = 6, message = ExceptionConstants.EMAIL_MIN_LENGTH)
+    @Size(max = 100, message = ExceptionConstants.EMAIL_MAX_LENGTH)
     @Pattern(regexp = BaseConstants.REGEX.EMAIL_PATTERN, message = ExceptionConstants.EMAIL_INVALID)
     private String email;
 
-    @NotBlank(message = ExceptionConstants.PHONE_NOT_BLANK)
+    @Size(min = 6, message = ExceptionConstants.PHONE_MIN_LENGTH)
+    @Size(max = 20, message = ExceptionConstants.PHONE_MAX_LENGTH)
     @Pattern(regexp = BaseConstants.REGEX.PHONE_PATTERN, message = ExceptionConstants.PHONE_INVALID)
     private String phone;
 
-    @NotBlank(message = ExceptionConstants.ADDRESS_NOT_BLANK)
+    @Size(max = 255, message = ExceptionConstants.ADDRESS_MAX_LENGTH)
     private String address;
 
     @NotBlank(message = ExceptionConstants.STATUS_NOT_BLANK)

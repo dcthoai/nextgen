@@ -91,7 +91,7 @@ public class AccountServiceImpl implements AccountService {
         List<IRoleDTO> roles = roleRepository.findAllByIds(request.getRoleIds());
 
         if (roles.isEmpty() || roles.size() != request.getRoleIds().size()) {
-            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ROLE_PERMISSION_INVALID);
         }
 
         String rawPassword = request.getPassword();
@@ -133,7 +133,7 @@ public class AccountServiceImpl implements AccountService {
         List<Role> accountRolesForUpdate = roleRepository.findAllById(request.getRoleIds());
 
         if (accountRolesForUpdate.isEmpty() || accountRolesForUpdate.size() != request.getRoleIds().size()) {
-            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ROLE_PERMISSION_INVALID);
         }
 
         Account account = accountOptional.get();

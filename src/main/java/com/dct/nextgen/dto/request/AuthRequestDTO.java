@@ -25,7 +25,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 public class AuthRequestDTO extends BaseRequestDTO {
 
     @NotBlank(message = ExceptionConstants.USERNAME_NOT_BLANK)
-    @Size(min = 2, max = 45)
+    @Size(min = 2, message = ExceptionConstants.USERNAME_MIN_LENGTH)
+    @Size(max = 45, message = ExceptionConstants.USERNAME_MAX_LENGTH)
     @Pattern(regexp = BaseConstants.REGEX.USERNAME_PATTERN, message = ExceptionConstants.USERNAME_INVALID)
     private String username;
 

@@ -85,7 +85,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   @Nullable HttpStatusCode status,
                                                                   @Nullable WebRequest request) {
         FieldError fieldError = exception.getBindingResult().getFieldError();
-        String errorKey = ExceptionConstants.INVALID_DATA; // Default message
+        String errorKey = ExceptionConstants.INVALID_REQUEST_DATA; // Default message
 
         if (Objects.nonNull(fieldError))
             errorKey = fieldError.getDefaultMessage(); // If the field with an error includes a custom message key

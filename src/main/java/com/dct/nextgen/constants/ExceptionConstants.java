@@ -45,23 +45,6 @@ public interface ExceptionConstants {
     String REGISTER_FAILED = "exception.account.register.failed";
     String ACCOUNT_EXISTED = "exception.account.existed";
     String ACCOUNT_NOT_EXISTED = "exception.account.notExisted";
-    String INVALID_DATA = "exception.account.data.invalid";
-    String USERNAME_INVALID = "exception.account.username.invalid";
-    String USERNAME_NOT_BLANK = "exception.account.username.notBlank";
-    String PASSWORD_NOT_BLANK = "exception.account.password.notBlank";
-    String PASSWORD_MIN_LENGTH = "exception.account.password.minLength";
-    String PASSWORD_MAX_LENGTH = "exception.account.password.maxLength";
-    String PASSWORD_INVALID = "exception.account.password.invalid";
-    String PHONE_NOT_BLANK = "exception.account.phone.notBlank";
-    String PHONE_INVALID = "exception.account.phone.invalid";
-    String EMAIL_NOT_BANK = "exception.account.email.notBlank";
-    String EMAIL_INVALID = "exception.account.email.invalid";
-    String FULL_NAME_NOT_BLANK = "exception.account.fullName.notBlank";
-    String FULL_NAME_INVALID = "exception.account.fullName.invalid";
-    String ADDRESS_NOT_BLANK = "exception.account.address.notBlank";
-    String ADDRESS_INVALID = "exception.account.address.invalid";
-    String STATUS_NOT_BLANK = "exception.account.status.notBlank";
-    String STATUS_INVALID = "exception.account.status.invalid";
 
     // Upload file request
     String MAXIMUM_UPLOAD_SIZE_EXCEEDED = "exception.upload.maximumSizeExceed";
@@ -69,28 +52,18 @@ public interface ExceptionConstants {
     // Request data error
     String INVALID_REQUEST_DATA = "exception.request.data.invalid";
 
-    // Validate data request
-    String ID_NOT_NULL = "exception.id.notNull";
+    // Role
     String ROLE_EXISTED = "exception.role.existed";
-    String ROLE_NAME_NOT_NULL = "exception.role.name.notNull";
-    String ROLE_CODE_NOT_NULL = "exception.role.code.notNull";
     String ROLE_PERMISSIONS_NOT_EMPTY = "exception.role.permissions.notEmpty";
-    String ROLE_ID_INVALID = "exception.role.id.invalid";
-    String INVALID_PERMISSION = "exception.role.permission.invalidList";
+    String ROLE_PERMISSION_INVALID = "exception.role.permission.invalidList";
 
     // RabbitMQ
     String DIRECT_EXCHANGE_NULL = "exception.rabbitmq.exchange.directExchangeNull";
 
     // Company info
-    String COMPANY_NULL = "exception.company.null";
     String LOGO_NOT_NULL = "exception.company.logo.notNull";
     String IMAGE_NOT_NULL = "exception.company.image.notNull";
     String LICENSE_CODE_MAX_SIZE = "exception.company.licenseCode.maxSize";
-    String COMPANY_NAME_NOT_NULL = "exception.company.name.notNull";
-    String COMPANY_NAME_MAX_SIZE = "exception.company.name.maxSize";
-    String COMPANY_DESCRIPTION_MAX_SIZE = "exception.company.description.maxSize";
-    String EMAIL_MAX_SIZE = "exception.company.email.maxSize";
-    String PHONE_MAX_SIZE = "exception.company.phone.maxSize";
     String WEBSITE_MAX_SIZE = "exception.company.website.maxSize";
     String COMPANY_MAP_NOT_NULL = "exception.company.map.notNull";
     String COMPANY_MAP_MAX_SIZE = "exception.company.map.maxSize";
@@ -98,10 +71,42 @@ public interface ExceptionConstants {
     String COMPANY_MAP_SLIDE_TEXT_MAX_SIZE = "exception.company.mapSlideText.maxSize";
 
     // Banner
-    String BANNER_NOT_FOUND = "exception.banner.notFound";
     String TEXT_STROKE_MAX_SIZE = "exception.banner.textStroke.maxSize";
     String TEXT_UPPERCASE_MAX_SIZE = "exception.banner.textUppercase.maxSize";
     String BANNER_POSITION_MAX_SIZE = "exception.banner.position.maxSize";
     String BANNER_POSITION_NOT_NULL = "exception.banner.position.notNull";
     String CANNOT_SAVE_VIDEO = "exception.home.video.canNotSaveFile";
+
+    // Form data request
+    String DATA_INVALID = "";
+    String DATA_NOT_FOUND = "";
+    String DATA_EXISTED = "";
+    String DATA_NOT_EXISTED = "";
+    String ID_NOT_NULL = "";
+    String ID_INVALID = "";
+    String NAME_NOT_BLANK = "";
+    String NAME_MAX_LENGTH = "";
+    String CODE_NOT_BLANK = "";
+    String USERNAME_NOT_BLANK = "";
+    String USERNAME_INVALID = "";
+    String USERNAME_MIN_LENGTH = "";
+    String USERNAME_MAX_LENGTH = "";
+    String PASSWORD_NOT_BLANK = "";
+    String PASSWORD_MIN_LENGTH = "";
+    String PASSWORD_MAX_LENGTH = "";
+    String PASSWORD_INVALID = "";
+    String EMAIL_NOT_BLANK = "";
+    String EMAIL_MIN_LENGTH = "";
+    String EMAIL_MAX_LENGTH = "";
+    String EMAIL_INVALID = "";
+    String PHONE_NOT_BLANK = "";
+    String PHONE_MIN_LENGTH = "";
+    String PHONE_MAX_LENGTH = "";
+    String PHONE_INVALID = "";
+    String DESCRIPTION_NOT_BLANK = "";
+    String DESCRIPTION_MAX_LENGTH = "";
+    String ADDRESS_NOT_BLANK = "";
+    String ADDRESS_MAX_LENGTH = "";
+    String STATUS_NOT_BLANK = "";
+    String STATUS_INVALID = "";
 }

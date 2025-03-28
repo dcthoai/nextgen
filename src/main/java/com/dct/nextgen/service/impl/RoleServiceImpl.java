@@ -137,7 +137,7 @@ public class RoleServiceImpl implements RoleService {
         List<RolePermission> rolePermissions = new ArrayList<>();
 
         if (permissions.isEmpty() || permissions.size() != request.getPermissionIds().size()) {
-            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ROLE_PERMISSION_INVALID);
         }
 
         permissions.forEach(permission -> rolePermissions.add(new RolePermission(role.getId(), permission.getId())));
@@ -165,7 +165,7 @@ public class RoleServiceImpl implements RoleService {
         List<Permission> permissionsForUpdate = permissionRepository.findAllById(request.getPermissionIds());
 
         if (permissionsForUpdate.isEmpty() || permissionsForUpdate.size() != request.getPermissionIds().size()) {
-            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ROLE_PERMISSION_INVALID);
         }
 
         role.setName(request.getName());

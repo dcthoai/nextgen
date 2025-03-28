@@ -37,7 +37,7 @@ public class CompanyServiceImpl implements CompanyService {
         Optional<ICompanyDTO> companyOptional = companyRepository.findCompany();
 
         if (companyOptional.isEmpty()) {
-            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.COMPANY_NULL);
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.DATA_NOT_FOUND);
         }
 
         return BaseResponseDTO.builder().ok(companyOptional.get());
@@ -48,7 +48,7 @@ public class CompanyServiceImpl implements CompanyService {
         Optional<Company> companyOptional = companyRepository.findFirstByOrderByCreatedDateAsc();
 
         if (companyOptional.isEmpty()) {
-            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.COMPANY_NULL);
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.DATA_NOT_FOUND);
         }
 
         Company company = companyOptional.get();

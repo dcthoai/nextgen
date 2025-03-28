@@ -9,10 +9,10 @@ import java.util.List;
 
 public class CreateRoleRequestDTO extends BaseRequestDTO {
 
-    @NotBlank(message = ExceptionConstants.ROLE_NAME_NOT_NULL)
+    @NotBlank(message = ExceptionConstants.NAME_NOT_BLANK)
     private String name;
 
-    @NotBlank(message = ExceptionConstants.ROLE_CODE_NOT_NULL)
+    @NotBlank(message = ExceptionConstants.CODE_NOT_BLANK)
     private String code;
 
     @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)

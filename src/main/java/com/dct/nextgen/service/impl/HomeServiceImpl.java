@@ -57,7 +57,7 @@ public class HomeServiceImpl implements HomeService {
         Optional<Banner> bannerOptional = bannerRepository.findById(bannerId);
 
         if (bannerOptional.isEmpty()) {
-            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.BANNER_NOT_FOUND);
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.DATA_NOT_FOUND);
         }
 
         Banner banner = bannerOptional.get();

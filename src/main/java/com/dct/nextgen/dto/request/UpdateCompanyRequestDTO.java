@@ -23,24 +23,27 @@ public class UpdateCompanyRequestDTO extends BaseRequestDTO {
     private String licenseDate;
     private String licenseAddress;
 
-    @NotBlank(message = ExceptionConstants.COMPANY_NAME_NOT_NULL)
-    @Size(max = 100, message = ExceptionConstants.COMPANY_NAME_MAX_SIZE)
+    @NotBlank(message = ExceptionConstants.NAME_NOT_BLANK)
+    @Size(max = 100, message = ExceptionConstants.NAME_MAX_LENGTH)
     private String name;
 
-    @Size(max = 500, message = ExceptionConstants.COMPANY_DESCRIPTION_MAX_SIZE)
+    @Size(max = 500, message = ExceptionConstants.DESCRIPTION_MAX_LENGTH)
     private String description;
 
-    @NotBlank(message = ExceptionConstants.EMAIL_NOT_BANK)
-    @Size(max = 100, message = ExceptionConstants.EMAIL_MAX_SIZE)
+    @NotBlank(message = ExceptionConstants.EMAIL_NOT_BLANK)
+    @Size(min = 6, message = ExceptionConstants.EMAIL_MIN_LENGTH)
+    @Size(max = 100, message = ExceptionConstants.EMAIL_MAX_LENGTH)
     @Pattern(regexp = BaseConstants.REGEX.EMAIL_PATTERN, message = ExceptionConstants.EMAIL_INVALID)
     private String email;
 
     @NotBlank(message = ExceptionConstants.PHONE_NOT_BLANK)
-    @Size(max = 20, message = ExceptionConstants.PHONE_MAX_SIZE)
+    @Size(min = 6, message = ExceptionConstants.PHONE_MIN_LENGTH)
+    @Size(max = 20, message = ExceptionConstants.PHONE_MAX_LENGTH)
     @Pattern(regexp = BaseConstants.REGEX.PHONE_PATTERN, message = ExceptionConstants.PHONE_INVALID)
     private String phone;
 
     @NotBlank(message = ExceptionConstants.ADDRESS_NOT_BLANK)
+    @Size(max = 255, message = ExceptionConstants.ADDRESS_MAX_LENGTH)
     private String address;
 
     @Size(max = 100, message = ExceptionConstants.WEBSITE_MAX_SIZE)
