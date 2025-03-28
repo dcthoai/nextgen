@@ -11,10 +11,10 @@ import java.util.List;
 public interface RoleService {
 
     BaseResponseDTO getRolesWithPaging(BaseRequestDTO request);
-    BaseResponseDTO getRoleDetail(Integer roleID);
+    BaseResponseDTO getRoleDetail(Integer roleId);
     BaseResponseDTO getPermissionTree();
     BaseResponseDTO createNewRole(CreateRoleRequestDTO request);
     BaseResponseDTO updateRole(UpdateRoleRequestDTO request);
-    BaseResponseDTO deleteRole(Integer roleID);
-    List<IRoleDTO> getAccountRoles(Integer userID);
+    BaseResponseDTO deleteRole(Integer roleId);
+    List<IRoleDTO> getAccountRoles(Integer accountId);
 }

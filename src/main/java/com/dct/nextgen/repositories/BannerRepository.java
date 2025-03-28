@@ -20,7 +20,7 @@ public interface BannerRepository extends JpaRepository<Banner, Integer> {
             b.text_stroke_1 as textStroke1, b.text_stroke_2 as textStroke2,
             b.text_uppercase_1 as textUpperCase1, b.text_uppercase_2 as textUpperCase2,
             b.position, b.image
-            FROM banner b;
+            FROM banner b
         """,
         nativeQuery = true
     )
@@ -33,7 +33,7 @@ public interface BannerRepository extends JpaRepository<Banner, Integer> {
             b.text_uppercase_1 as textUpperCase1, b.text_uppercase_2 as textUpperCase2,
             b.position, b.image
             FROM banner b
-            LIMIT 100;
+            LIMIT 100
         """,
         nativeQuery = true
     )
@@ -41,17 +41,17 @@ public interface BannerRepository extends JpaRepository<Banner, Integer> {
 
     @Query(
         value = """
-            SELECT b.id as id,
+            SELECT b.id,
             b.text_stroke_1 as textStroke1, b.text_stroke_2 as textStroke2,
             b.text_uppercase_1 as textUpperCase1, b.text_uppercase_2 as textUpperCase2,
             b.position, b.image
             FROM banner b
-            WHERE b.id = ?1;
+            WHERE b.id = ?1
         """,
         nativeQuery = true
     )
     Optional<IBannerDTO> findIBannerById(Integer bannerId);
 
-    @Query(value = "SELECT * FROM banner b WHERE b.position = ?1 LIMIT 1;", nativeQuery = true)
+    @Query(value = "SELECT * FROM banner b WHERE b.position = ?1 LIMIT 1", nativeQuery = true)
     Optional<Banner> findBannerByPosition(String position);
 }
