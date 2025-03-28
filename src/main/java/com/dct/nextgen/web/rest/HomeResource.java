@@ -37,10 +37,10 @@ public class HomeResource {
         return homeService.getBannersWithPaging(requestDTO);
     }
 
-    @GetMapping("/banners/{bannerID}")
+    @GetMapping("/banners/{bannerId}")
     @CheckAuthorize(authorities = RoleConstants.Home.VIEW)
-    public BaseResponseDTO getBannerDetail(@PathVariable Integer bannerID) {
-        return homeService.getBannerDetail(bannerID);
+    public BaseResponseDTO getBannerDetail(@PathVariable Integer bannerId) {
+        return homeService.getBannerDetail(bannerId);
     }
 
     @PutMapping("/banners")

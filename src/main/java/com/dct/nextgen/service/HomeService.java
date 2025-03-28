@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface HomeService {
 
     BaseResponseDTO getBannersWithPaging(BaseRequestDTO request);
-    BaseResponseDTO getBannerDetail(Integer bannerID);
+    BaseResponseDTO getBannerDetail(Integer bannerId);
     BaseResponseDTO updateBanner(UpdateBannerRequestDTO request);
     BaseResponseDTO getVideoHome();
     BaseResponseDTO updateVideoHome(MultipartFile video);

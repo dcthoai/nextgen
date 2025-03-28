@@ -63,14 +63,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public BaseResponseDTO getRoleDetail(Integer roleID) {
-        Optional<IRoleDTO> roleDTO = roleRepository.findByID(roleID);
+    public BaseResponseDTO getRoleDetail(Integer roleId) {
+        Optional<IRoleDTO> roleDTO = roleRepository.findIRoleById(roleId);
 
         if (roleDTO.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ResultConstants.DATA_NOT_FOUND);
         }
 
-        List<PermissionDTO> rolePermissions = permissionRepository.findAllByRoleID(roleID)
+        List<PermissionDTO> rolePermissions = permissionRepository.findAllByRoleId(roleId)
             .stream()
             .map(iPermissionDTO -> {
                 PermissionDTO permissionDTO = new PermissionDTO(iPermissionDTO);
@@ -123,12 +123,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<IRoleDTO> getAccountRoles(Integer accountID) {
-        if (Objects.isNull(accountID) || accountID <= 0) {
+    public List<IRoleDTO> getAccountRoles(Integer accountId) {
+        if (Objects.isNull(accountId) || accountId <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
         }
 
-        return roleRepository.findAllByAccountID(accountID);
+        return roleRepository.findAllByAccountId(accountId);
     }
 
     @Override
@@ -141,10 +141,10 @@ public class RoleServiceImpl implements RoleService {
         }
 
         Role role = roleRepository.save(new Role(request.getName(), request.getCode()));
-        List<IPermissionDTO> permissions = permissionRepository.findAllByIDs(request.getPermissionIDs());
+        List<IPermissionDTO> permissions = permissionRepository.findAllByIds(request.getPermissionIds());
         List<RolePermission> rolePermissions = new ArrayList<>();
 
-        if (permissions.isEmpty() || permissions.size() != request.getPermissionIDs().size()) {
+        if (permissions.isEmpty() || permissions.size() != request.getPermissionIds().size()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
         }
 
@@ -186,12 +186,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public BaseResponseDTO deleteRole(Integer roleID) {
-        if (Objects.isNull(roleID) || roleID <= 0) {
+    public BaseResponseDTO deleteRole(Integer roleId) {
+        if (Objects.isNull(roleId) || roleId <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
         }
 
-        roleRepository.deleteById(roleID);
+        roleRepository.deleteById(roleId);
         return BaseResponseDTO.builder().ok();
     }
 }

@@ -86,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_EXISTED);
         }
 
-        List<IRoleDTO> roles = roleRepository.findAllByIDs(request.getRoleIds());
+        List<IRoleDTO> roles = roleRepository.findAllByIds(request.getRoleIds());
 
         if (roles.isEmpty() || roles.size() != request.getRoleIds().size()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_PERMISSION);
@@ -143,12 +143,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public BaseResponseDTO deleteAccount(Integer accountID) {
-        if (Objects.isNull(accountID) || accountID <= 0) {
+    public BaseResponseDTO deleteAccount(Integer accountId) {
+        if (Objects.isNull(accountId) || accountId <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
         }
 
-        accountRepository.deleteById(accountID);
+        accountRepository.deleteById(accountId);
         return BaseResponseDTO.builder().ok();
     }
 }

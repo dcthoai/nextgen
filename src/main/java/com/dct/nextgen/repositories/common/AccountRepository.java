@@ -18,7 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_ID as deviceId
+            SELECT a.id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_id as deviceId
             FROM account a;
         """,
         nativeQuery = true
@@ -27,7 +27,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_ID as deviceId
+            SELECT a.id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_id as deviceId
             FROM account a LIMIT 100;
         """,
         nativeQuery = true
@@ -36,16 +36,16 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_ID as deviceId
-            FROM account a WHERE a.ID = :accountID
+            SELECT a.id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_id as deviceId
+            FROM account a WHERE a.id = ?1;
         """,
         nativeQuery = true
     )
-    Optional<IAccountDTO> findIAccountById(@Param("accountID") Integer accountID);
+    Optional<IAccountDTO> findIAccountById(Integer accountId);
 
     @Query(
         value = """
-            SELECT a.ID as id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_ID as deviceId
+            SELECT a.id, a.fullname, a.username, a.email, a.address, a.phone, a.status, a.device_id as deviceId
             FROM account a WHERE a.username = ?1;
         """,
         nativeQuery = true
@@ -53,6 +53,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     Optional<IAccountDTO> findAccountByUsername(String username);
 
     boolean existsByUsernameOrEmail(String username, String email);
-    boolean existsByUsernameOrEmailAndIdNot(String username, String email, Integer accountID);
+    boolean existsByUsernameOrEmailAndIdNot(String username, String email, Integer accountId);
     Optional<Account> findByUsername(String username);
 }

@@ -51,8 +51,8 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public BaseResponseDTO getBannerDetail(Integer bannerID) {
-        Optional<IBannerDTO> bannerOptional = bannerRepository.findByID(bannerID);
+    public BaseResponseDTO getBannerDetail(Integer bannerId) {
+        Optional<IBannerDTO> bannerOptional = bannerRepository.findIBannerById(bannerId);
 
         if (bannerOptional.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.BANNER_NOT_FOUND);

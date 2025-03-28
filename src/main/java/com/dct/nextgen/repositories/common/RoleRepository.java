@@ -16,26 +16,26 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
 
     @Query(
         value = """
-            SELECT r.ID, r.name, r.code
+            SELECT r.id, r.name, r.code
             FROM role r
-            JOIN account_role ar on r.ID = ar.role_ID
-            WHERE ar.account_ID = ?1;
+            JOIN account_role ar on r.id = ar.role_id
+            WHERE ar.account_id = ?1;
         """,
         nativeQuery = true
     )
-    List<IRoleDTO> findAllByAccountID(Integer accountID);
+    List<IRoleDTO> findAllByAccountId(Integer accountId);
 
-    @Query(value = "SELECT r.id as ID, r.name, r.code FROM role r;", nativeQuery = true)
+    @Query(value = "SELECT r.id, r.name, r.code FROM role r;", nativeQuery = true)
     Page<IRoleDTO> findAllWithPaging(Pageable pageable);
 
-    @Query(value = "SELECT r.id as ID, r.name, r.code FROM role r LIMIT 100;", nativeQuery = true)
+    @Query(value = "SELECT r.id, r.name, r.code FROM role r LIMIT 100;", nativeQuery = true)
     List<IRoleDTO> findAllNonPaging();
 
-    @Query(value = "SELECT r.id as ID, r.name, r.code FROM role r WHERE r.ID in (?1);", nativeQuery = true)
-    List<IRoleDTO> findAllByIDs(Iterable<Integer> roleIDs);
+    @Query(value = "SELECT r.id, r.name, r.code FROM role r WHERE r.id in (?1);", nativeQuery = true)
+    List<IRoleDTO> findAllByIds(Iterable<Integer> roleIds);
 
-    @Query(value = "SELECT r.id as ID, r.name, r.code FROM role r WHERE r.ID = ?1;", nativeQuery = true)
-    Optional<IRoleDTO> findByID(Integer roleID);
+    @Query(value = "SELECT r.id, r.name, r.code FROM role r WHERE r.id = ?1;", nativeQuery = true)
+    Optional<IRoleDTO> findIRoleById(Integer roleId);
 
     boolean existsByCodeOrName(String code, String name);
     boolean existsByCodeOrNameAndIdNot(String code, String name, Integer id);
