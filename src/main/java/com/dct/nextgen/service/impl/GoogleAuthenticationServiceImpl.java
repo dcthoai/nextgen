@@ -7,7 +7,7 @@ import com.dct.nextgen.constants.PropertiesConstants;
 import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
-import com.dct.nextgen.dto.mapping.IAccountDTO;
+import com.dct.nextgen.dto.mapping.IAuthenticationDTO;
 import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;
@@ -71,11 +71,11 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
     @Override
     public BaseResponseDTO authorize(OAuth2UserInfoResponse userInfo) {
         log.debug("Authorize for user '{}'", userInfo.getEmail());
-        Optional<IAccountDTO> accountOptional = accountRepository.findAccountByUsername(userInfo.getEmail());
+        Optional<IAuthenticationDTO> authentication = accountRepository.findAuthenticationByEmail(userInfo.getEmail());
         Account account = new Account();
         String username, password;
 
-        if (accountOptional.isEmpty()) {
+        if (authentication.isEmpty()) {
             username = CredentialGenerator.generateUsername(8);
             password = CredentialGenerator.generatePassword(8);
             log.debug("Authenticate for user '{}' via Google, no account yet", username);
@@ -87,7 +87,7 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
 
             account = accountService.createNewAccount(registerAccountRequest);
         } else {
-            BeanUtils.copyProperties(accountOptional.get(), account);
+            BeanUtils.copyProperties(authentication.get(), account);
             username = account.getUsername();
         }
 

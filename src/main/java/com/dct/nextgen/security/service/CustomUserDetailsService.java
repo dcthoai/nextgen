@@ -1,7 +1,7 @@
 package com.dct.nextgen.security.service;
 
 import com.dct.nextgen.constants.ExceptionConstants;
-import com.dct.nextgen.dto.mapping.IPermissionDTO;
+import com.dct.nextgen.dto.mapping.IAuthenticationDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.repositories.common.AccountRepository;
 import com.dct.nextgen.repositories.common.PermissionRepository;
@@ -9,6 +9,7 @@ import com.dct.nextgen.security.model.CustomUserDetails;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,8 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,18 +39,19 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("Load user by username: " + username);
-        Optional<Account> accountOptional = accountRepository.findByUsername(username);
+        Optional<IAuthenticationDTO> authentication = accountRepository.findAuthenticationByUsername(username);
 
-        if (accountOptional.isEmpty())
+        if (authentication.isEmpty())
             throw new UsernameNotFoundException(ExceptionConstants.ACCOUNT_NOT_FOUND);
 
-        Account account = accountOptional.get();
-        List<IPermissionDTO> userPermissions = permissionRepository.findAllByAccountID(account.getId());
+        Account account = new Account();
+        BeanUtils.copyProperties(authentication.get(), account);
+        Set<String> userPermissions = permissionRepository.findAllByAccountId(account.getId());
 
         Collection<SimpleGrantedAuthority> userAuthorities = userPermissions
             .stream()
-            .filter(permissionDTO -> StringUtils.hasText(permissionDTO.getCode()))
-            .map(permissionDTO -> new SimpleGrantedAuthority(permissionDTO.getCode()))
+            .filter(StringUtils::hasText)
+            .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toSet());
 
         return new CustomUserDetails(account, userAuthorities);

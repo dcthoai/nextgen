@@ -1,6 +1,5 @@
 package com.dct.nextgen.constants;
 
-import com.dct.nextgen.dto.config.NotifyConfigMap;
 import com.dct.nextgen.entity.base.SystemConfig;
 
 /**
@@ -18,7 +17,7 @@ import com.dct.nextgen.entity.base.SystemConfig;
  * <p>
  *   The {@link FUNCTION FUNCTION} section stores enums, with each enum containing a set of codes
  *   corresponding to the notification configurations used within that specific function.
- *   They are used with {@link NotifyConfigMap NotifyConfigMap}
+ *   They are used with NotifyConfigMap
  * </p>
  *
  * @author thoaidc

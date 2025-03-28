@@ -63,8 +63,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public BaseResponseDTO getAccountDetail(Integer accountID) {
-        Optional<IAccountDTO> iAccountDTO = accountRepository.findIAccountById(accountID);
+    public BaseResponseDTO getAccountDetail(Integer accountId) {
+        Optional<IAccountDTO> iAccountDTO = accountRepository.findIAccountById(accountId);
 
         if (iAccountDTO.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_NOT_EXISTED);
@@ -72,7 +72,7 @@ public class AccountServiceImpl implements AccountService {
 
         AccountDTO accountDTO = new AccountDTO();
         BeanUtils.copyProperties(iAccountDTO.get(), accountDTO);
-        List<IRoleDTO> accountRoles = roleService.getAccountRoles(accountID);
+        List<IRoleDTO> accountRoles = roleService.getAccountRoles(accountId);
         accountDTO.setAccountRoles(accountRoles);
 
         return BaseResponseDTO.builder().ok(accountDTO);
