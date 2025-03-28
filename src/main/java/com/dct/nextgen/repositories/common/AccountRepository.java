@@ -16,32 +16,11 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
-    @Query(
-        value = """
-            SELECT a.id, a.username, a.fullname, a.email, a.phone, a.status, a.device_id as deviceId
-            FROM account a;
-        """,
-        nativeQuery = true
-    )
+    @Query(value = "SELECT id, username, fullname, email, phone, status FROM account", nativeQuery = true)
     Page<IAccountDTO> findAllWithPaging(Pageable pageable);
 
-    @Query(
-        value = """
-            SELECT a.id, a.username, a.fullname, a.email, a.phone, a.status, a.device_id as deviceId
-            FROM account a LIMIT 100;
-        """,
-        nativeQuery = true
-    )
+    @Query(value = "SELECT id, username, fullname, email, phone, status FROM account LIMIT 50", nativeQuery = true)
     List<IAccountDTO> findAllNonPaging();
-
-    @Query(
-        value = """
-            SELECT a.id, a.username, a.fullname, a.email, a.phone, a.address, a.status, a.device_id as deviceId
-            FROM account a WHERE a.id = ?1
-        """,
-        nativeQuery = true
-    )
-    Optional<IAccountDTO> findIAccountById(Integer accountId);
 
     @Query(
         value = """

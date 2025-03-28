@@ -19,12 +19,12 @@ import java.util.Locale;
  */
 @SuppressWarnings("unused")
 @Component
-public class BaseCommon {
+public class MessageUtils {
 
-    private static final Logger log = LoggerFactory.getLogger(BaseCommon.class);
+    private static final Logger log = LoggerFactory.getLogger(MessageUtils.class);
     private final MessageSource messageSource; // Spring boot service for I18n
 
-    public BaseCommon(MessageSource messageSource) {
+    public MessageUtils(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 

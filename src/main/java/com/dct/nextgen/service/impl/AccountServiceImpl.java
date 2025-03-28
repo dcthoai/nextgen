@@ -1,5 +1,6 @@
 package com.dct.nextgen.service.impl;
 
+import com.dct.nextgen.common.Common;
 import com.dct.nextgen.constants.AccountConstants;
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.dto.mapping.IAccountDTO;
@@ -64,16 +65,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public BaseResponseDTO getAccountDetail(Integer accountId) {
-        Optional<IAccountDTO> iAccountDTO = accountRepository.findIAccountById(accountId);
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
 
-        if (iAccountDTO.isEmpty()) {
+        if (accountOptional.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_NOT_EXISTED);
         }
 
+        Account account = accountOptional.get();
         AccountDTO accountDTO = new AccountDTO();
-        BeanUtils.copyProperties(iAccountDTO.get(), accountDTO);
-        List<IRoleDTO> accountRoles = roleService.getAccountRoles(accountId);
-        accountDTO.setAccountRoles(accountRoles);
+        BeanUtils.copyProperties(account, accountDTO);
+        Common.setAuditingInfo(account, accountDTO);
+        accountDTO.setAccountRoles(roleService.getAccountRoles(accountId));
 
         return BaseResponseDTO.builder().ok(accountDTO);
     }

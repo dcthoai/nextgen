@@ -1,6 +1,6 @@
 package com.dct.nextgen.security.jwt;
 
-import com.dct.nextgen.common.BaseCommon;
+import com.dct.nextgen.common.MessageUtils;
 import com.dct.nextgen.common.JsonUtils;
 import com.dct.nextgen.constants.HttpStatusConstants;
 import com.dct.nextgen.constants.SecurityConstants;
@@ -42,11 +42,11 @@ public class JwtFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(JwtFilter.class);
     private static final String ENTITY_NAME = "JwtTokenFilter";
     private final JwtProvider jwtProvider;
-    private final BaseCommon baseCommon;
+    private final MessageUtils messageUtils;
 
-    public JwtFilter(JwtProvider jwtProvider, BaseCommon baseCommon) {
+    public JwtFilter(JwtProvider jwtProvider, MessageUtils messageUtils) {
         this.jwtProvider = jwtProvider;
-        this.baseCommon = baseCommon;
+        this.messageUtils = messageUtils;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class JwtFilter extends OncePerRequestFilter {
         BaseResponseDTO responseDTO = BaseResponseDTO.builder()
             .code(HttpStatusConstants.UNAUTHORIZED)
             .success(HttpStatusConstants.STATUS.FAILED)
-            .message(baseCommon.getMessageI18n(exception.getErrorKey(), exception.getArgs()))
+            .message(messageUtils.getMessageI18n(exception.getErrorKey(), exception.getArgs()))
             .build();
 
         response.getWriter().write(JsonUtils.toJsonString(responseDTO));

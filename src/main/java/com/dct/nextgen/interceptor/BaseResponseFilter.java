@@ -1,6 +1,6 @@
 package com.dct.nextgen.interceptor;
 
-import com.dct.nextgen.common.BaseCommon;
+import com.dct.nextgen.common.MessageUtils;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import jakarta.annotation.Nullable;
 
@@ -25,10 +25,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class BaseResponseFilter implements ResponseBodyAdvice<Object> {
 
     private static final Logger log = LoggerFactory.getLogger(BaseResponseFilter.class);
-    private final BaseCommon baseCommon;
+    private final MessageUtils messageUtils;
 
-    public BaseResponseFilter(BaseCommon baseCommon) {
-        this.baseCommon = baseCommon;
+    public BaseResponseFilter(MessageUtils messageUtils) {
+        this.messageUtils = messageUtils;
     }
 
     /**
@@ -67,14 +67,14 @@ public class BaseResponseFilter implements ResponseBodyAdvice<Object> {
                                   @Nullable ServerHttpRequest request,
                                   @Nullable ServerHttpResponse response) {
         if (body instanceof BaseResponseDTO) {
-            return baseCommon.setResponseMessageI18n((BaseResponseDTO) body);
+            return messageUtils.setResponseMessageI18n((BaseResponseDTO) body);
         }
 
         if (body instanceof ResponseEntity<?> responseEntity) {
             Object responseBody = responseEntity.getBody();
 
             if (responseBody instanceof BaseResponseDTO) {
-                BaseResponseDTO responseDTO = baseCommon.setResponseMessageI18n((BaseResponseDTO) responseBody);
+                BaseResponseDTO responseDTO = messageUtils.setResponseMessageI18n((BaseResponseDTO) responseBody);
                 return new ResponseEntity<>(responseDTO, responseEntity.getHeaders(), responseEntity.getStatusCode());
             }
         }

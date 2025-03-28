@@ -1,6 +1,6 @@
 package com.dct.nextgen.security.handler;
 
-import com.dct.nextgen.common.BaseCommon;
+import com.dct.nextgen.common.MessageUtils;
 import com.dct.nextgen.common.JsonUtils;
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.HttpStatusConstants;
@@ -28,10 +28,10 @@ import java.nio.charset.StandardCharsets;
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private static final Logger log = LoggerFactory.getLogger(CustomAuthenticationEntryPoint.class);
-    private final BaseCommon baseCommon;
+    private final MessageUtils messageUtils;
 
-    public CustomAuthenticationEntryPoint(BaseCommon baseCommon) {
-        this.baseCommon = baseCommon;
+    public CustomAuthenticationEntryPoint(MessageUtils messageUtils) {
+        this.messageUtils = messageUtils;
         log.debug("AuthenticationEntryPoint 'CustomAuthenticationEntryPoint' is configured for use");
     }
 
@@ -57,7 +57,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         BaseResponseDTO responseDTO = BaseResponseDTO.builder()
             .code(HttpStatusConstants.UNAUTHORIZED)
             .success(HttpStatusConstants.STATUS.FAILED)
-            .message(baseCommon.getMessageI18n(ExceptionConstants.UNAUTHORIZED))
+            .message(messageUtils.getMessageI18n(ExceptionConstants.UNAUTHORIZED))
             .build();
 
         response.getWriter().write(JsonUtils.toJsonString(responseDTO));

@@ -1,9 +1,9 @@
 package com.dct.nextgen.service.impl;
 
-import com.dct.nextgen.common.BaseCommon;
+import com.dct.nextgen.common.Common;
+import com.dct.nextgen.common.MessageUtils;
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.ResultConstants;
-import com.dct.nextgen.dto.auth.PermissionDTO;
 import com.dct.nextgen.dto.auth.PermissionTreeNode;
 import com.dct.nextgen.dto.auth.RoleDTO;
 import com.dct.nextgen.dto.mapping.IPermissionDTO;
@@ -22,6 +22,7 @@ import com.dct.nextgen.repositories.common.RoleRepository;
 import com.dct.nextgen.service.RoleService;
 
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -40,16 +41,16 @@ public class RoleServiceImpl implements RoleService {
     private final RolePermissionRepository rolePermissionRepository;
     private final PermissionRepository permissionRepository;
     private final RoleRepository roleRepository;
-    private final BaseCommon baseCommon;
+    private final MessageUtils messageUtils;
 
     public RoleServiceImpl(RolePermissionRepository rolePermissionRepository,
                            PermissionRepository permissionRepository,
                            RoleRepository roleRepository,
-                           BaseCommon baseCommon) {
+                           MessageUtils messageUtils) {
         this.rolePermissionRepository = rolePermissionRepository;
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
-        this.baseCommon = baseCommon;
+        this.messageUtils = messageUtils;
     }
 
     @Override
@@ -64,26 +65,17 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public BaseResponseDTO getRoleDetail(Integer roleId) {
-        Optional<IRoleDTO> roleDTO = roleRepository.findIRoleById(roleId);
+        Optional<Role> roleOptional = roleRepository.findById(roleId);
 
-        if (roleDTO.isEmpty()) {
+        if (roleOptional.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ResultConstants.DATA_NOT_FOUND);
         }
 
-        List<PermissionDTO> rolePermissions = permissionRepository.findAllByRoleId(roleId)
-            .stream()
-            .map(iPermissionDTO -> {
-                PermissionDTO permissionDTO = new PermissionDTO(iPermissionDTO);
-
-                permissionDTO.setName(baseCommon.getMessageI18n(permissionDTO.getName()));
-                permissionDTO.setDescription(baseCommon.getMessageI18n(permissionDTO.getDescription()));
-
-                return permissionDTO;
-            })
-            .toList();
-
-        RoleDTO roleDetails = new RoleDTO(roleDTO.get());
-        roleDetails.setRolePermissions(rolePermissions);
+        Role role = roleOptional.get();
+        RoleDTO roleDetails = new RoleDTO();
+        BeanUtils.copyProperties(role, roleDetails);
+        Common.setAuditingInfo(role, roleDetails);
+        roleDetails.setPermissions(permissionRepository.findAllByRoleId(roleId));
 
         return BaseResponseDTO.builder().ok(roleDetails);
     }
@@ -97,7 +89,7 @@ public class RoleServiceImpl implements RoleService {
         for (IPermissionDTO permission : permissions) {
             PermissionTreeNode node = PermissionTreeNode.builder()
                 .id(permission.getId())
-                .name(baseCommon.getMessageI18n(permission.getName()))
+                .name(messageUtils.getMessageI18n(permission.getName()))
                 .code(permission.getCode())
                 .parentId(permission.getParentId())
                 .build();

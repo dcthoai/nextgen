@@ -3,6 +3,8 @@ package com.dct.nextgen.dto.response;
 import com.dct.nextgen.constants.HttpStatusConstants;
 import com.dct.nextgen.constants.ResultConstants;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -13,7 +15,10 @@ import java.util.Objects;
  * @author thoaidc
  */
 @SuppressWarnings("unused")
-public class BaseResponseDTO {
+public class BaseResponseDTO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Integer code; // Http status
 

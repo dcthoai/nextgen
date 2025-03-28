@@ -1,6 +1,6 @@
 package com.dct.nextgen.security.handler;
 
-import com.dct.nextgen.common.BaseCommon;
+import com.dct.nextgen.common.MessageUtils;
 import com.dct.nextgen.common.JsonUtils;
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.HttpStatusConstants;
@@ -33,10 +33,10 @@ import java.nio.charset.StandardCharsets;
 public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     private static final Logger log = LoggerFactory.getLogger(OAuth2AuthenticationFailureHandler.class);
-    private final BaseCommon baseCommon;
+    private final MessageUtils messageUtils;
 
-    public OAuth2AuthenticationFailureHandler(BaseCommon baseCommon) {
-        this.baseCommon = baseCommon;
+    public OAuth2AuthenticationFailureHandler(MessageUtils messageUtils) {
+        this.messageUtils = messageUtils;
         log.debug("Configured 'OAuth2AuthenticationFailureHandler' for use");
     }
 
@@ -63,7 +63,7 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
         BaseResponseDTO responseDTO = BaseResponseDTO.builder()
             .code(HttpStatusConstants.UNAUTHORIZED)
             .success(HttpStatusConstants.STATUS.FAILED)
-            .message(baseCommon.getMessageI18n(ExceptionConstants.OAUTH2_AUTHORIZATION_CODE_EXCEPTION))
+            .message(messageUtils.getMessageI18n(ExceptionConstants.OAUTH2_AUTHORIZATION_CODE_EXCEPTION))
             .build();
 
         response.getWriter().write(JsonUtils.toJsonString(responseDTO));

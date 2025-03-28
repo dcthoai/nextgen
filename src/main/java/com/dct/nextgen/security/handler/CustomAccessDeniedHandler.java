@@ -1,6 +1,6 @@
 package com.dct.nextgen.security.handler;
 
-import com.dct.nextgen.common.BaseCommon;
+import com.dct.nextgen.common.MessageUtils;
 import com.dct.nextgen.common.JsonUtils;
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.HttpStatusConstants;
@@ -26,10 +26,10 @@ import java.nio.charset.StandardCharsets;
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     private static final Logger log = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
-    private final BaseCommon baseCommon;
+    private final MessageUtils messageUtils;
 
-    public CustomAccessDeniedHandler(BaseCommon baseCommon) {
-        this.baseCommon = baseCommon;
+    public CustomAccessDeniedHandler(MessageUtils messageUtils) {
+        this.messageUtils = messageUtils;
         log.debug("AccessDeniedHandler 'CustomAccessDeniedHandler' is configured for use");
     }
 
@@ -56,7 +56,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         BaseResponseDTO responseDTO = BaseResponseDTO.builder()
             .code(HttpStatusConstants.FORBIDDEN)
             .success(HttpStatusConstants.STATUS.FAILED)
-            .message(baseCommon.getMessageI18n(ExceptionConstants.FORBIDDEN))
+            .message(messageUtils.getMessageI18n(ExceptionConstants.FORBIDDEN))
             .build();
 
         response.getWriter().write(JsonUtils.toJsonString(responseDTO));

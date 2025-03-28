@@ -1,31 +1,16 @@
 package com.dct.nextgen.dto.auth;
 
-import com.dct.nextgen.dto.mapping.IRoleDTO;
-import jakarta.persistence.Tuple;
+import com.dct.nextgen.dto.response.AuditingEntityDTO;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class RoleDTO {
+public class RoleDTO extends AuditingEntityDTO {
 
     private Integer id;
     private String name;
     private String code;
-    List<PermissionDTO> rolePermissions = new ArrayList<>();
-
-    public RoleDTO() {}
-
-    public RoleDTO(IRoleDTO roleDTO) {
-        this.id = roleDTO.getId();
-        this.name = roleDTO.getName();
-        this.code = roleDTO.getCode();
-    }
-
-    public RoleDTO(Tuple tuple) {
-        this.id = tuple.get("id", Integer.class);
-        this.name = tuple.get("name", String.class);
-        this.code = tuple.get("code", String.class);
-    }
+    Set<String> permissions = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -51,11 +36,11 @@ public class RoleDTO {
         this.code = code;
     }
 
-    public List<PermissionDTO> getRolePermissions() {
-        return rolePermissions;
+    public Set<String> getPermissions() {
+        return permissions;
     }
 
-    public void setRolePermissions(List<PermissionDTO> rolePermissions) {
-        this.rolePermissions = rolePermissions;
+    public void setPermissions(Set<String> permissions) {
+        this.permissions = permissions;
     }
 }

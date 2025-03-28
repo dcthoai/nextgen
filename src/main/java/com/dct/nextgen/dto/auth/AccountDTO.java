@@ -1,12 +1,13 @@
 package com.dct.nextgen.dto.auth;
 
 import com.dct.nextgen.dto.mapping.IRoleDTO;
+import com.dct.nextgen.dto.response.AuditingEntityDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class AccountDTO {
+public class AccountDTO extends AuditingEntityDTO {
 
     private Integer id;
     private String fullname;
