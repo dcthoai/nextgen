@@ -1,7 +1,9 @@
 package com.dct.nextgen.service.impl;
 
+import com.dct.nextgen.common.Common;
 import com.dct.nextgen.common.FileUtils;
 import com.dct.nextgen.constants.ExceptionConstants;
+import com.dct.nextgen.dto.company.CompanyDTO;
 import com.dct.nextgen.dto.mapping.ICompanyDTO;
 import com.dct.nextgen.dto.request.UpdateCompanyRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
@@ -42,27 +44,40 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public BaseResponseDTO getCompanyDetail() {
+        Optional<Company> companyOptional = companyRepository.findFirstByOrderByCreatedDateAsc();
+
+        if (companyOptional.isEmpty()) {
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.COMPANY_NULL);
+        }
+
+        Company company = companyOptional.get();
+        CompanyDTO companyDetail = new CompanyDTO();
+        BeanUtils.copyProperties(company, companyDetail);
+        Common.setAuditingInfo(company, companyDetail);
+
+        return BaseResponseDTO.builder().ok(companyDetail);
+    }
+
+    @Override
     public BaseResponseDTO updateCompanyInfo(UpdateCompanyRequestDTO request) {
-        Optional<Company> companyOptional = companyRepository.findById(request.getId());
+        Optional<Company> companyOptional = companyRepository.findFirstByOrderByCreatedDateAsc();
         List<String> oldImageUrlToDelete = new ArrayList<>();
         Company company;
 
         if (companyOptional.isEmpty()) {
             company = new Company();
-            request.setId(null);
         } else {
             company = companyOptional.get();
             oldImageUrlToDelete.add(company.getLogo());
             oldImageUrlToDelete.add(company.getImage());
             oldImageUrlToDelete.add(company.getMapImage());
-            oldImageUrlToDelete.add(company.getVideoIntro());
         }
 
         BeanUtils.copyProperties(request, company);
         String companyLogoUrl = fileUtils.autoCompressImageAndSave(request.getLogoFile());
         String companyImageUrl = fileUtils.autoCompressImageAndSave(request.getImageFile());
         String companyMapImageUrl = fileUtils.autoCompressImageAndSave(request.getMapImageFile());
-        String companyVideoIntroUrl = fileUtils.autoCompressImageAndSave(request.getVideoIntroFile());
 
         if (StringUtils.hasText(companyLogoUrl)) {
             company.setLogo(companyLogoUrl);
@@ -74,10 +89,6 @@ public class CompanyServiceImpl implements CompanyService {
 
         if (StringUtils.hasText(companyMapImageUrl)) {
             company.setMapImage(companyMapImageUrl);
-        }
-
-        if (StringUtils.hasText(companyVideoIntroUrl)) {
-            company.setVideoIntro(companyVideoIntroUrl);
         }
 
         companyRepository.save(company);

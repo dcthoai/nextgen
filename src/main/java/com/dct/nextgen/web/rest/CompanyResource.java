@@ -28,6 +28,12 @@ public class CompanyResource {
         return companyService.getCompanyInfo();
     }
 
+    @GetMapping("/company")
+    @CheckAuthorize(authorities = RoleConstants.Company.VIEW)
+    public BaseResponseDTO getCompanyDetail() {
+        return companyService.getCompanyDetail();
+    }
+
     @PutMapping("/company")
     @CheckAuthorize(authorities = RoleConstants.Company.UPDATE)
     public BaseResponseDTO updateCompanyInfo(@Valid @ModelAttribute UpdateCompanyRequestDTO requestDTO) {

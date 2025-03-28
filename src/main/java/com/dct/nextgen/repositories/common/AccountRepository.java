@@ -41,5 +41,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     Optional<IAuthenticationDTO> findAuthenticationByEmail(String email);
 
     boolean existsByUsernameOrEmail(String username, String email);
-    boolean existsByUsernameOrEmailAndIdNot(String username, String email, Integer accountId);
+
+    @Query("SELECT COUNT(a.id) FROM Account a WHERE (a.username = ?1 OR a.email = ?2) AND a.id <> ?3")
+    Long countByUsernameOrEmailAndIdNot(String username, String email, Integer accountId);
 }

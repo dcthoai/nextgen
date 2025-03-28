@@ -114,13 +114,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public BaseResponseDTO updateAccount(UpdateAccountRequestDTO request) {
-        boolean isExistedAccount = accountRepository.existsByUsernameOrEmailAndIdNot(
+        Long existedAccounts = accountRepository.countByUsernameOrEmailAndIdNot(
             request.getUsername(),
             request.getEmail(),
             request.getId()
         );
 
-        if (isExistedAccount) {
+        if (existedAccounts > 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.ACCOUNT_EXISTED);
         }
 

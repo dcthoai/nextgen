@@ -6,5 +6,6 @@ import com.dct.nextgen.dto.response.BaseResponseDTO;
 public interface CompanyService {
 
     BaseResponseDTO getCompanyInfo();
+    BaseResponseDTO getCompanyDetail();
     BaseResponseDTO updateCompanyInfo(UpdateCompanyRequestDTO request);
 }

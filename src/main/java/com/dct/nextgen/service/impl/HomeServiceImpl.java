@@ -1,7 +1,9 @@
 package com.dct.nextgen.service.impl;
 
+import com.dct.nextgen.common.Common;
 import com.dct.nextgen.common.FileUtils;
 import com.dct.nextgen.constants.ExceptionConstants;
+import com.dct.nextgen.dto.company.BannerDTO;
 import com.dct.nextgen.dto.mapping.IBannerDTO;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.UpdateBannerRequestDTO;
@@ -52,13 +54,18 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public BaseResponseDTO getBannerDetail(Integer bannerId) {
-        Optional<IBannerDTO> bannerOptional = bannerRepository.findIBannerById(bannerId);
+        Optional<Banner> bannerOptional = bannerRepository.findById(bannerId);
 
         if (bannerOptional.isEmpty()) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.BANNER_NOT_FOUND);
         }
 
-        return BaseResponseDTO.builder().ok(bannerOptional.get());
+        Banner banner = bannerOptional.get();
+        BannerDTO bannerDetail = new BannerDTO();
+        BeanUtils.copyProperties(banner, bannerDetail);
+        Common.setAuditingInfo(banner, bannerDetail);
+
+        return BaseResponseDTO.builder().ok(bannerDetail);
     }
 
     @Override

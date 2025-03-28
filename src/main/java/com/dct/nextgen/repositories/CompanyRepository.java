@@ -28,6 +28,8 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     )
     Optional<ICompanyDTO> findCompany();
 
+    Optional<Company> findFirstByOrderByCreatedDateAsc();
+
     @Query(value = "SELECT c.video_intro FROM company c ORDER BY c.created_date LIMIT 1;", nativeQuery = true)
     String getVideoIntro();
 
