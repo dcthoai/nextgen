@@ -9,6 +9,7 @@
 --          Partners: view, create, update, delete
 --          Mottos: view, create, update, delete
 --          Staffs: view, create, update, delete
+--          Contact form: view, update
 --      Manage Products:
 --          Product Categories: view, create, update, delete
 --          Products: view, create, update, delete
@@ -131,6 +132,15 @@ INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_co
 ('permission.about.staff.update', '060403', 'permission.about.staff.update.description', @staff_id, '0604', 'admin'),
 ('permission.about.staff.delete', '060404', 'permission.about.staff.delete.description', @staff_id, '0604', 'admin');
 
+-- Manage About: Contact form
+INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`)
+VALUES ('permission.about.contactForm', '0605', 'permission.about.contactForm.description', @about_id, '06', 'admin');
+
+SET @contact_form_id = LAST_INSERT_ID();
+
+INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`) VALUES
+('permission.about.contactForm.view', '060501', 'permission.about.contactForm.view.description', @contact_form_id, '0605', 'admin'),
+('permission.about.contactForm.update', '060502', 'permission.about.contactForm.update.description', @contact_form_id, '0605', 'admin');
 
 -- Manage Products
 INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`)

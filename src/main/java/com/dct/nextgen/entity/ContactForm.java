@@ -15,11 +15,11 @@ public class ContactForm extends AbstractAuditingEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description", length = 1000, nullable = false)
-    private String description;
+    @Column(name = "text1", length = 500)
+    private String text1;
 
-    @Column(name = "description_2", length = 1000, nullable = false)
-    private String description2;
+    @Column(name = "text2", length = 500)
+    private String text2;
 
     public String getTitle() {
         return title;
@@ -29,19 +29,19 @@ public class ContactForm extends AbstractAuditingEntity {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getText1() {
+        return text1;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setText1(String text1) {
+        this.text1 = text1;
     }
 
-    public String getDescription2() {
-        return description2;
+    public String getText2() {
+        return text2;
     }
 
-    public void setDescription2(String description2) {
-        this.description2 = description2;
+    public void setText2(String text2) {
+        this.text2 = text2;
     }
 }

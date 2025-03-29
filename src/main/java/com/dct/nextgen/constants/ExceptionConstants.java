@@ -110,4 +110,8 @@ public interface ExceptionConstants {
     String ADDRESS_MAX_LENGTH = "exception.data.address.maxLength";
     String STATUS_NOT_BLANK = "exception.data.status.notBlank";
     String STATUS_INVALID = "exception.data.status.invalid";
+    String TITLE_NOT_BLANK = "exception.data.title.notBlank";
+    String TITLE_MAX_LENGTH = "exception.data.title.maxLength";
+    String CONTENT_NOT_BLANK = "exception.data.content.notBlank";
+    String CONTENT_MAX_LENGTH = "exception.data.content.maxLength";
 }

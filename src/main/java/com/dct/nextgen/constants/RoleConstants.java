@@ -87,6 +87,13 @@ public interface RoleConstants {
             String UPDATE = "060403";
             String DELETE = "060404";
         }
+
+        interface ContactForm {
+
+            String CONTACT_FORM = "0605";
+            String VIEW = "060501";
+            String UPDATE = "060502";
+        }
     }
 
     interface Product {
