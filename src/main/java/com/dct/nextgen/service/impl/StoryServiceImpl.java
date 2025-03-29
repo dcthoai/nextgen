@@ -101,7 +101,6 @@ public class StoryServiceImpl implements StoryService {
         for (StoryImageDTO storyImageDTO : request.getStoryImages()) {
             StoryImage existingImage = positionMap.get(storyImageDTO.getId());
 
-            // Đã tồn tại story image
             if (Objects.nonNull(existingImage)) {
                 if (FileUtils.invalidUploadFile(storyImageDTO.getImage())) {
                     updatedImages.add(existingImage);

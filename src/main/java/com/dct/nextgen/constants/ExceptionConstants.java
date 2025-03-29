@@ -76,6 +76,7 @@ public interface ExceptionConstants {
     String BANNER_POSITION_MAX_SIZE = "exception.banner.position.maxSize";
     String BANNER_POSITION_NOT_NULL = "exception.banner.position.notNull";
     String CANNOT_SAVE_VIDEO = "exception.home.video.canNotSaveFile";
+    String CANNOT_SAVE_IMAGE = "exception.home.image.canNotSaveFile";
 
     // Form data request
     String DATA_INVALID = "exception.data.invalid";

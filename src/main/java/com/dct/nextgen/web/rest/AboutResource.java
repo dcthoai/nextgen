@@ -1,8 +1,10 @@
 package com.dct.nextgen.web.rest;
 
 import com.dct.nextgen.dto.request.BaseRequestDTO;
+import com.dct.nextgen.dto.request.CreateOrUpdatePartnerRequestDTO;
 import com.dct.nextgen.dto.request.UpdateStoryRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
+import com.dct.nextgen.service.PartnerService;
 import com.dct.nextgen.service.StoryService;
 
 import jakarta.validation.Valid;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AboutResource {
 
     private final StoryService storyService;
+    private final PartnerService partnerService;
 
-    public AboutResource(StoryService storyService) {
+    public AboutResource(StoryService storyService, PartnerService partnerService) {
         this.storyService = storyService;
+        this.partnerService = partnerService;
     }
 
     @GetMapping("/p/stories")
@@ -88,33 +92,28 @@ public class AboutResource {
         return BaseResponseDTO.builder().ok();
     }
 
-    @GetMapping("/partners")
-    public BaseResponseDTO getAllPartnersWithPaging() {
-
-        return BaseResponseDTO.builder().ok();
+    @GetMapping("/p/partners")
+    public BaseResponseDTO getAllPartnersWithPaging(@RequestBody BaseRequestDTO requestDTO) {
+        return partnerService.getAllPartnersWithPaging(requestDTO);
     }
 
-    @GetMapping("/partners/{partnerID}")
-    public BaseResponseDTO getPartnerDetail(@PathVariable Integer partnerID) {
-
-        return BaseResponseDTO.builder().ok();
+    @GetMapping("/partners/{partnerId}")
+    public BaseResponseDTO getPartnerDetail(@PathVariable Integer partnerId) {
+        return partnerService.getPartnerDetail(partnerId);
     }
 
     @PostMapping("/partners")
-    public BaseResponseDTO createNewPartner() {
-
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO createNewPartner(@Valid @ModelAttribute CreateOrUpdatePartnerRequestDTO requestDTO) {
+        return partnerService.createNewPartner(requestDTO);
     }
 
     @PutMapping("/partners")
-    public BaseResponseDTO updatePartner() {
-
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO updatePartner(@Valid @ModelAttribute CreateOrUpdatePartnerRequestDTO requestDTO) {
+        return partnerService.updatePartner(requestDTO);
     }
 
-    @DeleteMapping("/partners/{partnerID}")
-    public BaseResponseDTO deletePartner(@PathVariable Integer partnerID) {
-
-        return BaseResponseDTO.builder().ok();
+    @DeleteMapping("/partners/{partnerId}")
+    public BaseResponseDTO deletePartner(@PathVariable Integer partnerId) {
+        return partnerService.deletePartner(partnerId);
     }
 }
