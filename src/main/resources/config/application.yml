@@ -27,6 +27,13 @@ spring:
     cache: false
   jackson:
     time-zone: UTC
+  servlet:
+    multipart:
+      enabled: true
+      # Maximum size of the entire HTTP request when uploading multipart data (including files and other parameters)
+      max-request-size: 50MB
+      # Maximum size for each file that a user can upload
+      max-file-size: 30MB
 
 server:
   servlet:

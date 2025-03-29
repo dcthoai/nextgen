@@ -1,38 +1,49 @@
 package com.dct.nextgen.web.rest;
 
+import com.dct.nextgen.dto.request.BaseRequestDTO;
+import com.dct.nextgen.dto.request.UpdateStoryRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.dct.nextgen.service.StoryService;
+
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/about")
+@RequestMapping("/api")
 public class AboutResource {
 
-    private static final Logger log = LoggerFactory.getLogger(AboutResource.class);
+    private final StoryService storyService;
 
-    @GetMapping("/stories")
-    public BaseResponseDTO getAllStoriesWithPaging() {
-
-        return BaseResponseDTO.builder().ok();
+    public AboutResource(StoryService storyService) {
+        this.storyService = storyService;
     }
 
-    @GetMapping("/stories/{storyID}")
-    public BaseResponseDTO getStoryDetail(@PathVariable Integer storyID) {
+    @GetMapping("/p/stories")
+    public BaseResponseDTO getAllStoriesWithPaging(@RequestBody BaseRequestDTO requestDTO) {
+        return storyService.getAllStoriesWithPaging(requestDTO);
+    }
 
-        return BaseResponseDTO.builder().ok();
+    @GetMapping("/p/stories/{position}")
+    public BaseResponseDTO getStoryByPosition(@PathVariable String position) {
+        return storyService.getStory(position);
+    }
+
+    @GetMapping("/stories/{position}")
+    public BaseResponseDTO getStoryDetail(@PathVariable String position) {
+        return storyService.getStoryDetail(position);
     }
 
     @PutMapping("/stories")
-    public BaseResponseDTO updateStory() {
-
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO updateStory(@Valid @ModelAttribute UpdateStoryRequestDTO requestDTO) {
+        return storyService.updateStory(requestDTO);
     }
 
     @GetMapping("/mottos")

@@ -37,12 +37,6 @@ spring:
       ddl-auto: validate
   thymeleaf:
     cache: false
-  servlet:
-    multipart:
-      # Maximum size of the entire HTTP request when uploading multipart data (including files and other parameters)
-      max-request-size: 50MB
-      # Maximum size for each file that a user can upload
-      max-file-size: 30MB
 
   rabbitmq:
     host: ${RABBIT_MQ_HOST}

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
- * ResponseBodyAdvice is an interface that allows you to intervene with the response data <p>
+ * {@link ResponseBodyAdvice} is an interface that allows you to intervene with the response data <p>
  * Executed after {@link BaseHandlerInterceptor#postHandle} and before the actual data is written into the response body
  *
  * @author thoaidc

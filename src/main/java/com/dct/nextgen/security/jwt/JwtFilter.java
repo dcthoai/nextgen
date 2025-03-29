@@ -62,7 +62,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 handleException(response, exception);
                 return;
             } catch (Exception exception) {
-                log.error("JwtFilter unable to process response for BaseAuthenticationException", exception);
+                log.error("JwtFilter unable to process response for: {}", exception.getClass().getName(), exception);
                 throw exception;
             }
         }

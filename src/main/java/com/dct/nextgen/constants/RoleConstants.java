@@ -2,7 +2,8 @@ package com.dct.nextgen.constants;
 
 /**
  * Please do not delete fields that are considered unused <p>
- * As it is used to reference the database permission list config for comparison
+ * As it is used to reference the database permission list config for comparison <p>
+ * Used in this application with @{@link com.dct.nextgen.aop.annotation.CheckAuthorize}
  *
  * @author thoaidc
  */

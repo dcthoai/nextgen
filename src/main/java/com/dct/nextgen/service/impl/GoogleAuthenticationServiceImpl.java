@@ -5,7 +5,6 @@ import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.HttpStatusConstants;
 import com.dct.nextgen.constants.PropertiesConstants;
 import com.dct.nextgen.constants.ResultConstants;
-import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
 import com.dct.nextgen.dto.mapping.IAuthenticationDTO;
 import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
@@ -25,13 +24,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Optional;
-import java.util.Set;
 
 import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
@@ -91,8 +88,7 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
             username = account.getUsername();
         }
 
-        Set<SimpleGrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority(SecurityConstants.ROLES.ROLE_USER));
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, username, authorities);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null);
         SecurityContextHolder.getContext().setAuthentication(token);
         BaseAuthTokenDTO authTokenDTO = BaseAuthTokenDTO.builder()
             .authentication(token)

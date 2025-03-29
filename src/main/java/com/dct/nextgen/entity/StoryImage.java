@@ -1,8 +1,13 @@
 package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -12,22 +17,16 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class StoryImage extends AbstractAuditingEntity {
 
-    @Column(name = "story_ID", nullable = false)
-    private int storyID;
-
     @Column(name = "url", nullable = false)
     private String url;
 
-    @Column(name = "index", nullable = false)
-    private int index;
+    @Column(name = "position", nullable = false)
+    private Integer position;
 
-    public int getStoryID() {
-        return storyID;
-    }
-
-    public void setStoryID(int storyID) {
-        this.storyID = storyID;
-    }
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "story_id", referencedColumnName = "id", updatable = false, nullable = false)
+    @JsonBackReference
+    private Story story;
 
     public String getUrl() {
         return url;
@@ -37,11 +36,19 @@ public class StoryImage extends AbstractAuditingEntity {
         this.url = url;
     }
 
-    public int getIndex() {
-        return index;
+    public Story getStory() {
+        return story;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setStory(Story story) {
+        this.story = story;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

@@ -1,6 +1,7 @@
 package com.dct.nextgen.security.handler;
 
 import com.dct.nextgen.constants.PropertiesConstants;
+import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.security.model.OAuth2UserInfoResponse;
 import com.dct.nextgen.service.AuthenticationService;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -75,8 +77,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         Cookie secureCookie = authenticationService.createSecureCookie(jwt, true);
 
         response.addCookie(secureCookie);
-        response.setHeader("Content-Type", "text/html");
-        response.getWriter().write("<script>window.opener.postMessage('auth-success', '*'); window.close();</script>");
+        response.setContentType(MediaType.TEXT_HTML_VALUE);
+        response.getWriter().write(SecurityConstants.OAUTH2.AUTH_SUCCESS_SCRIPT);
         response.flushBuffer();
     }
 }

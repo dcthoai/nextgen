@@ -1,6 +1,7 @@
 package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,10 +21,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Story extends AbstractAuditingEntity {
 
-    @Column(name = "subtitle", length = 150, nullable = false)
+    @Column(name = "subtitle", length = 100, nullable = false)
     private String subtitle;
 
-    @Column(name = "title", length = 400, nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "text1", length = 1000)
@@ -38,9 +39,9 @@ public class Story extends AbstractAuditingEntity {
     @Column(name = "position", length = 50, nullable = false, unique = true)
     private String position;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "story_ID")
-    @OrderColumn(name = "index")
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderColumn(name = "position")
+    @JsonManagedReference
     private List<StoryImage> images = new ArrayList<>();
 
     public Story() {}

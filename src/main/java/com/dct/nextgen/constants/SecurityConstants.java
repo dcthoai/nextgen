@@ -4,7 +4,6 @@ import com.dct.nextgen.config.InterceptorConfig;
 import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
 import com.dct.nextgen.security.jwt.JwtProvider;
 import com.dct.nextgen.security.config.SecurityConfig;
-import com.dct.nextgen.aop.annotation.CheckAuthorize;
 
 /**
  * Security configuration parameters
@@ -115,16 +114,18 @@ public interface SecurityConstants {
                 "sync-xhr=()"; // Prevent use of synchronous XMLHttpRequest requests
     }
 
-    /**
-     * The list of ROLES used in this application <p>
-     * Constants starting with the "ROLE" prefix are used for storing in the database or with @{@link CheckAuthorize}<p>
-     * Constants without the "ROLE" prefix are used for {@link SecurityConfig#securityFilterChain} <p>
-     * Spring Security automatically adds the "ROLE" prefix by default
-     */
-    interface ROLES {
-        String ADMIN = "ADMIN";
-        String USER = "USER";
-        String ROLE_ADMIN = "ROLE_ADMIN";
-        String ROLE_USER = "ROLE_USER";
+    interface OAUTH2 {
+
+        /**
+         * This script is used in the OAuth2 authentication flow after an authentication page opens in a popup window,
+         * performs the authentication, and then reports the result to the parent window before closing the popup
+         */
+        String AUTH_SUCCESS_SCRIPT = """
+            <script>
+                const AUTH_SUCCESS_MESSAGE = 'auth-success';
+                window.opener?.postMessage(AUTH_SUCCESS_MESSAGE, '*');
+                window.close();
+            </script>
+        """;
     }
 }
