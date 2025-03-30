@@ -3,11 +3,13 @@ package com.dct.nextgen.web.rest;
 import com.dct.nextgen.aop.annotation.CheckAuthorize;
 import com.dct.nextgen.constants.RoleConstants;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
+import com.dct.nextgen.dto.request.CreateOrUpdateMottoRequestDTO;
 import com.dct.nextgen.dto.request.CreateOrUpdatePartnerRequestDTO;
 import com.dct.nextgen.dto.request.UpdateContactFormRequestDTO;
 import com.dct.nextgen.dto.request.UpdateStoryRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.service.ContactFormService;
+import com.dct.nextgen.service.MottoService;
 import com.dct.nextgen.service.PartnerService;
 import com.dct.nextgen.service.StoryService;
 
@@ -29,13 +31,16 @@ public class AboutResource {
     private final StoryService storyService;
     private final PartnerService partnerService;
     private final ContactFormService contactFormService;
+    private final MottoService mottoService;
 
     public AboutResource(StoryService storyService,
                          PartnerService partnerService,
-                         ContactFormService contactFormService) {
+                         ContactFormService contactFormService,
+                         MottoService mottoService) {
         this.storyService = storyService;
         this.partnerService = partnerService;
         this.contactFormService = contactFormService;
+        this.mottoService = mottoService;
     }
 
     @GetMapping("/p/stories")
@@ -61,32 +66,32 @@ public class AboutResource {
     }
 
     @GetMapping("/p/mottos")
-    public BaseResponseDTO getAllMottosWithPaging() {
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO getAllMottosWithPaging(@RequestBody BaseRequestDTO requestDTO) {
+        return mottoService.getAllMottosWithPaging(requestDTO);
     }
 
     @GetMapping("/mottos/{mottoId}")
     @CheckAuthorize(authorities = RoleConstants.About.Motto.VIEW)
     public BaseResponseDTO getMottoDetail(@PathVariable Integer mottoId) {
-        return BaseResponseDTO.builder().ok();
+        return mottoService.getMottoDetail(mottoId);
     }
 
     @PostMapping("/mottos")
     @CheckAuthorize(authorities = RoleConstants.About.Motto.CREATE)
-    public BaseResponseDTO createNewMotto() {
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO createNewMotto(@Valid @RequestBody CreateOrUpdateMottoRequestDTO requestDTO) {
+        return mottoService.createNewMotto(requestDTO);
     }
 
     @PutMapping("/mottos")
     @CheckAuthorize(authorities = RoleConstants.About.Motto.UPDATE)
-    public BaseResponseDTO updateMotto() {
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO updateMotto(@Valid @RequestBody CreateOrUpdateMottoRequestDTO requestDTO) {
+        return mottoService.updateMotto(requestDTO);
     }
 
     @DeleteMapping("/mottos/{mottoId}")
     @CheckAuthorize(authorities = RoleConstants.About.Motto.DELETE)
     public BaseResponseDTO deleteMotto(@PathVariable Integer mottoId) {
-        return BaseResponseDTO.builder().ok();
+        return mottoService.deleteMotto(mottoId);
     }
 
     @GetMapping("/p/contact-form")

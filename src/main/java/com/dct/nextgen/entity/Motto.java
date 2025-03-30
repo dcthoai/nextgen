@@ -12,18 +12,18 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class Motto extends AbstractAuditingEntity {
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Column(name = "description", length = 1000, nullable = false)
     private String description;
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
