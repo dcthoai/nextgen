@@ -7,6 +7,7 @@ import com.dct.nextgen.entity.base.Account;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -44,4 +45,12 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query("SELECT COUNT(a.id) FROM Account a WHERE (a.username = ?1 OR a.email = ?2) AND a.id <> ?3")
     Long countByUsernameOrEmailAndIdNot(String username, String email, Integer accountId);
+
+    @Modifying
+    @Query(value = "UPDATE account a SET a.status = ?2 WHERE a.id = ?1", nativeQuery = true)
+    void updateAccountStatusById(Integer accountId, String status);
+
+    @Modifying
+    @Query(value = "UPDATE account a SET a.device_id = ?2 WHERE a.id = ?1", nativeQuery = true)
+    void updateDeviceIdByAccountId(Integer accountId, String deviceId);
 }

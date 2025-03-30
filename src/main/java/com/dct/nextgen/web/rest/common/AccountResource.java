@@ -35,10 +35,10 @@ public class AccountResource {
         return accountService.getAccountsWithPaging(request);
     }
 
-    @GetMapping("/{accountID}")
+    @GetMapping("/{accountId}")
     @CheckAuthorize(authorities = RoleConstants.Account.VIEW)
-    public BaseResponseDTO getAccountDetail(@PathVariable Integer accountID) {
-        return accountService.getAccountDetail(accountID);
+    public BaseResponseDTO getAccountDetail(@PathVariable Integer accountId) {
+        return accountService.getAccountDetail(accountId);
     }
 
     @PostMapping
@@ -54,9 +54,9 @@ public class AccountResource {
         return accountService.updateAccount(request);
     }
 
-    @DeleteMapping("/{accountID}")
+    @DeleteMapping("/{accountId}")
     @CheckAuthorize(authorities = RoleConstants.Account.DELETE)
-    public BaseResponseDTO deleteAccount(@PathVariable Integer accountID) {
-        return accountService.deleteAccount(accountID);
+    public BaseResponseDTO deleteAccount(@PathVariable Integer accountId) {
+        return accountService.deleteAccount(accountId);
     }
 }

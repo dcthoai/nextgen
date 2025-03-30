@@ -78,7 +78,6 @@ public class JwtProvider {
 
         return Jwts.builder()
                    .subject(authTokenDTO.getAuthentication().getName())
-                   .claim(SecurityConstants.TOKEN_PAYLOAD.USERNAME, authTokenDTO.getUsername())
                    .claim(SecurityConstants.TOKEN_PAYLOAD.USER_ID, authTokenDTO.getUserId())
                    .claim(SecurityConstants.TOKEN_PAYLOAD.DEVICE_ID, authTokenDTO.getDeviceId())
                    .claim(SecurityConstants.TOKEN_PAYLOAD.AUTHORITIES, String.join(",", userAuthorities))

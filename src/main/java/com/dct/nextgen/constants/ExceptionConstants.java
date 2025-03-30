@@ -25,7 +25,10 @@ public interface ExceptionConstants {
 
     // Authentication exception
     String BAD_CREDENTIALS = "exception.auth.badCredentials";
+    String CREDENTIALS_EXPIRED = "exception.auth.credentialsExpired";
     String ACCOUNT_EXPIRED = "exception.auth.accountExpired";
+    String ACCOUNT_LOCKED = "exception.auth.accountLocked";
+    String ACCOUNT_DISABLED = "exception.auth.accountDisabled";
     String ACCOUNT_NOT_FOUND = "exception.auth.accountNotFound";
     String UNAUTHORIZED = "exception.auth.unauthorized";
     String FORBIDDEN = "exception.auth.forbidden";
@@ -114,4 +117,5 @@ public interface ExceptionConstants {
     String TITLE_MAX_LENGTH = "exception.data.title.maxLength";
     String CONTENT_NOT_BLANK = "exception.data.content.notBlank";
     String CONTENT_MAX_LENGTH = "exception.data.content.maxLength";
+    String DEVICE_ID_NOT_BLANK = "exception.data.deviceId.notBlank";
 }

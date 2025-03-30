@@ -13,7 +13,6 @@ import com.dct.nextgen.security.jwt.JwtProvider;
 public class BaseAuthTokenDTO {
 
     private Authentication authentication; // Contains user authorities information
-    private String username;
     private String deviceId;
     private Integer userId;
     private Boolean isRememberMe = false;
@@ -27,11 +26,6 @@ public class BaseAuthTokenDTO {
 
         public Builder authentication(Authentication authentication) {
             instance.authentication = authentication;
-            return this;
-        }
-
-        public Builder username(String username) {
-            instance.username = username;
             return this;
         }
 
@@ -63,14 +57,6 @@ public class BaseAuthTokenDTO {
 
     public void setAuthentication(Authentication authentication) {
         this.authentication = authentication;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getDeviceId() {

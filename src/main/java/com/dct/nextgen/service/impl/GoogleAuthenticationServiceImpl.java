@@ -92,7 +92,6 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
         SecurityContextHolder.getContext().setAuthentication(token);
         BaseAuthTokenDTO authTokenDTO = BaseAuthTokenDTO.builder()
             .authentication(token)
-            .username(account.getUsername())
             .userId(account.getId())
             .rememberMe(true)
             .build();

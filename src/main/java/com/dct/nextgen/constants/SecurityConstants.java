@@ -21,10 +21,9 @@ public interface SecurityConstants {
      * See {@link JwtProvider#createToken(BaseAuthTokenDTO)} for details
      */
     interface TOKEN_PAYLOAD {
-        String USER_ID = "userID";
-        String USERNAME = "username";
-        String DEVICE_ID = "deviceID";
-        String AUTHORITIES = "auth";
+        String USER_ID = "userId";
+        String DEVICE_ID = "deviceId";
+        String AUTHORITIES = "authorities";
     }
 
     /**
