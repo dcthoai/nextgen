@@ -1,11 +1,11 @@
 package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
@@ -33,33 +33,33 @@ public class Project extends AbstractAuditingEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "category", nullable = false)
-    private String category;
+    @Column(name = "category_name", length = 100, nullable = false)
+    private String categoryName;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description", length = 1000)
+    @Column(name = "description", length = 1000, nullable = false)
     private String description;
 
-    @Column(name = "description_2", length = 1000)
-    private String description2;
+    @Column(name = "more_description", length = 1000)
+    private String moreDescription;
 
-    @Column(name = "customer", nullable = false)
+    @Column(name = "customer", length = 100, nullable = false)
     private String customer;
 
-    @Column(name = "finished_date", nullable = false)
+    @Column(name = "finished_date")
     private Instant finishedDate;
 
-    @Column(name = "link", nullable = false)
+    @Column(name = "link")
     private String linkDemo;
 
-    @Column(name = "link_title", length = 100, nullable = false)
+    @Column(name = "link_title", length = 100)
     private String linkDemoTitle;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "project_ID")
-    @OrderColumn(name = "index")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderColumn(name = "position")
+    @JsonManagedReference
     private List<ProjectImage> images = new ArrayList<>();
 
     public String getThumbnailSquare() {
@@ -94,12 +94,12 @@ public class Project extends AbstractAuditingEntity {
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getTitle() {
@@ -118,12 +118,12 @@ public class Project extends AbstractAuditingEntity {
         this.description = description;
     }
 
-    public String getDescription2() {
-        return description2;
+    public String getMoreDescription() {
+        return moreDescription;
     }
 
-    public void setDescription2(String description2) {
-        this.description2 = description2;
+    public void setMoreDescription(String moreDescription) {
+        this.moreDescription = moreDescription;
     }
 
     public String getCustomer() {

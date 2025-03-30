@@ -1,8 +1,13 @@
 package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -12,29 +17,23 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class ProjectImage extends AbstractAuditingEntity {
 
-    @Column(name = "project_ID")
-    private int projectID;
-
-    @Column(name = "index", nullable = false)
-    private int index;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id", referencedColumnName = "id", updatable = false, nullable = false)
+    @JsonBackReference
+    private Project project;
 
     @Column(name = "url", nullable = false)
     private String url;
 
-    public int getProjectID() {
-        return projectID;
+    @Column(name = "position", nullable = false)
+    private Integer position;
+
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectID(int projectID) {
-        this.projectID = projectID;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     public String getUrl() {
@@ -43,5 +42,13 @@ public class ProjectImage extends AbstractAuditingEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

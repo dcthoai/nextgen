@@ -23,14 +23,14 @@ public class Category extends AbstractAuditingEntity {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    @Column(name = "quantity")
-    private int quantity;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(
+        cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH },
+        fetch = FetchType.LAZY
+    )
     @JoinTable(
         name = "category_project",
-        joinColumns = @JoinColumn(name = "category_id"),
-        inverseJoinColumns = @JoinColumn(name = "project_id")
+        joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id")
     )
     private List<Project> projects = new ArrayList<>();
 
@@ -40,14 +40,6 @@ public class Category extends AbstractAuditingEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public List<Project> getProjects() {

@@ -12,25 +12,25 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class CategoryProject extends AbstractAuditingEntity {
 
-    @Column(name = "project_ID", nullable = false)
-    private int projectID;
+    @Column(name = "project_id", nullable = false)
+    private Integer projectId;
 
-    @Column(name = "category_ID", nullable = false)
-    private int categoryID;
+    @Column(name = "category_id", nullable = false)
+    private Integer categoryId;
 
-    public int getProjectID() {
-        return projectID;
+    public Integer getProjectId() {
+        return projectId;
     }
 
-    public void setProjectID(int projectID) {
-        this.projectID = projectID;
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 }
