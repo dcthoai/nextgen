@@ -5,6 +5,7 @@ import com.dct.nextgen.constants.RoleConstants;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
+import com.dct.nextgen.dto.request.UpdateAccountStatusRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.service.AccountService;
 
@@ -52,6 +53,12 @@ public class AccountResource {
     @CheckAuthorize(authorities = RoleConstants.Account.UPDATE)
     public BaseResponseDTO updateAccount(@Valid @RequestBody UpdateAccountRequestDTO request) {
         return accountService.updateAccount(request);
+    }
+
+    @PutMapping("/status")
+    @CheckAuthorize(authorities = RoleConstants.Account.UPDATE)
+    public BaseResponseDTO updateAccountStatus(@Valid @RequestBody UpdateAccountStatusRequestDTO request) {
+        return accountService.updateAccountStatus(request);
     }
 
     @DeleteMapping("/{accountId}")

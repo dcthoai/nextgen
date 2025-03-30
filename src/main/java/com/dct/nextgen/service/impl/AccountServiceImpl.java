@@ -9,6 +9,7 @@ import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
 import com.dct.nextgen.dto.auth.AccountDTO;
+import com.dct.nextgen.dto.request.UpdateAccountStatusRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.entity.base.AccountRole;
@@ -20,6 +21,7 @@ import com.dct.nextgen.repositories.common.RoleRepository;
 import com.dct.nextgen.service.AccountService;
 import com.dct.nextgen.service.RoleService;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -81,6 +83,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Account createNewAccount(RegisterAccountRequestDTO request) {
         boolean isExistedAccount = accountRepository.existsByUsernameOrEmail(request.getUsername(), request.getEmail());
 
@@ -113,6 +116,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO updateAccount(UpdateAccountRequestDTO request) {
         Long existedAccounts = accountRepository.countByUsernameOrEmailAndIdNot(
             request.getUsername(),
@@ -145,12 +149,20 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
+    public BaseResponseDTO updateAccountStatus(UpdateAccountStatusRequestDTO request) {
+        accountRepository.updateAccountStatusById(request.getAccountId(), request.getStatus());
+        return BaseResponseDTO.builder().ok();
+    }
+
+    @Override
+    @Transactional
     public BaseResponseDTO deleteAccount(Integer accountId) {
         if (Objects.isNull(accountId) || accountId <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
         }
 
-        accountRepository.deleteById(accountId);
+        accountRepository.updateAccountStatusById(accountId, AccountConstants.STATUS.DELETED);
         return BaseResponseDTO.builder().ok();
     }
 }

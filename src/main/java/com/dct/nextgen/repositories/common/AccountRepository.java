@@ -17,16 +17,22 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
-    @Query(value = "SELECT id, username, fullname, email, phone, status FROM account", nativeQuery = true)
+    @Query(
+        value = "SELECT id, username, fullname, email, phone, status FROM account WHERE status <> 'DELETED'",
+        nativeQuery = true
+    )
     Page<IAccountDTO> findAllWithPaging(Pageable pageable);
 
-    @Query(value = "SELECT id, username, fullname, email, phone, status FROM account LIMIT 50", nativeQuery = true)
+    @Query(
+        value = "SELECT id, username, fullname, email, phone, status FROM account WHERE status <> 'DELETED' LIMIT 20",
+        nativeQuery = true
+    )
     List<IAccountDTO> findAllNonPaging();
 
     @Query(
         value = """
             SELECT a.id, a.username, a.password, a.email, a.status, a.device_id as deviceId
-            FROM account a WHERE a.username = ?1
+            FROM account a WHERE a.username = ?1 AND status <> 'DELETED'
         """,
         nativeQuery = true
     )
@@ -35,7 +41,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query(
         value = """
             SELECT a.id, a.username, a.password, a.email, a.status, a.device_id as deviceId
-            FROM account a WHERE a.email = ?1
+            FROM account a WHERE a.email = ?1 AND status <> 'DELETED'
         """,
         nativeQuery = true
     )
