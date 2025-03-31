@@ -3,7 +3,7 @@ package com.dct.nextgen.web.rest.common;
 import com.dct.nextgen.aop.annotation.CheckAuthorize;
 import com.dct.nextgen.constants.RoleConstants;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
-import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
+import com.dct.nextgen.dto.request.CreateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountStatusRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
@@ -44,7 +44,7 @@ public class AccountResource {
 
     @PostMapping
     @CheckAuthorize(authorities = RoleConstants.Account.CREATE)
-    public BaseResponseDTO createNewAccount(@Valid @RequestBody RegisterAccountRequestDTO request) {
+    public BaseResponseDTO createNewAccount(@Valid @RequestBody CreateAccountRequestDTO request) {
         accountService.createNewAccount(request);
         return BaseResponseDTO.builder().ok();
     }

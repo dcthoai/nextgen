@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.Instant;
@@ -17,7 +18,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "project")
-@DynamicUpdate
+@DynamicInsert // Hibernate only insert the nonnull columns to the database instead of insert the entire table
+@DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
 @SuppressWarnings("unused")
 public class Project extends AbstractAuditingEntity {
 

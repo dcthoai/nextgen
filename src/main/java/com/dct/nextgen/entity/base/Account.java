@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
  * @author thoaidc
  */
 @Entity
+@DynamicInsert // Hibernate only insert the nonnull columns to the database instead of insert the entire table
 @DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
 @Table(name = "account")
 @SuppressWarnings("unused")

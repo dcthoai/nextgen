@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,12 +21,14 @@ import java.io.Serializable;
 import java.time.Instant;
 
 /**
- * Provides a mechanism to automatically track information about data creation and modification in application entities<p>
+ * Provides a mechanism to automatically track information about data creation and modification in entities<p>
  * This is part of the Auditing model in Hibernate/Spring Data JPA <p>
  * Which helps automatically record who created, modified data and when <p>
  * {@link EntityListeners}({@link AuditingEntityListener}.class) to enable {@link PersistenceConfig#auditorProvider()}
+ *
  * @author thoaidc
  */
+@DynamicInsert // Hibernate only insert the nonnull columns to the database instead of insert the entire table
 @DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
 @MappedSuperclass // Make this class a superclass that other entities can inherit from
 @EntityListeners(AuditingEntityListener.class)

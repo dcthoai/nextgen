@@ -23,15 +23,7 @@ import java.util.List;
  *
  * @author thoaidc
  */
-public class RegisterAccountRequestDTO extends BaseRequestDTO {
-
-    @Size(max = 100, message = ExceptionConstants.NAME_MAX_LENGTH)
-    private String fullname;
-
-    @Size(min = 6, message = ExceptionConstants.PHONE_MIN_LENGTH)
-    @Size(max = 20, message = ExceptionConstants.PHONE_MAX_LENGTH)
-    @Pattern(regexp = BaseConstants.REGEX.PHONE_PATTERN, message = ExceptionConstants.PHONE_INVALID)
-    private String phone;
+public class CreateAccountRequestDTO extends BaseRequestDTO {
 
     @NotBlank(message = ExceptionConstants.USERNAME_NOT_BLANK)
     @Size(min = 2, message = ExceptionConstants.USERNAME_MIN_LENGTH)
@@ -53,6 +45,17 @@ public class RegisterAccountRequestDTO extends BaseRequestDTO {
 
     @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)
     private List<Integer> roleIds = new ArrayList<>();
+
+    @Size(max = 100, message = ExceptionConstants.NAME_MAX_LENGTH)
+    private String fullname;
+
+    @Size(max = 255, message = ExceptionConstants.ADDRESS_MAX_LENGTH)
+    private String address;
+
+    @Size(min = 6, message = ExceptionConstants.PHONE_MIN_LENGTH)
+    @Size(max = 20, message = ExceptionConstants.PHONE_MAX_LENGTH)
+    @Pattern(regexp = BaseConstants.REGEX.PHONE_PATTERN, message = ExceptionConstants.PHONE_INVALID)
+    private String phone;
 
     public String getUsername() {
         return username;
@@ -100,5 +103,13 @@ public class RegisterAccountRequestDTO extends BaseRequestDTO {
 
     public void setRoleIds(List<Integer> roleIds) {
         this.roleIds = roleIds;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

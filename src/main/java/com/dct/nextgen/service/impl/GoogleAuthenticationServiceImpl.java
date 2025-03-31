@@ -7,7 +7,7 @@ import com.dct.nextgen.constants.PropertiesConstants;
 import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
 import com.dct.nextgen.dto.mapping.IAuthenticationDTO;
-import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
+import com.dct.nextgen.dto.request.CreateAccountRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.exception.BaseAuthenticationException;
@@ -77,12 +77,12 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
             password = CredentialGenerator.generatePassword(8);
             log.debug("Authenticate for user '{}' via Google, no account yet", username);
 
-            RegisterAccountRequestDTO registerAccountRequest = new RegisterAccountRequestDTO();
-            registerAccountRequest.setUsername(username);
-            registerAccountRequest.setEmail(userInfo.getEmail());
-            registerAccountRequest.setPassword(password);
+            CreateAccountRequestDTO createAccountRequest = new CreateAccountRequestDTO();
+            createAccountRequest.setUsername(username);
+            createAccountRequest.setEmail(userInfo.getEmail());
+            createAccountRequest.setPassword(password);
 
-            account = accountService.createNewAccount(registerAccountRequest);
+            account = accountService.createNewAccount(createAccountRequest);
         } else {
             BeanUtils.copyProperties(authentication.get(), account);
             username = account.getUsername();

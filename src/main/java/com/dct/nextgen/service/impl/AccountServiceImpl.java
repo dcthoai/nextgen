@@ -6,7 +6,7 @@ import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.dto.mapping.IAccountDTO;
 import com.dct.nextgen.dto.mapping.IRoleDTO;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
-import com.dct.nextgen.dto.request.RegisterAccountRequestDTO;
+import com.dct.nextgen.dto.request.CreateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
 import com.dct.nextgen.dto.auth.AccountDTO;
 import com.dct.nextgen.dto.request.UpdateAccountStatusRequestDTO;
@@ -84,7 +84,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public Account createNewAccount(RegisterAccountRequestDTO request) {
+    public Account createNewAccount(CreateAccountRequestDTO request) {
         boolean isExistedAccount = accountRepository.existsByUsernameOrEmail(request.getUsername(), request.getEmail());
 
         if (isExistedAccount) {
@@ -100,18 +100,16 @@ public class AccountServiceImpl implements AccountService {
         String rawPassword = request.getPassword();
         String hashedPassword = passwordEncoder.encode(rawPassword);
 
-        Account account = Account.builder()
-            .username(request.getUsername())
-            .email(request.getEmail())
-            .password(hashedPassword)
-            .status(AccountConstants.STATUS.ACTIVE)
-            .build();
-
+        Account account = new Account();
+        BeanUtils.copyProperties(request, account);
+        account.setPassword(hashedPassword);
+        account.setStatus(AccountConstants.STATUS.ACTIVE);
         accountRepository.save(account);
+
         List<AccountRole> accountRoles = new ArrayList<>();
         roles.forEach(role -> accountRoles.add(new AccountRole(account.getId(), role.getId())));
-
         accountRoleRepository.saveAll(accountRoles);
+
         return account;
     }
 
