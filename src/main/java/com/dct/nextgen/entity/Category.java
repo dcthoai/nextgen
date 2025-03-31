@@ -1,6 +1,7 @@
 package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +33,7 @@ public class Category extends AbstractAuditingEntity {
         joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id")
     )
+    @JsonIgnore
     private List<Project> projects = new ArrayList<>();
 
     public String getName() {
