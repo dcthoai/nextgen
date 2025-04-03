@@ -12,6 +12,8 @@ import com.dct.nextgen.dto.request.CreateProjectRequestDTO;
 import com.dct.nextgen.dto.request.UpdateProjectRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.dto.work.ProjectDTO;
+import com.dct.nextgen.dto.work.ProjectImageDTO;
+import com.dct.nextgen.entity.Category;
 import com.dct.nextgen.entity.CategoryProject;
 import com.dct.nextgen.entity.Project;
 import com.dct.nextgen.entity.ProjectImage;
@@ -33,8 +35,11 @@ import org.springframework.util.StringUtils;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -194,7 +199,85 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public BaseResponseDTO updateProject(UpdateProjectRequestDTO request) {
-        return null;
+        Optional<Project> projectOptional = projectRepository.findById(request.getId());
+
+        if (projectOptional.isEmpty()) {
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.DATA_NOT_FOUND);
+        }
+
+        Project project = projectOptional.get();
+        BeanUtils.copyProperties(request, project, "finishedDate");
+        String thumbnailRectUrl = fileUtils.autoCompressImageAndSave(request.getThumbnailRectFile());
+        String thumbnailSquareUrl = fileUtils.autoCompressImageAndSave(request.getThumbnailSquareFile());
+        List<String> imageUrlsToDelete = new ArrayList<>();
+
+        if (StringUtils.hasText(thumbnailRectUrl)) {
+            imageUrlsToDelete.add(project.getThumbnailRect());
+            project.setThumbnailRect(thumbnailRectUrl);
+        }
+
+        if (StringUtils.hasText(thumbnailSquareUrl)) {
+            imageUrlsToDelete.add(project.getThumbnailSquare());
+            project.setThumbnailSquare(thumbnailSquareUrl);
+        }
+
+        Instant finishedDate = DateUtils
+            .ofInstant(
+                request.getFinishedDate(),
+                DatetimeConstants.Formatter.DD_MM_YYYY_HH_MM_SS_DASH,
+                DatetimeConstants.ZoneID.ASIA_HO_CHI_MINH
+            )
+            .getInstance();
+        List<Category> categoriesForUpdate = categoryRepository.findAllById(request.getCategoryIds());
+
+        if (categoriesForUpdate.isEmpty() || categoriesForUpdate.size() != request.getCategoryIds().size()) {
+            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.CATEGORY_IDS_INVALID);
+        }
+
+        project.setCategories(categoriesForUpdate);
+        project.setFinishedDate(finishedDate);
+        imageUrlsToDelete.addAll(updateProjectImages(project, request.getProjectImageDTOs()));
+        projectRepository.save(project);
+        fileUtils.delete(imageUrlsToDelete);
+
+        return BaseResponseDTO.builder().ok();
+    }
+
+    private List<String> updateProjectImages(Project project, List<ProjectImageDTO> projectImageDTOs) {
+        List<String> imageUrlsToDelete = new ArrayList<>();
+        List<ProjectImage> updatedImages = new ArrayList<>();
+        Map<Integer, ProjectImage> positionMap = project.getImages().stream()
+            .collect(Collectors.toMap(ProjectImage::getId, Function.identity()));
+        int position = 0;
+
+        for (ProjectImageDTO projectImageDTO : projectImageDTOs) {
+            ProjectImage existingImage = positionMap.get(projectImageDTO.getId());
+
+            if (Objects.nonNull(existingImage)) {
+                if (FileUtils.invalidUploadFile(projectImageDTO.getImage())) {
+                    updatedImages.add(existingImage);
+                } else {
+                    String imageUrl = fileUtils.save(projectImageDTO.getImage());
+
+                    if (StringUtils.hasText(imageUrl)) {
+                        imageUrlsToDelete.add(existingImage.getUrl());
+                        existingImage.setUrl(imageUrl);
+                    }
+                }
+
+                existingImage.setPosition(position++);
+            } else {
+                ProjectImage projectImage = new ProjectImage();
+                projectImage.setProject(project);
+                projectImage.setUrl(fileUtils.save(projectImageDTO.getImage()));
+                projectImage.setPosition(position++);
+                updatedImages.add(projectImage);
+            }
+        }
+
+        project.getImages().clear();
+        project.getImages().addAll(updatedImages);
+        return imageUrlsToDelete;
     }
 
     @Override

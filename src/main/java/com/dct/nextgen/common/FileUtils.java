@@ -99,8 +99,9 @@ public class FileUtils {
                 Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
                 if (!imageDTO.getCompressedImage().delete())
-                    log.warn("Could not clean up temporary image file: {}", fileToSaveImage.getAbsolutePath());
+                    log.warn("Could not clean up temporary when save image: {}", fileToSaveImage.getAbsolutePath());
 
+                log.debug("Save new file to: {}", fileToSaveImage.getAbsolutePath());
                 return BaseConstants.UPLOAD_RESOURCES.PREFIX_PATH + fileName;
             }
         } catch (IOException e) {
@@ -197,6 +198,7 @@ public class FileUtils {
         if (Objects.isNull(file))
             return false;
 
+        log.debug("Deleting file: {}", file.getAbsolutePath());
         return file.delete();
     }
 

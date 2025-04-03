@@ -1,38 +1,66 @@
 package com.dct.nextgen.dto.request;
 
+import com.dct.nextgen.constants.ExceptionConstants;
+import com.dct.nextgen.dto.work.ProjectImageDTO;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpdateProjectRequestDTO {
 
-    private String thumbnailSquare;
-    private String thumbnailRect;
+    @NotNull(message = ExceptionConstants.ID_NOT_NULL)
+    @Min(value = 1, message = ExceptionConstants.ID_INVALID)
+    private Integer id;
+
+    @NotBlank(message = ExceptionConstants.SUB_NAME_NOT_BLANK)
+    @Size(max = 100, message = ExceptionConstants.SUB_NAME_MAX_LENGTH)
     private String subName;
+
+    @NotBlank(message = ExceptionConstants.NAME_NOT_BLANK)
+    @Size(max = 255, message = ExceptionConstants.NAME_MAX_LENGTH)
     private String name;
+
+    @NotBlank(message = ExceptionConstants.CATEGORY_NAME_NOT_BLANK)
+    @Size(max = 100, message = ExceptionConstants.CATEGORY_NAME_MAX_LENGTH)
     private String categoryName;
+
+    @NotBlank(message = ExceptionConstants.TITLE_NOT_BLANK)
+    @Size(max = 255, message = ExceptionConstants.TITLE_MAX_LENGTH)
     private String title;
+
+    @NotBlank(message = ExceptionConstants.DESCRIPTION_NOT_BLANK)
+    @Size(max = 1000, message = ExceptionConstants.DESCRIPTION_MAX_LENGTH)
     private String description;
+
+    @Size(max = 1000, message = ExceptionConstants.MORE_DESCRIPTION_MAX_LENGTH)
     private String moreDescription;
+
+    @NotBlank(message = ExceptionConstants.CUSTOMER_NAME_NOT_BLANK)
+    @Size(max = 100, message = ExceptionConstants.CUSTOMER_NAME_MAX_LENGTH)
     private String customer;
+
     private String finishedDate;
     private String linkDemo;
+
+    @Size(max = 100, message = ExceptionConstants.LINK_NAME_MAX_LENGTH)
     private String linkDemoTitle;
+
+    private List<Integer> categoryIds = new ArrayList<>();
+    private List<ProjectImageDTO> projectImageDTOs = new ArrayList<>();
     private MultipartFile thumbnailSquareFile;
     private MultipartFile thumbnailRectFile;
 
-    public String getThumbnailSquare() {
-        return thumbnailSquare;
+    public Integer getId() {
+        return id;
     }
 
-    public void setThumbnailSquare(String thumbnailSquare) {
-        this.thumbnailSquare = thumbnailSquare;
-    }
-
-    public String getThumbnailRect() {
-        return thumbnailRect;
-    }
-
-    public void setThumbnailRect(String thumbnailRect) {
-        this.thumbnailRect = thumbnailRect;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getSubName() {
@@ -115,6 +143,14 @@ public class UpdateProjectRequestDTO {
         this.linkDemoTitle = linkDemoTitle;
     }
 
+    public List<Integer> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(List<Integer> categoryIds) {
+        this.categoryIds = categoryIds;
+    }
+
     public MultipartFile getThumbnailSquareFile() {
         return thumbnailSquareFile;
     }
@@ -129,5 +165,13 @@ public class UpdateProjectRequestDTO {
 
     public void setThumbnailRectFile(MultipartFile thumbnailRectFile) {
         this.thumbnailRectFile = thumbnailRectFile;
+    }
+
+    public List<ProjectImageDTO> getProjectImageDTOs() {
+        return projectImageDTOs;
+    }
+
+    public void setProjectImageDTOs(List<ProjectImageDTO> projectImageDTOs) {
+        this.projectImageDTOs = projectImageDTOs;
     }
 }

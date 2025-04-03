@@ -1,11 +1,10 @@
-package com.dct.nextgen.dto.about;
+package com.dct.nextgen.dto.work;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class StoryImageDTO {
+public class ProjectImageDTO {
 
     private Integer id;
-    private Integer storyId;
     private String url;
     private Integer position;
     private MultipartFile image;
@@ -16,14 +15,6 @@ public class StoryImageDTO {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getStoryId() {
-        return storyId;
-    }
-
-    public void setStoryId(Integer storyId) {
-        this.storyId = storyId;
     }
 
     public String getUrl() {
