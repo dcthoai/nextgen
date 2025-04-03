@@ -1,68 +1,23 @@
-package com.dct.nextgen.entity;
+package com.dct.nextgen.dto.request;
 
-import com.dct.nextgen.entity.base.AbstractAuditingEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OrderColumn;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+public class UpdateProjectRequestDTO {
 
-@Entity
-@Table(name = "project")
-@DynamicInsert // Hibernate only insert the nonnull columns to the database instead of insert the entire table
-@DynamicUpdate // Hibernate only updates the changed columns to the database instead of updating the entire table
-@SuppressWarnings("unused")
-public class Project extends AbstractAuditingEntity {
-
-    @Column(name = "thumbnail_square", nullable = false)
     private String thumbnailSquare;
-
-    @Column(name = "thumbnail_rect", nullable = false)
     private String thumbnailRect;
-
-    @Column(name = "sub_name", length = 100, nullable = false)
     private String subName;
-
-    @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "category_name", length = 100, nullable = false)
     private String categoryName;
-
-    @Column(name = "title", nullable = false)
     private String title;
-
-    @Column(name = "description", length = 1000, nullable = false)
     private String description;
-
-    @Column(name = "more_description", length = 1000)
     private String moreDescription;
-
-    @Column(name = "customer", length = 100, nullable = false)
     private String customer;
-
-    @Column(name = "finished_date")
-    private Instant finishedDate;
-
-    @Column(name = "link")
+    private String finishedDate;
     private String linkDemo;
-
-    @Column(name = "link_title", length = 100)
     private String linkDemoTitle;
-
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @OrderColumn(name = "position")
-    @JsonIgnore
-    private List<ProjectImage> images = new ArrayList<>();
+    private MultipartFile thumbnailSquareFile;
+    private MultipartFile thumbnailRectFile;
 
     public String getThumbnailSquare() {
         return thumbnailSquare;
@@ -136,11 +91,11 @@ public class Project extends AbstractAuditingEntity {
         this.customer = customer;
     }
 
-    public Instant getFinishedDate() {
+    public String getFinishedDate() {
         return finishedDate;
     }
 
-    public void setFinishedDate(Instant finishedDate) {
+    public void setFinishedDate(String finishedDate) {
         this.finishedDate = finishedDate;
     }
 
@@ -160,11 +115,19 @@ public class Project extends AbstractAuditingEntity {
         this.linkDemoTitle = linkDemoTitle;
     }
 
-    public List<ProjectImage> getImages() {
-        return images;
+    public MultipartFile getThumbnailSquareFile() {
+        return thumbnailSquareFile;
     }
 
-    public void setImages(List<ProjectImage> images) {
-        this.images = images;
+    public void setThumbnailSquareFile(MultipartFile thumbnailSquareFile) {
+        this.thumbnailSquareFile = thumbnailSquareFile;
+    }
+
+    public MultipartFile getThumbnailRectFile() {
+        return thumbnailRectFile;
+    }
+
+    public void setThumbnailRectFile(MultipartFile thumbnailRectFile) {
+        this.thumbnailRectFile = thumbnailRectFile;
     }
 }

@@ -118,4 +118,16 @@ public interface ExceptionConstants {
     String CONTENT_NOT_BLANK = "exception.data.content.notBlank";
     String CONTENT_MAX_LENGTH = "exception.data.content.maxLength";
     String DEVICE_ID_NOT_BLANK = "exception.data.deviceId.notBlank";
+
+    // Project
+    String SUB_NAME_NOT_BLANK = "exception.project.subName.notBlank";
+    String SUB_NAME_MAX_LENGTH = "exception.project.subName.maxLength";
+    String CATEGORY_NAME_NOT_BLANK = "exception.project.categoryName.notBlank";
+    String CATEGORY_NAME_MAX_LENGTH = "exception.project.categoryName.maxLength";
+    String MORE_DESCRIPTION_NOT_BLANK = "exception.project.moreDescription.notBlank";
+    String MORE_DESCRIPTION_MAX_LENGTH = "exception.project.moreDescription.maxLength";
+    String CUSTOMER_NAME_NOT_BLANK = "exception.project.customerName.notBlank";
+    String CUSTOMER_NAME_MAX_LENGTH = "exception.project.customerName.maxLength";
+    String LINK_NAME_MAX_LENGTH = "exception.project.linkName.maxLength";
+    String CATEGORY_IDS_INVALID = "exception.project.category.idInvalid";
 }

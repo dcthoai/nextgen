@@ -4,27 +4,36 @@ import com.dct.nextgen.aop.annotation.CheckAuthorize;
 import com.dct.nextgen.constants.RoleConstants;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.CreateOrUpdateCategoryRequestDTO;
+import com.dct.nextgen.dto.request.CreateProjectRequestDTO;
+import com.dct.nextgen.dto.request.UpdateProjectRequestDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.service.CategoryService;
+import com.dct.nextgen.service.ProjectService;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
 public class WorkResource {
 
     private final CategoryService categoryService;
+    private final ProjectService projectService;
 
-    public WorkResource(CategoryService categoryService) {
+    public WorkResource(CategoryService categoryService, ProjectService projectService) {
         this.categoryService = categoryService;
+        this.projectService = projectService;
     }
 
     @GetMapping("/p/categories")
@@ -57,36 +66,41 @@ public class WorkResource {
     }
 
     @GetMapping("/p/projects")
-    public BaseResponseDTO getAllProjectsWithPaging(BaseRequestDTO requestDTO) {
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO getAllProjectsWithPaging(@RequestBody BaseRequestDTO requestDTO,
+                                                    @RequestParam(value = "category", required = false) Integer id) {
+        if (Objects.nonNull(id) && id > 0) {
+            return projectService.getAllProjectsByCategoryWithPaging(requestDTO, id);
+        }
+
+        return projectService.getAllProjectsWithPaging(requestDTO);
     }
 
-    @GetMapping("/p/projects/{categoryId}")
-    public BaseResponseDTO getProjectsWithPagingByCategory(BaseRequestDTO request, @PathVariable Integer categoryId) {
-        return BaseResponseDTO.builder().ok();
+    @GetMapping("/p/projects/{projectId}")
+    public BaseResponseDTO getProjectInfo(@PathVariable Integer projectId) {
+        return projectService.getProjectInfo(projectId);
     }
 
     @GetMapping("/projects/{projectId}")
     @CheckAuthorize(authorities = RoleConstants.Works.Project.VIEW)
     public BaseResponseDTO getProjectDetail(@PathVariable Integer projectId) {
-        return BaseResponseDTO.builder().ok();
+        return projectService.getProjectDetail(projectId);
     }
 
     @PostMapping("/projects")
     @CheckAuthorize(authorities = RoleConstants.Works.Project.CREATE)
-    public BaseResponseDTO createNewProject() {
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO createNewProject(@Valid @ModelAttribute CreateProjectRequestDTO requestDTO) {
+        return projectService.createNewProject(requestDTO);
     }
 
-    @PutMapping
+    @PutMapping("/projects")
     @CheckAuthorize(authorities = RoleConstants.Works.Project.UPDATE)
-    public BaseResponseDTO updateProject() {
-        return BaseResponseDTO.builder().ok();
+    public BaseResponseDTO updateProject(@Valid UpdateProjectRequestDTO requestDTO) {
+        return projectService.updateProject(requestDTO);
     }
 
-    @DeleteMapping("/{projectId}")
+    @DeleteMapping("/projects/{projectId}")
     @CheckAuthorize(authorities = RoleConstants.Works.Project.DELETE)
     public BaseResponseDTO deleteProject(@PathVariable Integer projectId) {
-        return BaseResponseDTO.builder().ok();
+        return projectService.deleteProject(projectId);
     }
 }
