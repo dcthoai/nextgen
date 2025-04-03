@@ -29,4 +29,18 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
         nativeQuery = true
     )
     long countCategoryProjectQuantity(Integer categoryId);
+
+    @Query(value = "SELECT c.id FROM category c WHERE c.id IN (?1)", nativeQuery = true)
+    List<Integer> findAllCategoryIdsIn(Iterable<Integer> categoryIds);
+
+    @Query(
+        value = """
+            SELECT c.id, c.name
+            FROM category c
+            JOIN category_project cp ON c.id = cp.category_id
+            WHERE cp.project_id = ?1
+        """,
+        nativeQuery = true
+    )
+    List<ICategoryDTO> findAllByProjectId(Integer projectId);
 }

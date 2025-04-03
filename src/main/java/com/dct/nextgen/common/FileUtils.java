@@ -171,6 +171,20 @@ public class FileUtils {
         return null;
     }
 
+    public List<String> autoCompressImageAndSave(MultipartFile[] images) {
+        List<String> imageUrls = new ArrayList<>();
+
+        for (MultipartFile image : images) {
+            String imageUrl = autoCompressImageAndSave(image);
+
+            if (StringUtils.hasText(imageUrl)) {
+                imageUrls.add(imageUrl);
+            }
+        }
+
+        return imageUrls;
+    }
+
     public boolean delete(String filePath) {
         if (!StringUtils.hasText(filePath))
             return false;

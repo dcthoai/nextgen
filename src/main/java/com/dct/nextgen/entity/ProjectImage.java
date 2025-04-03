@@ -1,7 +1,7 @@
 package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ public class ProjectImage extends AbstractAuditingEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id", referencedColumnName = "id", updatable = false, nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private Project project;
 
     @Column(name = "url", nullable = false)
