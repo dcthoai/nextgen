@@ -3,11 +3,9 @@ package com.dct.nextgen.web.rest;
 import com.dct.nextgen.aop.annotation.CheckAuthorize;
 import com.dct.nextgen.constants.RoleConstants;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
-import com.dct.nextgen.dto.request.CreateProductCarouselRequestDTO;
 import com.dct.nextgen.dto.request.CreateProductPackCompareRequestDTO;
 import com.dct.nextgen.dto.request.CreateProductPackRequestDTO;
 import com.dct.nextgen.dto.request.CreateProductRequestDTO;
-import com.dct.nextgen.dto.request.UpdateProductCarouselRequestDTO;
 import com.dct.nextgen.dto.request.UpdateProductPackCompareRequestDTO;
 import com.dct.nextgen.dto.request.UpdateProductPackRequestDTO;
 import com.dct.nextgen.dto.request.UpdateProductRequestDTO;
@@ -53,13 +51,13 @@ public class ProductResource {
 
     @PostMapping("/products")
     @CheckAuthorize(authorities = RoleConstants.Product.CREATE)
-    public BaseResponseDTO createNewProduct(@Valid @RequestBody CreateProductRequestDTO requestDTO) {
+    public BaseResponseDTO createNewProduct(@Valid @ModelAttribute CreateProductRequestDTO requestDTO) {
         return productService.createNewProduct(requestDTO);
     }
 
     @PutMapping("/products")
     @CheckAuthorize(authorities = RoleConstants.Product.UPDATE)
-    public BaseResponseDTO updateProduct(@Valid @RequestBody UpdateProductRequestDTO requestDTO) {
+    public BaseResponseDTO updateProduct(@Valid @ModelAttribute UpdateProductRequestDTO requestDTO) {
         return productService.updateProduct(requestDTO);
     }
 
@@ -67,24 +65,6 @@ public class ProductResource {
     @CheckAuthorize(authorities = RoleConstants.Product.DELETE)
     public BaseResponseDTO deleteProduct(@PathVariable Integer productId) {
         return productService.deleteProduct(productId);
-    }
-
-    @GetMapping("/products/carousels/{productId}")
-    @CheckAuthorize(authorities = RoleConstants.Product.VIEW)
-    public BaseResponseDTO getAllProductCarousel(@PathVariable Integer productId) {
-        return productService.getAllProductCarousel(productId);
-    }
-
-    @PostMapping("/products/carousels")
-    @CheckAuthorize(authorities = RoleConstants.Product.CREATE)
-    public BaseResponseDTO createProductCarousel(@Valid @ModelAttribute CreateProductCarouselRequestDTO requestDTO) {
-        return productService.createProductCarousel(requestDTO);
-    }
-
-    @PutMapping("/products/carousels")
-    @CheckAuthorize(authorities = RoleConstants.Product.UPDATE)
-    public BaseResponseDTO updateProductCarousel(@Valid @ModelAttribute UpdateProductCarouselRequestDTO requestDTO) {
-        return productService.updateProductCarousel(requestDTO);
     }
 
     @GetMapping("/products/packs/{productId}")

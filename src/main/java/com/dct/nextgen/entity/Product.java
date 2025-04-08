@@ -1,11 +1,11 @@
 package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
@@ -30,14 +30,14 @@ public class Product extends AbstractAuditingEntity {
     @Column(name = "description", length = 1000)
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "product_ID")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private Set<ProductCarousel> productCarousels = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "product_ID")
-    @OrderColumn(name = "index")
-    private List<ProductIntro> productInfos = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
+    @OrderColumn(name = "position")
+    private List<ProductIntro> productIntros = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -63,11 +63,11 @@ public class Product extends AbstractAuditingEntity {
         this.productCarousels = productCarousels;
     }
 
-    public List<ProductIntro> getProductInfos() {
-        return productInfos;
+    public List<ProductIntro> getProductIntros() {
+        return productIntros;
     }
 
-    public void setProductInfos(List<ProductIntro> productInfos) {
-        this.productInfos = productInfos;
+    public void setProductIntros(List<ProductIntro> productIntros) {
+        this.productIntros = productIntros;
     }
 }

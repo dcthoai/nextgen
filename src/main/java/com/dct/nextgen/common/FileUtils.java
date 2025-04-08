@@ -20,6 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -203,7 +204,7 @@ public class FileUtils {
     }
 
     @Async
-    public void delete(List<String> filePaths) {
+    public void delete(Collection<String> filePaths) {
         if (Objects.isNull(filePaths) || filePaths.isEmpty())
             return;
 

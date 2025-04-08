@@ -130,4 +130,8 @@ public interface ExceptionConstants {
     String CUSTOMER_NAME_MAX_LENGTH = "exception.project.customerName.maxLength";
     String LINK_NAME_MAX_LENGTH = "exception.project.linkName.maxLength";
     String CATEGORY_IDS_INVALID = "exception.project.category.idInvalid";
+
+    // Product
+    String CAROUSEL_NOT_EMPTY = "product.data.carousel.notEmpty";
+    String PRODUCT_INTRO_NOT_EMPTY = "product.data.intro.notEmpty";
 }

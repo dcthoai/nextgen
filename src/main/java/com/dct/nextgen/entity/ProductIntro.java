@@ -1,8 +1,13 @@
 package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -14,21 +19,23 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class ProductIntro extends AbstractAuditingEntity {
 
-    @Column(name = "product_ID", nullable = false)
-    private int productID;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", updatable = false, nullable = false)
+    @JsonIgnore
+    private Product product;
 
     @Column(name = "content")
     private String content;
 
-    @Column(name = "index")
-    private int index;
+    @Column(name = "position")
+    private int position;
 
-    public int getProductID() {
-        return productID;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getContent() {
@@ -39,11 +46,11 @@ public class ProductIntro extends AbstractAuditingEntity {
         this.content = content;
     }
 
-    public int getIndex() {
-        return index;
+    public int getPosition() {
+        return position;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setPosition(int position) {
+        this.position = position;
     }
 }
