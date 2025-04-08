@@ -99,24 +99,10 @@ public interface RoleConstants {
     interface Product {
 
         String PRODUCT = "07";
-
-        interface Category {
-
-            String CATEGORY = "0701";
-            String VIEW = "070101";
-            String CREATE = "070102";
-            String UPDATE = "070103";
-            String DELETE = "070104";
-        }
-
-        interface Item {
-
-            String ITEM = "0702";
-            String VIEW = "070201";
-            String CREATE = "070202";
-            String UPDATE = "070203";
-            String DELETE = "070204";
-        }
+        String VIEW = "0701";
+        String CREATE = "0702";
+        String UPDATE = "0703";
+        String DELETE = "0704";
     }
 
     interface Works {

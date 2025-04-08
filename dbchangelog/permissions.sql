@@ -10,14 +10,12 @@
 --          Mottos: view, create, update, delete
 --          Staffs: view, create, update, delete
 --          Contact form: view, update
---      Manage Products:
---          Product Categories: view, create, update, delete
---          Products: view, create, update, delete
+--      Manage Products: view, create, update, delete
 --      Manage Works:
 --          Project Categories: view, create, update, delete
 --          Projects: view, create, update, delete
 --      Manage Recruitment (jobs): view, create, update, delete
---      Manage Company Infos: view, update
+--      Manage Company infos: view, update
 
 USE `nextgen_brand`;
 
@@ -148,29 +146,11 @@ VALUES ('permission.product', '07', 'permission.product.description', NULL, NULL
 
 SET @product_id = LAST_INSERT_ID();
 
--- Manage Products: Categories
-INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`)
-VALUES ('permission.product.category', '0701', 'permission.product.category.description', @product_id, '07', 'admin');
-
-SET @category_id = LAST_INSERT_ID();
-
 INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`) VALUES
-('permission.product.category.view', '070101', 'permission.product.category.view.description', @category_id, '0701', 'admin'),
-('permission.product.category.create', '070102', 'permission.product.category.create.description', @category_id, '0701', 'admin'),
-('permission.product.category.update', '070103', 'permission.product.category.update.description', @category_id, '0701', 'admin'),
-('permission.product.category.delete', '070104', 'permission.product.category.delete.description', @category_id, '0701', 'admin');
-
--- Manage Products: Products
-INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`)
-VALUES ('permission.product.item', '0702', 'permission.product.item.description', @product_id, '07', 'admin');
-
-SET @item_id = LAST_INSERT_ID();
-
-INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`) VALUES
-('permission.product.item.view', '070201', 'permission.product.item.view.description', @item_id, '0702', 'admin'),
-('permission.product.item.create', '070202', 'permission.product.item.create.description', @item_id, '0702', 'admin'),
-('permission.product.item.update', '070203', 'permission.product.item.update.description', @item_id, '0702', 'admin'),
-('permission.product.item.delete', '070204', 'permission.product.item.delete.description', @item_id, '0702', 'admin');
+('permission.product.view', '0701', 'permission.product.view.description', @product_id, '07', 'admin'),
+('permission.product.create', '0702', 'permission.product.create.description', @product_id, '07', 'admin'),
+('permission.product.update', '0703', 'permission.product.update.description', @product_id, '07', 'admin'),
+('permission.product.delete', '0704', 'permission.product.delete.description', @product_id, '07', 'admin');
 
 -- Manage Works
 INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`)
