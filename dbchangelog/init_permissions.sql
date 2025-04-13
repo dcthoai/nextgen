@@ -19,6 +19,23 @@
 
 USE `nextgen_brand`;
 
+-- Create SUPER_ADMIN role
+INSERT INTO role (
+    name,
+    code,
+    created_by,
+    created_date,
+    last_modified_by,
+    last_modified_date
+) VALUES (
+    'Administrator',
+    'ROLE_ADMIN',
+    'system',
+    CURRENT_TIMESTAMP,
+    'system',
+    CURRENT_TIMESTAMP
+);
+
 -- Reset AUTO_INCREMENT to 1
 ALTER TABLE `permission` AUTO_INCREMENT = 1;
 
@@ -203,3 +220,22 @@ SET @company_info_id = LAST_INSERT_ID();
 INSERT INTO `permission` (`name`, `code`, `description`, `parent_id`, `parent_code`, `created_by`) VALUES
 ('permission.company.view', '1001', 'permission.company.view.description', @company_info_id, '10', 'admin'),
 ('permission.company.update', '1002', 'permission.company.update.description', @company_info_id, '10', 'admin');
+
+INSERT INTO role_permission (
+    role_id,
+    permission_id,
+    created_by,
+    created_date,
+    last_modified_by,
+    last_modified_date
+)
+SELECT
+    r.id AS role_id,
+    p.id AS permission_id,
+    'system' AS created_by,
+    CURRENT_TIMESTAMP AS created_date,
+    'system' AS last_modified_by,
+    CURRENT_TIMESTAMP AS last_modified_date
+FROM role r
+CROSS JOIN permission p
+WHERE r.code = 'ROLE_ADMIN';

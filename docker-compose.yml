@@ -1,0 +1,37 @@
+services:
+  app:
+    image: nextgen-prod:0.0.1   # Docker image name and version (should match the version in pom.xml for consistency)
+    container_name: nextgen-app # Friendly name for the container
+    build:
+      context: .                # Use the current directory as the build context
+      dockerfile: Dockerfile    # Specify the Dockerfile to use for building the image
+    env_file:
+      - .env                    # Load environment variables from the .env file
+    ports:
+      - "8080:8080"             # Map host port 8080 to container port 8080
+    depends_on:                 # Wait for my sql to finish starting
+      - mysql
+    environment:
+      UPLOADS_PATH: ${UPLOADS_PATH}
+    volumes:
+      - uploads:/app/uploads    # Mount named volume "uploads" to persist uploaded files at /app/uploads
+    restart: unless-stopped     # Automatically restart the container unless it is manually stopped
+
+  mysql:
+    image: mysql:8.0.40-oracle
+    container_name: nextgen-mysql
+    env_file:
+      - .env                    # Load environment variables from the .env file
+    ports:
+      - "3307:3306"             # Map host port 3307 to container port 3306
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - mysql:/var/lib/mysql    # Mount named volume "mysql_data" to persist database
+    restart: unless-stopped     # Automatically restart the container unless it is manually stopped
+
+volumes:
+  mysql:    # Named volume to persist database
+  uploads:  # Named volume to persist uploaded resources (e.g., images, logo, licenses)

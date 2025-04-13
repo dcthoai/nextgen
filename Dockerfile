@@ -1,26 +1,47 @@
-# Using Maven with OpenJDK 17 to build the application
+# ==============================
+# STAGE 1: Build with Maven
+# ==============================
 FROM maven:3.8.5-openjdk-17 AS build
 
-# Set working directory in container
 WORKDIR /app
 
-# Copy pom.xml file to download dependencies first (take advantage of Docker cache)
-COPY pom.xml .
+# Copy only Maven config files first to leverage Docker cache
+COPY pom.xml ./
+
+# Cache Maven dependencies
 RUN mvn dependency:go-offline -B
 
-# Copy the entire source code and build it into a WAR file
+# Install Node.js v18.20.5 and npm 10.8.2
+RUN mvn frontend:install-node-and-npm
+
+# Copy package.json and package-lock.json for caching node_modules
+COPY package.json package-lock.json ./
+RUN mvn frontend:npm
+
+# Copy Angular config files
+COPY angular.json server.ts tsconfig*.json ./
+
+# Copy full source code
 COPY src ./src
-RUN mvn package -Pprod -DskipTests
 
-# Switch to official Tomcat image
-FROM tomcat:10.1.39-jdk17
-WORKDIR /usr/local/tomcat/webapps/
+# Build backend and frontend (Angular)
+RUN mvn clean package -Pprod -DskipTests
 
-# Copy the WAR file to Tomcat's webapps directory
-COPY --from=build /app/target/*.war ROOT.war
+# ==============================
+# STAGE 2: Run JAR
+# ==============================
+FROM openjdk:17-jdk-slim
 
-# Expose port 8080
+WORKDIR /app
+
+# Copy Spring Boot JAR from the build stage
+COPY --from=build /app/target/nextgen-*.jar app.jar
+
+# Copy static Angular build files (already integrated by Spring Boot)
+COPY --from=build /app/target/classes/static /app/static
+
+# Expose application port
 EXPOSE 8080
 
-# Start Tomcat (by default Tomcat entrypoint will run Catalina)
-CMD ["catalina.sh", "run"]
+# Run the Spring Boot app
+ENTRYPOINT ["java", "-jar", "app.jar"]

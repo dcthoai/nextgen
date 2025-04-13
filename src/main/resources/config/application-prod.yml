@@ -16,20 +16,25 @@ logging:
     root: info
     com.dct.nextgen: info
     org.hibernate.sql: info
-  file:
-    path: /mnt/logs
-    name: ${logging.file.path}/clusterLogData.log # Used by default. Overridden by configuration in logback-spring.xml
   charset:
     console: UTF-8
     file: UTF-8
+  # Custom properties to define logs file paths according to different profiles
+  file-path: /mnt/logs
 
 spring:
+  sql:
+    init:
+      mode: never
   jpa:
     # Avoid causing LazyInitializationException if querying outside the scope of EntityManager or causing poor performance
     open-in-view: false
     properties:
       hibernate:
-        show_sql: false
+        format_sql: false
+        jdbc:
+          time_zone: UTC
+          ddl-auto: validate
     hibernate:
       # Hibernate only checks if the current schema matches the entity
       # If it does not match, the application will not start
@@ -68,7 +73,7 @@ server:
         # Cookies will still be sent with each HTTP request (and can therefore be used for session authentication)
         # But Cookies cannot be accessed from the client side using JavaScript (e.g. via document.cookie)
         http-only: true
-  port: 8000
+  port: 8080
 
 dct-base:
   domain: http://localhost:${server.port}
@@ -82,7 +87,7 @@ dct-base:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    database: jdbc:mysql://${NEXTGEN_BRAND_DATABASE_URL};encrypt=true;trustServerCertificate=true
+    database: jdbc:mysql://${NEXTGEN_BRAND_DATABASE_URL}?encrypt=true&trustServerCertificate=true
     username: ${NEXTGEN_BRAND_DATABASE_USERNAME}
     password: ${NEXTGEN_BRAND_DATABASE_PASSWORD}
     hikari:
@@ -131,4 +136,4 @@ dct-base:
 
   resources:
     upload:
-      upload-path: D:/Downloads/
+      upload-path: ${UPLOADS_PATH}
