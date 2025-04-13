@@ -14,7 +14,7 @@ public class ProductDTO extends AuditingEntityDTO {
     private Integer id;
     private String name;
     private String description;
-    private Set<IProductCarouselDTO> carousels = new HashSet<>();
+    private List<IProductCarouselDTO> carousels = new ArrayList<>();
     private Set<String> carouselUrls = new HashSet<>();
     private List<IProductIntroDTO> productIntros = new ArrayList<>();
     private List<String> intros = new ArrayList<>();
@@ -59,11 +59,11 @@ public class ProductDTO extends AuditingEntityDTO {
         this.intros = intros;
     }
 
-    public Set<IProductCarouselDTO> getCarousels() {
+    public List<IProductCarouselDTO> getCarousels() {
         return carousels;
     }
 
-    public void setCarousels(Set<IProductCarouselDTO> carousels) {
+    public void setCarousels(List<IProductCarouselDTO> carousels) {
         this.carousels = carousels;
     }
 

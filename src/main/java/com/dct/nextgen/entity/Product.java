@@ -2,20 +2,21 @@ package com.dct.nextgen.entity;
 
 import com.dct.nextgen.entity.base.AbstractAuditingEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
+
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -30,9 +31,10 @@ public class Product extends AbstractAuditingEntity {
     @Column(name = "description", length = 1000)
     private String description;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     @JsonIgnore
-    private Set<ProductCarousel> productCarousels = new HashSet<>();
+    private List<ProductCarousel> productCarousels = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
@@ -55,11 +57,11 @@ public class Product extends AbstractAuditingEntity {
         this.description = description;
     }
 
-    public Set<ProductCarousel> getProductCarousels() {
+    public List<ProductCarousel> getProductCarousels() {
         return productCarousels;
     }
 
-    public void setProductCarousels(Set<ProductCarousel> productCarousels) {
+    public void setProductCarousels(List<ProductCarousel> productCarousels) {
         this.productCarousels = productCarousels;
     }
 

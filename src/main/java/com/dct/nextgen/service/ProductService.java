@@ -1,11 +1,9 @@
 package com.dct.nextgen.service;
 
 import com.dct.nextgen.dto.request.BaseRequestDTO;
-import com.dct.nextgen.dto.request.CreateProductCarouselRequestDTO;
 import com.dct.nextgen.dto.request.CreateProductPackCompareRequestDTO;
 import com.dct.nextgen.dto.request.CreateProductPackRequestDTO;
 import com.dct.nextgen.dto.request.CreateProductRequestDTO;
-import com.dct.nextgen.dto.request.UpdateProductCarouselRequestDTO;
 import com.dct.nextgen.dto.request.UpdateProductPackCompareRequestDTO;
 import com.dct.nextgen.dto.request.UpdateProductPackRequestDTO;
 import com.dct.nextgen.dto.request.UpdateProductRequestDTO;
@@ -19,9 +17,6 @@ public interface ProductService {
     BaseResponseDTO createNewProduct(CreateProductRequestDTO request);
     BaseResponseDTO updateProduct(UpdateProductRequestDTO request);
     BaseResponseDTO deleteProduct(Integer productId);
-    BaseResponseDTO getAllProductCarousel(Integer productId);
-    BaseResponseDTO createProductCarousel(CreateProductCarouselRequestDTO request);
-    BaseResponseDTO updateProductCarousel(UpdateProductCarouselRequestDTO request);
     BaseResponseDTO getAllProductPack(Integer productId);
     BaseResponseDTO getProductPackDetail(Integer productPackId);
     BaseResponseDTO createProductPack(CreateProductPackRequestDTO request);

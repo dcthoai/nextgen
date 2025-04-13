@@ -27,7 +27,7 @@ public class UpdateProductRequestDTO {
     private String description;
 
     @Size(min = 1, message = ExceptionConstants.CAROUSEL_NOT_EMPTY)
-    private Set<ProductCarouselDTO> carousels = new HashSet<>();
+    private List<ProductCarouselDTO> carousels = new ArrayList<>();
 
     @Size(min = 1, message = ExceptionConstants.PRODUCT_INTRO_NOT_EMPTY)
     private List<ProductIntroDTO> intros = new ArrayList<>();
@@ -56,11 +56,11 @@ public class UpdateProductRequestDTO {
         this.description = description;
     }
 
-    public Set<ProductCarouselDTO> getCarousels() {
+    public List<ProductCarouselDTO> getCarousels() {
         return carousels;
     }
 
-    public void setCarousels(Set<ProductCarouselDTO> carousels) {
+    public void setCarousels(List<ProductCarouselDTO> carousels) {
         this.carousels = carousels;
     }
 
