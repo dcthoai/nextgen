@@ -1,4 +1,4 @@
-# Nextgen Creative brand Application – Spring Boot + MySQL + Dockerized Setup
+# Nextgen Creative Brand Application – Spring Boot + MySQL + Dockerized Setup
 
 A production-ready **Spring Boot** application packaged as a **standalone JAR** (with embedded Tomcat), using **MySQL** for database persistence. 
 This application is containerized via Docker with persistent volumes for database.
@@ -207,7 +207,51 @@ Or if you want to run the two steps of building the image and running the contai
    docker-compose up -d
    ```
 
-#### Step 4: Verify the application is running
+**Notes:** Don't worry if the application haven't started successfully yet. Continue with the next step to initialize the database, and the application should be able to connect and start successfully.
+
+#### Step 4: Initialize database structure
+
+After checking and ensuring that the database (nextgen_brand) has been created, 
+run the following command to initialize the database structure for the application:
+
+##### 1. Create database access account for Application
+Open the terminal and run the following commands one by one:
+
+```bash
+mysql -u root -p -h 127.0.0.1 -P 3307
+```
+Enter the password for the root account that was set in the `MYSQL_ROOT_PASSWORD` (from the `.env` file) to continue.
+
+```bash
+CREATE USER 'your_username'@'%' IDENTIFIED BY 'your_password';
+```
+Make sure that the username and password match the values of `NEXTGEN_BRAND_DATABASE_USERNAME` and `NEXTGEN_BRAND_DATABASE_PASSWORD` in the `.env` file.  
+
+```bash
+GRANT SELECT, INSERT, UPDATE, DELETE ON <your_database_name>.* TO 'your_username'@'%';
+```
+Ensure that the database name matches the value of `MYSQL_DATABASE` in the `.env` file.
+
+```bash
+REVOKE CREATE, ALTER, DROP, INDEX, CREATE VIEW, ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON <your_database_name>.* FROM 'your_username'@'%';
+FLUSH PRIVILEGES;
+```
+
+**Notes:** If you only want this user to access from a specific address, replace `%` symbols with the IP address of the container.  
+
+#### 2. Initialize the database structure
+Use MySQL Workbench with the connection information as configured in the `docker-compose.yml` and `.env` files and login with root account.  
+Copy and execute the contents of the following files in order `dbchangelog/init_*.sql`
+
+**Note:** Update the super admin account information in `init_super_admin.sql` to match your personal credentials.
+
+```bash
+ALTER USER 'your_username'@'%' IDENTIFIED WITH mysql_native_password BY 'your_password';
+FLUSH PRIVILEGES;
+exit;
+```
+
+#### Step 5: Verify the application is running
 Open your browser at:
 ```
 http://localhost:8080
@@ -216,15 +260,6 @@ http://localhost:8080
 Use the following command to verify the container is running:
 ```bash
 docker ps
-```
-
-#### Step 5: Initialize database structure
-
-After checking and ensuring that the application has launched successfully and the database (nextgen_brand) has been created, 
-run the following command to initialize the database structure for the application:
-
-```bash
-
 ```
 
 #### Step 6: Check logs (Optional)
@@ -275,10 +310,12 @@ docker-compose logs -f app
 ---
 
 ## Deploy to Production Server with Docker Registry (Docker Hub)
-Use the configuration guidelines from the previous steps and follow the instructions below to deploy the application to a production server instead of running it with Docker local.
+Use the configuration guidelines from the previous steps and follow the instructions below 
+to deploy the application to a production server instead of running it with Docker local.
 
 ### Case 1. If you skipped the setup step for testing production on Docker local
-If you **haven't run** `docker-compose up --build -d` as part of testing production with Docker local, follow these steps to build the image and push it to Docker Hub:
+If you **haven't run** `docker-compose up --build -d` as part of testing production with Docker local, 
+follow these steps to build the image and push it to Docker Hub:
 
 #### Step 1. **Build Docker image**:
 ```bash
@@ -314,7 +351,8 @@ If you **have already built** using:
 docker-compose up --build -d
 ```
 
-The Docker image built will not have the standard tag like `<your-username>/<repo-name>:<tag>`. You will need to **re-tag** the image to push it to Docker Hub.
+The Docker image built will not have the standard tag like `<your-username>/<repo-name>:<tag>`. 
+You will need to **re-tag** the image to push it to Docker Hub.
 
 #### Step 1. **View the list of built images**:
 ```bash
@@ -426,7 +464,8 @@ UPLOADS_PATH=/app/uploads/
 
 #### Step 4: Run Docker Compose on the Production Server
 
-After configuring `docker-compose.prod.yml` and `.env`, cd to the application installation directory where the configuration files were created above and run Docker compose:
+After configuring `docker-compose.prod.yml` and `.env`, 
+cd to the application installation directory where the configuration files were created above and run Docker compose:
 
 ```bash
 docker-compose -f docker-compose.prod.yml up -d
@@ -451,14 +490,11 @@ Or check the logs for the specific container `app`:
 docker-compose logs -f app
 ```
 
+**Notes:** Don't worry if the application haven't started successfully yet. Continue with the next step to initialize the database, and the application should be able to connect and start successfully.
+
 #### Step 6: Initialize database structure (only first-time setup)
 
-After checking and ensuring that the application has launched successfully and the database (nextgen_brand) has been created,
-run the following command to initialize the database structure for the application:
-
-```bash
-
-```
+Follow to the same steps as in **Step 4** of the **Running the Application (Docker local)** section.
 
 ### **Redeploy with New Docker image (New application version)**
 
@@ -488,7 +524,8 @@ After pulling the new Docker image, restart the container with the new image:
 
 2. **Restart the container with the new image**:
 
-   After stopping and removing the old container, use the `up` command with the `-d` flag to run the containers with the new image in detached mode:
+   After stopping and removing the old container, 
+   use the `up` command with the `-d` flag to run the containers with the new image in detached mode:
 
    ```bash
    docker-compose -f docker-compose.prod.yml up -d
