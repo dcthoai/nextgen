@@ -237,6 +237,12 @@ REVOKE CREATE, ALTER, DROP, INDEX, CREATE VIEW, ALTER ROUTINE, CREATE ROUTINE, E
 FLUSH PRIVILEGES;
 ```
 
+```bash
+ALTER USER 'your_username'@'%' IDENTIFIED WITH mysql_native_password BY 'your_password';
+FLUSH PRIVILEGES;
+exit;
+```
+
 **Notes:** If you only want this user to access from a specific address, replace `%` symbols with the IP address of the container.  
 
 #### 2. Initialize the database structure
@@ -244,12 +250,6 @@ Use MySQL Workbench with the connection information as configured in the `docker
 Copy and execute the contents of the following files in order `dbchangelog/init_*.sql`
 
 **Note:** Update the super admin account information in `init_super_admin.sql` to match your personal credentials.
-
-```bash
-ALTER USER 'your_username'@'%' IDENTIFIED WITH mysql_native_password BY 'your_password';
-FLUSH PRIVILEGES;
-exit;
-```
 
 #### Step 5: Verify the application is running
 Open your browser at:
@@ -476,7 +476,13 @@ The command above will:
 - Initialize the container from the downloaded Docker image.
 - Open port 8080 so the application can be accessed via `http://your-server-ip:8080`.
 
-#### Step 5: Check Logs (Optional)
+**Notes:** Don't worry if the application haven't started successfully yet. Continue with the next step to initialize the database, and the application should be able to connect and start successfully.
+
+#### Step 5: Initialize database structure (only first-time setup)
+
+Follow to the same steps as in **Step 4** of the **Running the Application (Docker local)** section.
+
+#### Step 6: Check Logs (Optional)
 
 After the application is running, you can check the logs to ensure everything is working as expected:
 
@@ -489,12 +495,6 @@ Or check the logs for the specific container `app`:
 ```bash
 docker-compose logs -f app
 ```
-
-**Notes:** Don't worry if the application haven't started successfully yet. Continue with the next step to initialize the database, and the application should be able to connect and start successfully.
-
-#### Step 6: Initialize database structure (only first-time setup)
-
-Follow to the same steps as in **Step 4** of the **Running the Application (Docker local)** section.
 
 ### **Redeploy with New Docker image (New application version)**
 
