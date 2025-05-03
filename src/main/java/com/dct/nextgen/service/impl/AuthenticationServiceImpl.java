@@ -7,11 +7,11 @@ import com.dct.nextgen.constants.ResultConstants;
 import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.auth.BaseAuthTokenDTO;
 import com.dct.nextgen.dto.request.AuthRequestDTO;
+import com.dct.nextgen.dto.response.AuthenticationResponseDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.entity.base.Account;
 import com.dct.nextgen.exception.BaseAuthenticationException;
 import com.dct.nextgen.exception.BaseBadRequestException;
-import com.dct.nextgen.repositories.common.AccountRepository;
 import com.dct.nextgen.security.model.CustomUserDetails;
 import com.dct.nextgen.security.jwt.JwtProvider;
 import com.dct.nextgen.service.AuthenticationService;
@@ -20,6 +20,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,9 +34,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import java.util.Objects;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -43,17 +41,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private static final Logger log = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
     private static final String ENTITY_NAME = "AuthenticationServiceImpl";
     private final AuthenticationManager authenticationManager;
-    private final AccountRepository accountRepository;
     private final JwtProvider tokenProvider;
     private final Security security;
 
     public AuthenticationServiceImpl(JwtProvider tokenProvider,
                                      AuthenticationManager authenticationManager,
-                                     AccountRepository accountRepository,
                                      @Qualifier("security") Security security) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
-        this.accountRepository = accountRepository;
         this.security = security;
     }
 
@@ -97,28 +92,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         Account account = userDetails.getAccount();
-        String newDeviceId = authRequestDTO.getDeviceId();
-
-        if (!StringUtils.hasText(newDeviceId)) {
-            throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.DEVICE_ID_NOT_BLANK);
-        } else if (!Objects.equals(account.getDeviceId(), newDeviceId)) {
-            accountRepository.updateDeviceIdByAccountId(account.getId(), authRequestDTO.getDeviceId());
-        }
+        AuthenticationResponseDTO results = new AuthenticationResponseDTO();
+        BeanUtils.copyProperties(account, results);
+        results.setAuthorities(userDetails.getSetAuthorities());
 
         BaseAuthTokenDTO authTokenDTO = BaseAuthTokenDTO.builder()
             .authentication(authentication)
             .userId(account.getId())
-            .deviceId(newDeviceId)
+            .username(account.getUsername())
             .rememberMe(authRequestDTO.getRememberMe())
             .build();
 
         String jwtToken = tokenProvider.createToken(authTokenDTO);
+        results.setToken(jwtToken);
 
         return BaseResponseDTO.builder()
             .code(HttpStatusConstants.ACCEPTED)
             .message(ResultConstants.LOGIN_SUCCESS)
             .success(HttpStatusConstants.STATUS.SUCCESS)
-            .result(jwtToken)
+            .result(results)
             .build();
     }
 

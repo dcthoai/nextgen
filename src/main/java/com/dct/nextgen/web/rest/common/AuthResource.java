@@ -1,6 +1,8 @@
 package com.dct.nextgen.web.rest.common;
 
+import com.dct.nextgen.constants.SecurityConstants;
 import com.dct.nextgen.dto.request.AuthRequestDTO;
+import com.dct.nextgen.dto.response.AuthenticationResponseDTO;
 import com.dct.nextgen.dto.response.BaseResponseDTO;
 import com.dct.nextgen.service.AuthenticationService;
 
@@ -27,11 +29,12 @@ public class AuthResource {
     @PostMapping("/login")
     public BaseResponseDTO login(@Valid @RequestBody AuthRequestDTO requestDTO, HttpServletResponse response) {
         BaseResponseDTO responseDTO = authService.authenticate(requestDTO);
-        String jwt = (String) responseDTO.getResult();
-        Cookie secureCookie = authService.createSecureCookie(jwt, requestDTO.getRememberMe());
+        AuthenticationResponseDTO result = (AuthenticationResponseDTO) responseDTO.getResult();
+        Cookie secureCookie = authService.createSecureCookie(result.getToken(), requestDTO.getRememberMe());
 
+        result.setToken(null);            // Clear token in response body
         response.addCookie(secureCookie); // Send secure cookie with token to client in HttpOnly
-        responseDTO.setResult(null); // Clear token in response body
+        responseDTO.setResult(result);
 
         return responseDTO;
     }
@@ -44,6 +47,8 @@ public class AuthResource {
         Cookie secureCookie = authService.createSecureCookie(null, false);
         secureCookie.setMaxAge(0); // Delete cookies immediately
         response.addCookie(secureCookie); // Send new cookie to client to overwrite old cookie
+        response.setHeader(SecurityConstants.HEADER.AUTHORIZATION_HEADER, null);
+        response.setHeader(SecurityConstants.HEADER.AUTHORIZATION_GATEWAY_HEADER, null);
 
         return BaseResponseDTO.builder().ok();
     }
