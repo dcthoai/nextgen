@@ -203,3 +203,5 @@ Desktop.ini
 /.nyc_output/
 
 /.env
+/.nx/
+dist/
