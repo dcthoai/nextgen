@@ -41,10 +41,10 @@ $text-color: #58647a;
 
         .logo-img {
           transition: none !important;
-          height: 100%;
+          max-width: 100%;
+          max-height: 100%;
           object-fit: cover;
           margin: auto 0;
-          max-width: 100%;
         }
 
         .collapse-body:hover {
@@ -176,8 +176,7 @@ $text-color: #58647a;
       .logo-img-custom {
         position: absolute;
         transition: none !important;
-        width: 36px !important;
-        height: 36px;
+        width: 48px !important;
         margin: auto;
         visibility: visible;
         opacity: 1;
