@@ -11,7 +11,6 @@ import com.dct.nextgen.security.service.SecurityUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -37,8 +36,6 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
-
-import java.util.Objects;
 
 /**
  * This class configures security for a Spring application, include:
@@ -70,18 +67,15 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
-    private final OAuth2ClientConfig oAuth2ClientConfig;
 
     public SecurityConfig(CorsFilter corsFilter,
                           JwtFilter jwtFilter,
                           CustomAccessDeniedHandler accessDeniedHandler,
-                          CustomAuthenticationEntryPoint authenticationEntryPoint,
-                          @Autowired(required = false) OAuth2ClientConfig oAuth2ClientConfig) {
+                          CustomAuthenticationEntryPoint authenticationEntryPoint) {
         this.corsFilter = corsFilter;
         this.jwtFilter = jwtFilter;
         this.accessDeniedHandler = accessDeniedHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
-        this.oAuth2ClientConfig = oAuth2ClientConfig;
     }
 
     /**
@@ -146,10 +140,6 @@ public class SecurityConfig {
      *     </ul>
      *   </li>
      *   <li>Disables the default form-based login feature of Spring Security</li>
-     *   <li>
-     *     If the OAuth2 Client configuration {@link SecurityConfig#oAuth2ClientConfig} is present,
-     *     this method will call {@link OAuth2ClientConfig#configure} method to add additional configuration
-     *   </li>
      * </ul>
      */
     @Bean
@@ -182,9 +172,6 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .formLogin(AbstractHttpConfigurer::disable);
-
-        if (Objects.nonNull(oAuth2ClientConfig))
-            oAuth2ClientConfig.configure(http);
 
         return http.build();
     }
