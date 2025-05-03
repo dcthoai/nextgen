@@ -13,10 +13,7 @@ public class AccountDTO extends AuditingEntityDTO {
     private String fullname;
     private String username;
     private String email;
-    private String address;
-    private String phone;
     private String status;
-    private String deviceId;
     private List<IRoleDTO> accountRoles = new ArrayList<>();
 
     public Integer getId() {
@@ -51,36 +48,12 @@ public class AccountDTO extends AuditingEntityDTO {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
     }
 
     public List<IRoleDTO> getAccountRoles() {

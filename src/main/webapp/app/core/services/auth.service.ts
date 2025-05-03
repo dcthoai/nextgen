@@ -13,7 +13,7 @@ import {
 import {LoginRequest} from '../models/login.model';
 import {BaseResponse} from '../models/response.model';
 import {filter} from 'rxjs/operators';
-import {LOCAL_TOKEN_KEY, LOCAL_USER_AUTHORITIES_KEY, LOCAL_USERNAME_KEY} from '../../constants/local-storage.constants';
+import {LOCAL_USER_AUTHORITIES_KEY, LOCAL_USERNAME_KEY} from '../../constants/local-storage.constants';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   hasToken(): boolean {
-    return !!localStorage.getItem(LOCAL_TOKEN_KEY);
+    return !!localStorage.getItem(LOCAL_USERNAME_KEY);
   }
 
   isAuthenticated(): boolean {
@@ -105,10 +105,6 @@ export class AuthService {
     this.authenticationState.next(authentication);
 
     if (authentication) {
-      if (authentication.token) {
-        localStorage.setItem(LOCAL_TOKEN_KEY, authentication.token);
-      }
-
       localStorage.setItem(LOCAL_USERNAME_KEY, authentication.username);
       localStorage.setItem(LOCAL_USER_AUTHORITIES_KEY, JSON.stringify(authentication.authorities));
     } else {
@@ -120,7 +116,6 @@ export class AuthService {
     this.stateStorageService.clearPreviousPage();
     localStorage.removeItem(LOCAL_USERNAME_KEY);
     localStorage.removeItem(LOCAL_USER_AUTHORITIES_KEY);
-    localStorage.removeItem(LOCAL_TOKEN_KEY);
   }
 
   /**

@@ -3,7 +3,6 @@ USE `nextgen_brand`;
 -- Indexes for `account`
 CREATE INDEX idx_account_email ON account(email);
 CREATE INDEX idx_account_username ON account(username);
-CREATE INDEX idx_account_phone ON account(phone);
 CREATE INDEX idx_account_status ON account(status);
 
 -- Index for `role`

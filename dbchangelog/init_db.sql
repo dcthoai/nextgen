@@ -28,9 +28,6 @@ CREATE TABLE `account` (
     `username` VARCHAR(45) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
-    `phone` VARCHAR(15) DEFAULT NULL,
-    `address` VARCHAR(512) DEFAULT NULL,
-    `device_id` VARCHAR(45) DEFAULT NULL,
     `status` ENUM('ACTIVE', 'INACTIVE', 'LOCKED', 'DELETED') NOT NULL DEFAULT 'ACTIVE',
     `created_by` VARCHAR(45) NOT NULL DEFAULT 'SYSTEM',
     `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -39,7 +36,6 @@ CREATE TABLE `account` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `username_UNIQUE` (`username`),
     UNIQUE KEY `email_UNIQUE` (`email`),
-    KEY `phone_INDEX` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Table structure for table `role`

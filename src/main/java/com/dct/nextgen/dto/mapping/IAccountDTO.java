@@ -6,6 +6,5 @@ public interface IAccountDTO {
     String getUsername();
     String getFullname();
     String getEmail();
-    String getPhone();
     String getStatus();
 }

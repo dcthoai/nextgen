@@ -31,7 +31,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.id, a.username, a.password, a.email, a.status, a.device_id as deviceId
+            SELECT a.id, a.username, a.password, a.email, a.status
             FROM account a WHERE a.username = ?1 AND status <> 'DELETED'
         """,
         nativeQuery = true
@@ -40,12 +40,13 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query(
         value = """
-            SELECT a.id, a.username, a.password, a.email, a.status, a.device_id as deviceId
-            FROM account a WHERE a.email = ?1 AND status <> 'DELETED'
+            SELECT id, email, fullname, status
+            FROM account
+            WHERE username = ?1 AND status <> 'DELETED'
         """,
         nativeQuery = true
     )
-    Optional<IAuthenticationDTO> findAuthenticationByEmail(String email);
+    Optional<IAccountDTO> findByAccountByUsername(String username);
 
     boolean existsByUsernameOrEmail(String username, String email);
 
@@ -55,8 +56,4 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Modifying
     @Query(value = "UPDATE account a SET a.status = ?2 WHERE a.id = ?1", nativeQuery = true)
     void updateAccountStatusById(Integer accountId, String status);
-
-    @Modifying
-    @Query(value = "UPDATE account a SET a.device_id = ?2 WHERE a.id = ?1", nativeQuery = true)
-    void updateDeviceIdByAccountId(Integer accountId, String deviceId);
 }

@@ -1,5 +1,6 @@
 package com.dct.nextgen.service;
 
+import com.dct.nextgen.dto.auth.AccountDTO;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.CreateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
@@ -10,6 +11,8 @@ import com.dct.nextgen.entity.base.Account;
 public interface AccountService {
 
     Account createNewAccount(CreateAccountRequestDTO request);
+
+    AccountDTO findAccountByUsername(String username);
 
     BaseResponseDTO getAccountsWithPaging(BaseRequestDTO request);
 

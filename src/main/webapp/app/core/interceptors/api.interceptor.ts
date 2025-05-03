@@ -8,23 +8,15 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {ApplicationConfigService} from '../config/application-config.service';
 import {tap} from 'rxjs';
-import {LOCAL_TOKEN_KEY} from '../../constants/local-storage.constants';
 
 export const ApiInterceptorFn: HttpInterceptorFn = (request: HttpRequest<any>, next: HttpHandlerFn) => {
   const toast = inject(ToastrService);
   const appConfig = inject(ApplicationConfigService);
-
-  const token = localStorage.getItem(LOCAL_TOKEN_KEY);
   const isApiRequest = request.url.startsWith(appConfig.getEndpointFor(''));
   let modifiedReq = request;
 
-  if (isApiRequest && token) {
-    modifiedReq = request.clone({
-      withCredentials: true,
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
+  if (isApiRequest) {
+    modifiedReq = request.clone({ withCredentials: true });
   }
 
   return next(modifiedReq).pipe(
