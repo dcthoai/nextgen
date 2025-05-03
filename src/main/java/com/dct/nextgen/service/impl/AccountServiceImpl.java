@@ -7,7 +7,6 @@ import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.dto.mapping.IAccountDTO;
 import com.dct.nextgen.dto.mapping.IRoleDTO;
 import com.dct.nextgen.dto.request.AccountFilterSearchRequestDTO;
-import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.CreateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
 import com.dct.nextgen.dto.auth.AccountDTO;

@@ -7,4 +7,6 @@ public interface IAccountDTO {
     String getFullname();
     String getEmail();
     String getStatus();
+    String getCreatedBy();
+    String getCreatedDate();
 }
