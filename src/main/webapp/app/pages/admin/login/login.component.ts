@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import {AuthService} from '../../core/services/auth.service';
+import {AuthService} from '../../../core/services/auth.service';
 import {Router} from '@angular/router';
-import {UtilsService} from '../../shared/utils/utils.service';
-import {ICON_EYE, ICON_EYE_CROSS} from '../../shared/utils/icon';
-import {LoginRequest} from '../../core/models/login.model';
-import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
+import {UtilsService} from '../../../shared/utils/utils.service';
+import {ICON_EYE, ICON_EYE_CROSS} from '../../../shared/utils/icon';
+import {LoginRequest} from '../../../core/models/login.model';
+import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 
@@ -59,7 +59,7 @@ export class LoginComponent {
       if (authentication) {
         this.toastr.success('Đăng nhập thành công', 'Thông báo');
         const redirectUrl = this.utilsService.findFirstAccessibleRoute(authentication.authorities);
-        this.router.navigate([redirectUrl || '/']).then();
+        this.router.navigate([redirectUrl || '/admin/home']).then();
       }
     });
   }

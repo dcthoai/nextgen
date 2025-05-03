@@ -17,7 +17,7 @@ import {SidebarNavItem} from '../../../../core/models/sidebar.model';
 
 export const SIDEBAR_ROUTES: SidebarNavItem[] = [
   {
-    path: '/',
+    path: '/admin/home',
     title: SIDEBAR_HOME_TITLE,
     icon: ICON_DASHBOARD,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,

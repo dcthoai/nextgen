@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import dayjs from 'dayjs/esm';
 import { ToastrService } from 'ngx-toastr';
 import {LOCAL_USER_AUTHORITIES_KEY} from '../../constants/local-storage.constants';
-import {SIDEBAR_ROUTES} from '../../pages/main/layouts/sidebar/sidebar.route';
+import {SIDEBAR_ROUTES} from '../../pages/admin/layouts/sidebar/sidebar.route';
 import {SidebarNavItem} from '../../core/models/sidebar.model';
 
 @Injectable({

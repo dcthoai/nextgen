@@ -8,9 +8,9 @@ import {NavbarComponent} from './layouts/navbar/navbar.component';
   selector: 'app-main',
   standalone: true,
   imports: [RouterOutlet, NgClass, NgIf, SidebarComponent, NavbarComponent],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.scss'
+  templateUrl: './admin.component.html',
+  styleUrl: './admin.component.scss'
 })
-export class MainComponent {
+export class AdminComponent {
   isSidebarShown = true;
 }
