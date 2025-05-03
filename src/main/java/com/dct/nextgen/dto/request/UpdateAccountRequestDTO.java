@@ -32,10 +32,6 @@ public class UpdateAccountRequestDTO extends BaseRequestDTO {
     @Pattern(regexp = BaseConstants.REGEX.EMAIL_PATTERN, message = ExceptionConstants.EMAIL_INVALID)
     private String email;
 
-    @NotBlank(message = ExceptionConstants.STATUS_NOT_BLANK)
-    @Pattern(regexp = BaseConstants.REGEX.ACCOUNT_STATUS_PATTERN, message = ExceptionConstants.STATUS_INVALID)
-    private String status;
-
     @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)
     private List<Integer> roleIds = new ArrayList<>();
 
@@ -77,13 +73,5 @@ public class UpdateAccountRequestDTO extends BaseRequestDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

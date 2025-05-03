@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,11 +26,24 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     )
     List<IRoleDTO> findAllByAccountId(Integer accountId);
 
-    @Query(value = "SELECT r.id, r.name, r.code FROM role r", nativeQuery = true)
-    Page<IRoleDTO> findAllWithPaging(Pageable pageable);
+    @Query(
+        value = """
+            SELECT r.id, r.name, r.code FROM role r
+            WHERE :keyword IS NULL OR (r.code LIKE :keyword OR r.name LIKE :keyword)
+        """,
+        nativeQuery = true
+    )
+    Page<IRoleDTO> findAllWithPaging(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query(value = "SELECT r.id, r.name, r.code FROM role r LIMIT 100", nativeQuery = true)
-    List<IRoleDTO> findAllNonPaging();
+    @Query(
+        value = """
+            SELECT r.id, r.name, r.code FROM role r
+            WHERE :keyword IS NULL OR (r.code LIKE :keyword OR r.name LIKE :keyword)
+            LIMIT 20
+        """,
+        nativeQuery = true
+    )
+    List<IRoleDTO> findAllNonPaging(@Param("keyword") String keyword);
 
     @Query(value = "SELECT r.id, r.name, r.code FROM role r WHERE r.id IN (?1)", nativeQuery = true)
     List<IRoleDTO> findAllByIds(Iterable<Integer> roleIds);
