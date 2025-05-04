@@ -91,6 +91,8 @@ public interface ExceptionConstants {
     String NAME_NOT_BLANK = "exception.data.name.notBlank";
     String NAME_MAX_LENGTH = "exception.data.name.maxLength";
     String CODE_NOT_BLANK = "exception.data.code.notBlank";
+    String FULLNAME_NOT_BLANK = "exception.data.fullname.notBlank";
+    String FULLNAME_MAX_LENGTH = "exception.data.fullname.maxLength";
     String USERNAME_NOT_BLANK = "exception.data.username.notBlank";
     String USERNAME_INVALID = "exception.data.username.invalid";
     String USERNAME_MIN_LENGTH = "exception.data.username.minLength";

@@ -25,6 +25,9 @@ import java.util.List;
  */
 public class CreateAccountRequestDTO extends BaseRequestDTO {
 
+    @Size(max = 100, message = ExceptionConstants.NAME_MAX_LENGTH)
+    private String fullname;
+
     @NotBlank(message = ExceptionConstants.USERNAME_NOT_BLANK)
     @Size(min = 2, message = ExceptionConstants.USERNAME_MIN_LENGTH)
     @Size(max = 45, message = ExceptionConstants.USERNAME_MAX_LENGTH)
@@ -45,12 +48,6 @@ public class CreateAccountRequestDTO extends BaseRequestDTO {
 
     @Size(min = 1, message = ExceptionConstants.ROLE_PERMISSIONS_NOT_EMPTY)
     private List<Integer> roleIds = new ArrayList<>();
-
-    @Size(max = 100, message = ExceptionConstants.NAME_MAX_LENGTH)
-    private String fullname;
-
-    @Size(max = 255, message = ExceptionConstants.ADDRESS_MAX_LENGTH)
-    private String address;
 
     public String getUsername() {
         return username;
@@ -90,13 +87,5 @@ public class CreateAccountRequestDTO extends BaseRequestDTO {
 
     public void setRoleIds(List<Integer> roleIds) {
         this.roleIds = roleIds;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }

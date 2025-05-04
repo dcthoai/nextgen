@@ -194,3 +194,21 @@ CREATE TABLE product_intro (
     `last_modified_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Table structure for table `customer_demand`
+DROP TABLE IF EXISTS `customer_demand`;
+CREATE TABLE `customer_demand` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `fullname` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(45),
+    `email` VARCHAR(100) NOT NULL,
+    `phone` VARCHAR(20) NOT NULL,
+    `status` ENUM('PENDING', 'ADVISED', 'REFUSED', 'DELETED') NOT NULL DEFAULT 'PENDING',
+    `product_id` INT NOT NULL,
+    `created_by` VARCHAR(45) NOT NULL DEFAULT 'SYSTEM',
+    `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `last_modified_by` VARCHAR(45) DEFAULT 'SYSTEM',
+    `last_modified_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
