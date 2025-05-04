@@ -5,7 +5,7 @@ import {SidebarComponent} from './layouts/sidebar/sidebar.component';
 import {NavbarComponent} from './layouts/navbar/navbar.component';
 
 @Component({
-  selector: 'app-main',
+  selector: 'app-admin-main',
   standalone: true,
   imports: [RouterOutlet, NgClass, NgIf, SidebarComponent, NavbarComponent],
   templateUrl: './admin.component.html',
