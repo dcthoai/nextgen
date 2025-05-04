@@ -37,13 +37,6 @@ NEXTGEN_BRAND_DATABASE_URL=nextgen-mysql:3306/nextgen_brand
 NEXTGEN_BRAND_DATABASE_USERNAME=your_username_for_connect_db_in_app
 NEXTGEN_BRAND_DATABASE_PASSWORD=your_password_for_connect_db_in_app
 NEXTGEN_BRAND_SECRET_KEY=your_base64_secret_key
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-RABBIT_MQ_HOST=your_rabbitmq_host
-RABBIT_MQ_VIRTUAL_HOST=your_rabbitmq_virtual_host
-RABBIT_MQ_PORT=your_rabbitmq_port
-RABBIT_MQ_USERNAME=your_rabbitmq_username
-RABBIT_MQ_PASSWORD=your_rabbitmq_password
 UPLOADS_PATH=/app/uploads/
 ```
 
@@ -73,7 +66,7 @@ COPY package.json package-lock.json ./
 RUN mvn frontend:npm
 
 # Copy Angular config files
-COPY angular.json server.ts tsconfig*.json ./
+COPY angular.json tsconfig*.json ./
 
 # Copy full source code
 COPY src ./src
@@ -88,17 +81,27 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
+# Install Nginx
+RUN apt-get update && apt-get install -y nginx
+
+# Create nginx user and group
+RUN groupadd -r nginx && useradd -r -g nginx nginx
+
 # Copy Spring Boot JAR from the build stage
 COPY --from=build /app/target/nextgen-*.jar app.jar
 
-# Copy static Angular build files (already integrated by Spring Boot)
-COPY --from=build /app/target/classes/static /app/static
+# Copy the built Angular app into Nginx's default directory
+COPY --from=build /app/target/classes/static /usr/share/nginx/html
 
-# Expose application port
+# Copy configure Nginx file
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose necessary ports (8080 for Spring Boot, 80 for Nginx serving Angular)
 EXPOSE 8080
+EXPOSE 80
 
-# Run the Spring Boot app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Start both Spring Boot app and Nginx in the same container
+CMD service nginx start && java -jar app.jar
 ```
 
 ---
@@ -117,6 +120,7 @@ services:
       - .env                    # Load environment variables from the .env file
     ports:
       - "8080:8080"             # Map host port 8080 to container port 8080
+      - "4200:80"               # Map port 4200 to serve the Angular frontend on Nginx
     depends_on:                 # Wait for my sql to finish starting
       - mysql
     environment:
@@ -167,13 +171,6 @@ NEXTGEN_BRAND_DATABASE_URL=nextgen-mysql:3306/nextgen_brand
 NEXTGEN_BRAND_DATABASE_USERNAME=your_username_for_connect_db_in_app
 NEXTGEN_BRAND_DATABASE_PASSWORD=your_password_for_connect_db_in_app
 NEXTGEN_BRAND_SECRET_KEY=your_base64_secret_key
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-RABBIT_MQ_HOST=your_rabbitmq_host
-RABBIT_MQ_VIRTUAL_HOST=your_rabbitmq_virtual_host
-RABBIT_MQ_PORT=your_rabbitmq_port
-RABBIT_MQ_USERNAME=your_rabbitmq_username
-RABBIT_MQ_PASSWORD=your_rabbitmq_password
 UPLOADS_PATH=/app/uploads/
 ```
 
@@ -193,7 +190,7 @@ The above command will execute:
 - Build the image from source code
 - Create the necessary volumes (if not exist)
 - Create container from built image and run in background
-- Start the service on port `8080`
+- Start the service on port `8080` for Spring Boot and `4200` for Angular with Nginx
 
 Or if you want to run the two steps of building the image and running the container separately:
 
@@ -416,6 +413,7 @@ services:
       - .env                    # Load environment variables from the .env file
     ports:
       - "8080:8080"             # Map host port 8080 to container port 8080
+      - "4200:80"               # Map port 4200 to serve the Angular frontend on Nginx
     depends_on:                 # Wait for my sql to finish starting
       - mysql
     environment:
@@ -452,13 +450,6 @@ NEXTGEN_BRAND_DATABASE_URL=nextgen-mysql:3306/nextgen_brand
 NEXTGEN_BRAND_DATABASE_USERNAME=your_username_for_connect_db_in_app
 NEXTGEN_BRAND_DATABASE_PASSWORD=your_password_for_connect_db_in_app
 NEXTGEN_BRAND_SECRET_KEY=your_base64_secret_key
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-RABBIT_MQ_HOST=your_rabbitmq_host
-RABBIT_MQ_VIRTUAL_HOST=your_rabbitmq_virtual_host
-RABBIT_MQ_PORT=your_rabbitmq_port
-RABBIT_MQ_USERNAME=your_rabbitmq_username
-RABBIT_MQ_PASSWORD=your_rabbitmq_password
 UPLOADS_PATH=/app/uploads/
 ```
 
@@ -474,7 +465,7 @@ docker-compose -f docker-compose.prod.yml up -d
 The command above will:
 - Pull the Docker image from Docker Hub (if not already pulled).
 - Initialize the container from the downloaded Docker image.
-- Open port 8080 so the application can be accessed via `http://your-server-ip:8080`.
+- Open port 4200 so the application can be accessed via `http://your-server-ip:4200` (Angular view)
 
 **Notes:** Don't worry if the application haven't started successfully yet. Continue with the next step to initialize the database, and the application should be able to connect and start successfully.
 

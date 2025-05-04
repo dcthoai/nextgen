@@ -6,6 +6,7 @@ services:
       - .env                    # Load environment variables from the .env file
     ports:
       - "8080:8080"             # Map host port 8080 to container port 8080
+      - "4200:80"               # Map port 4200 to serve the Angular frontend on Nginx
     depends_on:                 # Wait for my sql to finish starting
       - mysql
     environment:

@@ -19,7 +19,7 @@ COPY package.json package-lock.json ./
 RUN mvn frontend:npm
 
 # Copy Angular config files
-COPY angular.json server.ts tsconfig*.json ./
+COPY angular.json tsconfig*.json ./
 
 # Copy full source code
 COPY src ./src
@@ -34,14 +34,24 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
+# Install Nginx
+RUN apt-get update && apt-get install -y nginx
+
+# Create nginx user and group
+RUN groupadd -r nginx && useradd -r -g nginx nginx
+
 # Copy Spring Boot JAR from the build stage
 COPY --from=build /app/target/nextgen-*.jar app.jar
 
-# Copy static Angular build files (already integrated by Spring Boot)
-COPY --from=build /app/target/classes/static /app/static
+# Copy the built Angular app into Nginx's default directory
+COPY --from=build /app/target/classes/static /usr/share/nginx/html
 
-# Expose application port
+# Copy configure Nginx file
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose necessary ports (8080 for Spring Boot, 80 for Nginx serving Angular)
 EXPOSE 8080
+EXPOSE 80
 
-# Run the Spring Boot app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Start both Spring Boot app and Nginx in the same container
+CMD service nginx start && java -jar app.jar
