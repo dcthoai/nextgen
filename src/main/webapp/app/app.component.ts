@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {WebSocketService} from './core/services/websocket.service';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {AuthService} from './core/services/auth.service';
+import {Authentication} from './core/models/account.model';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.stateSubscription = this.webSocketService.onState().subscribe();
-    this.webSocketService.connect();
+
+    this.authService.subscribeAuthenticationState().subscribe((authentication: Authentication | null) => {
+      if (authentication) {
+        this.webSocketService.connect();
+      }
+    });
   }
 
   ngOnDestroy(): void {

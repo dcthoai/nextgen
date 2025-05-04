@@ -142,23 +142,6 @@ table {
   }
 }
 
-.save-button-dialog {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 16px;
-  gap: 4px;
-  min-width: 100px;
-  height: 40px;
-  background: var(--app-main-color);
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
 .input-text-custom {
   position: relative;
   margin-top: 0.125rem;
@@ -849,6 +832,7 @@ button:disabled {
   opacity: 0.7;
 }
 
+.save-button-dialog,
 .success-button-dialog {
   display: flex;
   flex-direction: row;
@@ -907,50 +891,5 @@ button:disabled {
     letter-spacing: 0.5px;
     font-size: 20px !important;
     padding-bottom: 12px;
-  }
-}
-
-.gr-comparison-matching {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .gr-comparison-option {
-    width: 30%;
-    display: flex;
-    justify-content: center;
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    height: 40px;
-    border-radius: 8px;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-    background-color: #ffffff;
-
-    .comparison-option {
-      width: 33.33%;
-      height: 100%;
-      background-color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .comparison-option-active {
-      background: var(--app-main-color) !important;
-      color: #ffffff;
-    }
-  }
-
-  .input-text-custom {
-    width: 75%;
-
-    .form-control {
-      border-top-left-radius: 0 !important;
-      border-bottom-left-radius: 0 !important;
-    }
   }
 }

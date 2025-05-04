@@ -2,7 +2,6 @@ export interface Authentication {
   email: string;
   username: string;
   status: string;
-  token: string;
   authorities: string[];
 }
 
