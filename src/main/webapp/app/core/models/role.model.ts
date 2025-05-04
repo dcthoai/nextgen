@@ -1,4 +1,4 @@
-import {BaseFilterRequest, Pagination} from './request.model';
+import {BaseFilterRequest} from './request.model';
 
 export interface Role {
   id: number;

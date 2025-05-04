@@ -23,7 +23,7 @@ import {IMessage} from '@stomp/stompjs';
 export class NavbarComponent implements OnInit {
   @Input() isSidebarShown!: boolean;
   showDropdown = '';
-  userName: string | null = '';
+  username: string | null = '';
 
   constructor(
     private router: Router,
@@ -42,12 +42,12 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserName() {
-    let rawUserName = localStorage.getItem(LOCAL_USERNAME_KEY);
+    let rawUsername = localStorage.getItem(LOCAL_USERNAME_KEY);
 
-    if (rawUserName) {
-      this.userName = rawUserName.replace(/^"(.*)"$/, '$1');
+    if (rawUsername) {
+      this.username = rawUsername.replace(/^"(.*)"$/, '$1');
     } else {
-      this.userName = null;
+      this.username = null;
     }
   }
 
