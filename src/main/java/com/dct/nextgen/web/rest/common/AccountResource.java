@@ -5,6 +5,7 @@ import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.RoleConstants;
 import com.dct.nextgen.dto.auth.AccountDTO;
 import com.dct.nextgen.dto.request.BaseRequestDTO;
+import com.dct.nextgen.dto.request.ChangeAccountPasswordRequestDTO;
 import com.dct.nextgen.dto.request.CreateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountStatusRequestDTO;
@@ -89,6 +90,12 @@ public class AccountResource {
     @CheckAuthorize(authorities = RoleConstants.Account.UPDATE)
     public BaseResponseDTO updateAccountStatus(@Valid @RequestBody UpdateAccountStatusRequestDTO request) {
         return accountService.updateAccountStatus(request);
+    }
+
+    @PutMapping("/passwords")
+    @CheckAuthorize(authorities = RoleConstants.Account.UPDATE)
+    public BaseResponseDTO changePasswordForAdmin(@Valid @RequestBody ChangeAccountPasswordRequestDTO request) {
+        return accountService.changePasswordForAdmin(request);
     }
 
     @DeleteMapping("/{accountId}")

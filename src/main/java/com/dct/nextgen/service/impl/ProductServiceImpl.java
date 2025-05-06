@@ -48,9 +48,9 @@ public class ProductServiceImpl implements ProductService {
     private static final String ENTITY_NAME = "ProductServiceImpl";
     private final FileUtils fileUtils;
     private final ProductRepository productRepository;
-    private final ProductPackRepository productPackRepository;
     private final ProductIntroRepository productIntroRepository;
     private final ProductCarouselRepository productCarouselRepository;
+    private final ProductPackRepository productPackRepository;
     private final ProductPackDetailRepository productPackDetailRepository;
     private final ProductPackCompareRepository productPackCompareRepository;
 

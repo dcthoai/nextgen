@@ -48,6 +48,8 @@ public interface ExceptionConstants {
     String REGISTER_FAILED = "exception.account.register.failed";
     String ACCOUNT_EXISTED = "exception.account.existed";
     String ACCOUNT_NOT_EXISTED = "exception.account.notExisted";
+    String OLD_PASSWORD_INVALID = "exception.account.oldPasswordInvalid";
+    String NEW_PASSWORD_DUPLICATED = "exception.account.newPasswordDuplicated";
 
     // Upload file request
     String MAXIMUM_UPLOAD_SIZE_EXCEEDED = "exception.upload.maximumSizeExceed";
