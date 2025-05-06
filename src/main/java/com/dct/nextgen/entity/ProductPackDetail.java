@@ -14,29 +14,29 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class ProductPackDetail extends AbstractAuditingEntity {
 
-    @Column(name = "pack_ID", nullable = false)
-    private int packID;
+    @Column(name = "pack_id", nullable = false)
+    private int packId;
 
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "index", nullable = false)
-    private int index;
+    @Column(name = "position", nullable = false)
+    private int position;
 
-    public int getIndex() {
-        return index;
+    public int getPosition() {
+        return position;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
-    public int getPackID() {
-        return packID;
+    public int getPackId() {
+        return packId;
     }
 
-    public void setPackID(int packID) {
-        this.packID = packID;
+    public void setPackId(int packId) {
+        this.packId = packId;
     }
 
     public String getContent() {

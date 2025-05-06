@@ -14,32 +14,35 @@ import org.hibernate.annotations.DynamicUpdate;
 @SuppressWarnings("unused")
 public class ProductPackCompare extends AbstractAuditingEntity {
 
-    @Column(name = "pack_ID", nullable = false)
-    private int packID;
+    @Column(name = "pack_id", nullable = false)
+    private int packId;
 
-    @Column(name = "product_ID", nullable = false)
-    private int productID;
+    @Column(name = "product_id", nullable = false)
+    private int productId;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", length = 300, nullable = false)
     private String content;
 
-    public int getPackID() {
-        return packID;
+    @Column(name = "position", nullable = false)
+    private int position;
+
+    public int getPackId() {
+        return packId;
     }
 
-    public void setPackID(int packID) {
-        this.packID = packID;
+    public void setPackId(int packId) {
+        this.packId = packId;
     }
 
-    public int getProductID() {
-        return productID;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -56,5 +59,13 @@ public class ProductPackCompare extends AbstractAuditingEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

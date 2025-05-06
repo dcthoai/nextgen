@@ -22,8 +22,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ProductPack extends AbstractAuditingEntity {
 
-    @Column(name = "product_ID", nullable = false)
-    private int productID;
+    @Column(name = "product_id", nullable = false)
+    private int productId;
 
     @Column(name = "name", length = 100, nullable = false)
     private String name;
@@ -38,16 +38,16 @@ public class ProductPack extends AbstractAuditingEntity {
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "pack_ID")
-    @OrderColumn(name = "index")
+    @JoinColumn(name = "pack_id")
+    @OrderColumn(name = "position")
     List<ProductPackDetail> packDetails = new ArrayList<>();
 
-    public int getProductID() {
-        return productID;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getName() {

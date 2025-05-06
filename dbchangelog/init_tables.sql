@@ -195,6 +195,53 @@ CREATE TABLE product_intro (
     FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `product_pack`;
+CREATE TABLE `product_pack` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `icon` VARCHAR(255),
+    `price` BIGINT NOT NULL,
+    `description` VARCHAR(1000),
+    `product_id` INT NOT NULL,
+    `created_by` VARCHAR(45) NOT NULL DEFAULT 'SYSTEM',
+    `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `last_modified_by` VARCHAR(45) DEFAULT 'SYSTEM',
+    `last_modified_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `product_pack_compare`;
+CREATE TABLE `product_pack_compare` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    `content` VARCHAR(300) NOT NULL,
+    `position` INT NOT NULL,
+    `pack_id` INT NOT NULL,
+    `product_id` INT NOT NULL,
+    `created_by` VARCHAR(45) NOT NULL DEFAULT 'SYSTEM',
+    `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `last_modified_by` VARCHAR(45) DEFAULT 'SYSTEM',
+    `last_modified_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`pack_id`) REFERENCES `product_pack`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `product_pack_detail`;
+CREATE TABLE `product_pack_detail` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `content` VARCHAR(255) NOT NULL,
+    `position` INT NOT NULL,
+    `pack_id` INT NOT NULL,
+    `created_by` VARCHAR(45) NOT NULL DEFAULT 'SYSTEM',
+    `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `last_modified_by` VARCHAR(45) DEFAULT 'SYSTEM',
+    `last_modified_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`pack_id`) REFERENCES `product_pack`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 -- Table structure for table `customer_demand`
 DROP TABLE IF EXISTS `customer_demand`;
 CREATE TABLE `customer_demand` (
