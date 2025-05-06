@@ -1,6 +1,7 @@
 package com.dct.nextgen.dto.request;
 
 import com.dct.nextgen.constants.BaseConstants;
+import com.dct.nextgen.constants.CustomerDemandConstants;
 import com.dct.nextgen.constants.ExceptionConstants;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
@@ -10,6 +11,9 @@ public class CustomerDemandSearchRequestDTO extends BaseRequestDTO {
 
     @Min(value = 1, message = ExceptionConstants.ID_INVALID)
     private Integer productId;
+
+    @Pattern(regexp = CustomerDemandConstants.Status.PATTERN, message = ExceptionConstants.STATUS_INVALID)
+    private String status;
 
     @Size(min = 6, message = ExceptionConstants.PHONE_MIN_LENGTH)
     @Size(max = 20, message = ExceptionConstants.PHONE_MAX_LENGTH)
@@ -27,6 +31,14 @@ public class CustomerDemandSearchRequestDTO extends BaseRequestDTO {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getPhone() {

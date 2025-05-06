@@ -134,6 +134,9 @@ public interface ExceptionConstants {
     String CATEGORY_IDS_INVALID = "exception.project.category.idInvalid";
 
     // Product
-    String CAROUSEL_NOT_EMPTY = "product.data.carousel.notEmpty";
-    String PRODUCT_INTRO_NOT_EMPTY = "product.data.intro.notEmpty";
+    String CAROUSEL_NOT_EMPTY = "exception.data.carousel.notEmpty";
+    String PRODUCT_INTRO_NOT_EMPTY = "exception.data.intro.notEmpty";
+
+    // Customer demand
+    String CUSTOMER_DEMAND_NOT_EXISTED = "exception.customer.demand.notExist";
 }

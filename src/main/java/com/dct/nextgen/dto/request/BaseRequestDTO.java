@@ -30,11 +30,12 @@ public class BaseRequestDTO implements Serializable {
     private String sort;
     private String fromDate;
     private String toDate;
+    private String status;
     private String keyword;
 
     public Pageable getPageable() {
         if (page == null || size == null || page < 0 || size <= 0) {
-            return Pageable.unpaged();
+            return PageRequest.of(0, 20);
         }
 
         if (StringUtils.hasText(sort)) {
@@ -85,6 +86,22 @@ public class BaseRequestDTO implements Serializable {
             } catch (DateTimeParseException e) {
                 log.error("Could not parse toDate from request, skip filter by toDate. {}", e.getMessage());
             }
+        }
+
+        return null;
+    }
+
+    public String getStatusSearch(String regex) {
+        if (Objects.nonNull(status) && !status.matches(regex)) {
+            return null;
+        }
+
+        return status;
+    }
+
+    public String getKeywordSearch() {
+        if (StringUtils.hasText(keyword)) {
+            return "%" + keyword + "%";
         }
 
         return null;
