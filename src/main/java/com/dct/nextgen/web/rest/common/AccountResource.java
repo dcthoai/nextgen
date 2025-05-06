@@ -4,7 +4,7 @@ import com.dct.nextgen.aop.annotation.CheckAuthorize;
 import com.dct.nextgen.constants.ExceptionConstants;
 import com.dct.nextgen.constants.RoleConstants;
 import com.dct.nextgen.dto.auth.AccountDTO;
-import com.dct.nextgen.dto.request.AccountFilterSearchRequestDTO;
+import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.CreateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountStatusRequestDTO;
@@ -46,7 +46,7 @@ public class AccountResource {
 
     @GetMapping
     @CheckAuthorize(authorities = RoleConstants.Account.VIEW)
-    public BaseResponseDTO getAccountsWithPaging(@ModelAttribute AccountFilterSearchRequestDTO request) {
+    public BaseResponseDTO getAccountsWithPaging(@ModelAttribute BaseRequestDTO request) {
         return accountService.getAccountsWithPaging(request);
     }
 

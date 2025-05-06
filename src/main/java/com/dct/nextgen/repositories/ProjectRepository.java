@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -35,40 +34,12 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
                 p.thumbnail_rect as thumbnailRect,
                 p.thumbnail_square as thumbnailSquare
             FROM project p
-            LIMIT 20
-        """,
-        nativeQuery = true
-    )
-    List<IProjectDTO> findAllNonPaging();
-
-    @Query(
-        value = """
-            SELECT p.id, p.name, p.customer,
-                p.category_name AS customerName,
-                p.thumbnail_rect as thumbnailRect,
-                p.thumbnail_square as thumbnailSquare
-            FROM project p
             JOIN category_project cp on p.id = cp.project_id
             WHERE cp.category_id = ?1
         """,
         nativeQuery = true
     )
     Page<IProjectDTO> findAllByCategoryWithPaging(Integer categoryId, Pageable pageable);
-
-    @Query(
-        value = """
-            SELECT p.id, p.name, p.customer,
-                p.category_name AS customerName,
-                p.thumbnail_rect as thumbnailRect,
-                p.thumbnail_square as thumbnailSquare
-            FROM project p
-            JOIN category_project cp on p.id = cp.project_id
-            WHERE cp.category_id = ?1
-            LIMIT 20
-        """,
-        nativeQuery = true
-    )
-    List<IProjectDTO> findAllByCategoryNonPaging(Integer categoryId);
 
     @Query(
         value = """

@@ -14,5 +14,14 @@ public interface StoryImageRepository extends JpaRepository<StoryImage, Integer>
     @Query(value = "SELECT si.url FROM story_image si WHERE si.story_id = ?1 ORDER BY si.position", nativeQuery = true)
     List<String> findAllImageByStoryIdOrderByPosition(Integer storyId);
 
+    @Query(
+        value = """
+            SELECT si.id, si.story_id as storyId, si.url, si.position
+            FROM story_image si
+            WHERE si.story_id = ?1
+            ORDER BY si.position
+        """,
+        nativeQuery = true
+    )
     List<IStoryImageDTO> findAllByStoryIdOrderByPosition(Integer storyId);
 }

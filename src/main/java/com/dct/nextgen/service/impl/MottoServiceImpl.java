@@ -31,12 +31,8 @@ public class MottoServiceImpl implements MottoService {
 
     @Override
     public BaseResponseDTO getAllMottosWithPaging(BaseRequestDTO request) {
-        if (request.getPageable().isPaged()) {
-            Page<IMottoDTO> mottosWithPaged = mottoRepository.findAllWithPaging(request.getPageable());
-            return BaseResponseDTO.builder().total(mottosWithPaged.getTotalElements()).ok(mottosWithPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(mottoRepository.findAllNonPaging());
+        Page<IMottoDTO> mottosWithPaged = mottoRepository.findAllWithPaging(request.getPageable());
+        return BaseResponseDTO.builder().total(mottosWithPaged.getTotalElements()).ok(mottosWithPaged.getContent());
     }
 
     @Override

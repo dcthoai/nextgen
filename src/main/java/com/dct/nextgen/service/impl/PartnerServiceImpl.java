@@ -35,12 +35,8 @@ public class PartnerServiceImpl implements PartnerService {
 
     @Override
     public BaseResponseDTO getAllPartnersWithPaging(BaseRequestDTO request) {
-        if (request.getPageable().isPaged()) {
-            Page<IPartnerDTO> partnersWithPaged = partnerRepository.findAllWithPaging(request.getPageable());
-            return BaseResponseDTO.builder().total(partnersWithPaged.getTotalElements()).ok(partnersWithPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(partnerRepository.findAllNonPaging());
+        Page<IPartnerDTO> partnersWithPaged = partnerRepository.findAllWithPaging(request.getPageable());
+        return BaseResponseDTO.builder().total(partnersWithPaged.getTotalElements()).ok(partnersWithPaged.getContent());
     }
 
     @Override

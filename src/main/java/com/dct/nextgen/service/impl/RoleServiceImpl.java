@@ -25,7 +25,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,20 +55,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public BaseResponseDTO getRolesWithPaging(BaseRequestDTO request) {
-        String keyword = request.getKeyword();
-
-        if (StringUtils.hasText(keyword)) {
-            keyword = "%" + keyword + "%";
-        } else {
-            keyword = null;
-        }
-
-        if (request.getPageable().isPaged()) {
-            Page<IRoleDTO> rolesWithPaged = roleRepository.findAllWithPaging(keyword, request.getPageable());
-            return BaseResponseDTO.builder().total(rolesWithPaged.getTotalElements()).ok(rolesWithPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(roleRepository.findAllNonPaging(keyword));
+        Page<IRoleDTO> rolesWithPaged = roleRepository.findAllWithPaging(request.getKeywordSearch(), request.getPageable());
+        return BaseResponseDTO.builder().total(rolesWithPaged.getTotalElements()).ok(rolesWithPaged.getContent());
     }
 
     @Override

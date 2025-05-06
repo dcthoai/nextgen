@@ -65,25 +65,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public BaseResponseDTO getAllProjectsWithPaging(BaseRequestDTO request) {
-        if (request.getPageable().isPaged()) {
-            Page<IProjectDTO> projectsPaged = projectRepository.findAllWithPaging(request.getPageable());
-            return BaseResponseDTO.builder().total(projectsPaged.getTotalElements()).ok(projectsPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(projectRepository.findAllNonPaging());
+        Page<IProjectDTO> projectsPaged = projectRepository.findAllWithPaging(request.getPageable());
+        return BaseResponseDTO.builder().total(projectsPaged.getTotalElements()).ok(projectsPaged.getContent());
     }
 
     @Override
     public BaseResponseDTO getAllProjectsByCategoryWithPaging(BaseRequestDTO request, Integer categoryId) {
-        if (request.getPageable().isPaged()) {
-            Page<IProjectDTO> projectsPaged = projectRepository.findAllByCategoryWithPaging(
-                categoryId,
-                request.getPageable()
-            );
-            return BaseResponseDTO.builder().total(projectsPaged.getTotalElements()).ok(projectsPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(projectRepository.findAllByCategoryNonPaging(categoryId));
+        Page<IProjectDTO> projectsPaged = projectRepository.findAllByCategoryWithPaging(categoryId, request.getPageable());
+        return BaseResponseDTO.builder().total(projectsPaged.getTotalElements()).ok(projectsPaged.getContent());
     }
 
     @Override

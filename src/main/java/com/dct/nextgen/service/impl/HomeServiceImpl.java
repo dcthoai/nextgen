@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,13 +42,8 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public BaseResponseDTO getBannersWithPaging(BaseRequestDTO request) {
-        if (request.getPageable().isPaged()) {
-            Page<IBannerDTO> bannersWithPaged = bannerRepository.findAllWithPaging(request.getPageable());
-            return BaseResponseDTO.builder().total(bannersWithPaged.getTotalElements()).ok(bannersWithPaged.getContent());
-        }
-
-        List<IBannerDTO> banners = bannerRepository.findAllNonPaging();
-        return BaseResponseDTO.builder().total((long) banners.size()).ok(banners);
+        Page<IBannerDTO> bannersWithPaged = bannerRepository.findAllWithPaging(request.getPageable());
+        return BaseResponseDTO.builder().total(bannersWithPaged.getTotalElements()).ok(bannersWithPaged.getContent());
     }
 
     @Override

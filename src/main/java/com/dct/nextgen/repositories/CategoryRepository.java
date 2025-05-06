@@ -16,9 +16,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Query(value = "SELECT c.id, c.name FROM category c", nativeQuery = true)
     Page<ICategoryDTO> findAllWithPaging(Pageable pageable);
 
-    @Query(value = "SELECT c.id, c.name FROM category c LIMIT 20", nativeQuery = true)
-    List<ICategoryDTO> findAllNonPaging();
-
     @Query(
         value = """
             SELECT COUNT(DISTINCT cp.project_id)

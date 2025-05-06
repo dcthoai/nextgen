@@ -48,12 +48,8 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public BaseResponseDTO getAllStoriesWithPaging(BaseRequestDTO request) {
-        if (request.getPageable().isPaged()) {
-            Page<IStoryDTO> storiesWithPaged = storyRepository.findAllWithPaging(request.getPageable());
-            return BaseResponseDTO.builder().total(storiesWithPaged.getTotalElements()).ok(storiesWithPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(storyRepository.findAllNonPaging());
+        Page<IStoryDTO> storiesWithPaged = storyRepository.findAllWithPaging(request.getPageable());
+        return BaseResponseDTO.builder().total(storiesWithPaged.getTotalElements()).ok(storiesWithPaged.getContent());
     }
 
     @Override

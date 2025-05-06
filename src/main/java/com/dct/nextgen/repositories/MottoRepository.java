@@ -9,14 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface MottoRepository extends JpaRepository<Motto, Integer> {
 
     @Query(value = "SELECT m.id, m.title, m.description FROM motto m", nativeQuery = true)
     Page<IMottoDTO> findAllWithPaging(Pageable pageable);
-
-    @Query(value = "SELECT m.id, m.title, m.description FROM motto m LIMIT 20", nativeQuery = true)
-    List<IMottoDTO> findAllNonPaging();
 }

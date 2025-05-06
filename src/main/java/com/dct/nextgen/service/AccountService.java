@@ -1,7 +1,7 @@
 package com.dct.nextgen.service;
 
 import com.dct.nextgen.dto.auth.AccountDTO;
-import com.dct.nextgen.dto.request.AccountFilterSearchRequestDTO;
+import com.dct.nextgen.dto.request.BaseRequestDTO;
 import com.dct.nextgen.dto.request.CreateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountRequestDTO;
 import com.dct.nextgen.dto.request.UpdateAccountStatusRequestDTO;
@@ -14,7 +14,7 @@ public interface AccountService {
 
     AccountDTO findAccountByUsername(String username);
 
-    BaseResponseDTO getAccountsWithPaging(AccountFilterSearchRequestDTO request);
+    BaseResponseDTO getAccountsWithPaging(BaseRequestDTO request);
 
     BaseResponseDTO getAccountDetail(Integer accountId);
 

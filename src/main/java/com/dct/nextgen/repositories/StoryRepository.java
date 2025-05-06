@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,12 +18,6 @@ public interface StoryRepository extends JpaRepository<Story, Integer> {
         nativeQuery = true
     )
     Page<IStoryDTO> findAllWithPaging(Pageable pageable);
-
-    @Query(
-        value = "SELECT s.id, s.subtitle, s.title, s.text1, s.text2, s.text3, s.position FROM story s LIMIT 20",
-        nativeQuery = true
-    )
-    List<IStoryDTO> findAllNonPaging();
 
     @Query(
         value = "SELECT s.id, s.subtitle, s.title, s.position, s.text1, s.text2, s.text3 FROM story s WHERE s.position = ?1",

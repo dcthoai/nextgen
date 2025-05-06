@@ -32,12 +32,8 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public BaseResponseDTO getAllJobsWithPaging(BaseRequestDTO request) {
-        if (request.getPageable().isPaged()) {
-            Page<IJobDTO> jobsWithPaged = jobRepository.findAllWithPaging(request.getPageable());
-            return BaseResponseDTO.builder().total(jobsWithPaged.getTotalElements()).ok(jobsWithPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(jobRepository.findAllNonPaging());
+        Page<IJobDTO> jobsWithPaged = jobRepository.findAllWithPaging(request.getPageable());
+        return BaseResponseDTO.builder().total(jobsWithPaged.getTotalElements()).ok(jobsWithPaged.getContent());
     }
 
     @Override

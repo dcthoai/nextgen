@@ -25,8 +25,8 @@ public class BaseRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private static final Logger log = LoggerFactory.getLogger(BaseRequestDTO.class);
-    private Integer page;
-    private Integer size;
+    private Integer page = 0;
+    private Integer size = 20;
     private String sort;
     private String fromDate;
     private String toDate;

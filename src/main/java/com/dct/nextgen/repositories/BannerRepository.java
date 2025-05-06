@@ -33,19 +33,6 @@ public interface BannerRepository extends JpaRepository<Banner, Integer> {
             b.text_uppercase_1 as textUpperCase1, b.text_uppercase_2 as textUpperCase2,
             b.position, b.image
             FROM banner b
-            LIMIT 100
-        """,
-        nativeQuery = true
-    )
-    List<IBannerDTO> findAllNonPaging();
-
-    @Query(
-        value = """
-            SELECT b.id,
-            b.text_stroke_1 as textStroke1, b.text_stroke_2 as textStroke2,
-            b.text_uppercase_1 as textUpperCase1, b.text_uppercase_2 as textUpperCase2,
-            b.position, b.image
-            FROM banner b
             WHERE b.id = ?1
         """,
         nativeQuery = true

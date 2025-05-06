@@ -35,12 +35,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public BaseResponseDTO getAllCategoriesWithPaging(BaseRequestDTO request) {
-        if (request.getPageable().isPaged()) {
-            Page<ICategoryDTO> categoriesWithPaged = categoryRepository.findAllWithPaging(request.getPageable());
-            return BaseResponseDTO.builder().total(categoriesWithPaged.getTotalElements()).ok(categoriesWithPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(categoryRepository.findAllNonPaging());
+        Page<ICategoryDTO> categoriesWithPaged = categoryRepository.findAllWithPaging(request.getPageable());
+        return BaseResponseDTO.builder()
+            .total(categoriesWithPaged.getTotalElements())
+            .ok(categoriesWithPaged.getContent());
     }
 
     @Override

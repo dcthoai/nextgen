@@ -72,12 +72,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BaseResponseDTO getAllProductWithPaging(BaseRequestDTO request) {
-        if (request.getPageable().isPaged()) {
-            Page<IProductDTO> productsWithPaged = productRepository.findAllWithPaging(request.getPageable());
-            return BaseResponseDTO.builder().total(productsWithPaged.getTotalElements()).ok(productsWithPaged.getContent());
-        }
-
-        return BaseResponseDTO.builder().ok(productRepository.findAllNonPaging());
+        Page<IProductDTO> productsWithPaged = productRepository.findAllWithPaging(request.getPageable());
+        return BaseResponseDTO.builder().total(productsWithPaged.getTotalElements()).ok(productsWithPaged.getContent());
     }
 
     @Override
