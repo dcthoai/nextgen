@@ -15,6 +15,7 @@ import com.dct.nextgen.service.MottoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -52,6 +53,7 @@ public class MottoServiceImpl implements MottoService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO createNewMotto(CreateOrUpdateMottoRequestDTO request) {
         Motto motto = new Motto();
         BeanUtils.copyProperties(request, motto, "id");
@@ -59,6 +61,7 @@ public class MottoServiceImpl implements MottoService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO updateMotto(CreateOrUpdateMottoRequestDTO request) {
         Optional<Motto> mottoOptional = mottoRepository.findById(request.getId());
 
@@ -73,6 +76,7 @@ public class MottoServiceImpl implements MottoService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO deleteMotto(Integer mottoId) {
         if (Objects.isNull(mottoId) || mottoId <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);

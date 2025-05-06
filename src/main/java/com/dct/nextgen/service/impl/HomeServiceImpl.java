@@ -15,10 +15,10 @@ import com.dct.nextgen.repositories.BannerRepository;
 import com.dct.nextgen.repositories.CompanyRepository;
 import com.dct.nextgen.service.HomeService;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 

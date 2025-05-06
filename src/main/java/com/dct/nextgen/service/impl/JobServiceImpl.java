@@ -16,6 +16,7 @@ import com.dct.nextgen.service.JobService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -53,6 +54,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO createJob(CreateJobRequestDTO request) {
         Job job = new Job();
         BeanUtils.copyProperties(request, job);
@@ -61,6 +63,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO updateJob(UpdateJobRequestDTO request) {
         Optional<Job> jobOptional = jobRepository.findById(request.getId());
 
@@ -76,6 +79,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO deleteJob(Integer jobId) {
         if (Objects.isNull(jobId) || jobId <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);

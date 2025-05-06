@@ -21,10 +21,10 @@ import com.dct.nextgen.repositories.common.RolePermissionRepository;
 import com.dct.nextgen.repositories.common.RoleRepository;
 import com.dct.nextgen.service.RoleService;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;

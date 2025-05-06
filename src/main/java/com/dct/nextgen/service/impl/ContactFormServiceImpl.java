@@ -13,6 +13,7 @@ import com.dct.nextgen.service.ContactFormService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -54,6 +55,7 @@ public class ContactFormServiceImpl implements ContactFormService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO updateContactForm(UpdateContactFormRequestDTO request) {
         ContactForm contactForm = contactFormRepository.findContactFormDetail().orElseGet(ContactForm::new);
         BeanUtils.copyProperties(request, contactForm, "id");

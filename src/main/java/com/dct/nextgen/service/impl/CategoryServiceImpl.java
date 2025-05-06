@@ -13,10 +13,11 @@ import com.dct.nextgen.exception.BaseBadRequestException;
 import com.dct.nextgen.repositories.CategoryProjectRepository;
 import com.dct.nextgen.repositories.CategoryRepository;
 import com.dct.nextgen.service.CategoryService;
-import jakarta.transaction.Transactional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

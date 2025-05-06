@@ -14,6 +14,7 @@ import com.dct.nextgen.service.CompanyService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO updateCompanyInfo(UpdateCompanyRequestDTO request) {
         Optional<Company> companyOptional = companyRepository.findFirstByOrderByCreatedDateAsc();
         List<String> oldImageUrlToDelete = new ArrayList<>();

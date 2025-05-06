@@ -13,9 +13,11 @@ import com.dct.nextgen.exception.BaseBadRequestAlertException;
 import com.dct.nextgen.exception.BaseBadRequestException;
 import com.dct.nextgen.repositories.PartnerRepository;
 import com.dct.nextgen.service.PartnerService;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Objects;
@@ -56,6 +58,7 @@ public class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO createNewPartner(CreateOrUpdatePartnerRequestDTO request) {
         if (FileUtils.invalidUploadFile(request.getLogoFile())) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
@@ -76,6 +79,7 @@ public class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO updatePartner(CreateOrUpdatePartnerRequestDTO request) {
         if (Objects.isNull(request.getId()) || request.getId() <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
@@ -99,6 +103,7 @@ public class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
+    @Transactional
     public BaseResponseDTO deletePartner(Integer partnerId) {
         if (Objects.isNull(partnerId) || partnerId <= 0) {
             throw new BaseBadRequestException(ENTITY_NAME, ExceptionConstants.INVALID_REQUEST_DATA);
